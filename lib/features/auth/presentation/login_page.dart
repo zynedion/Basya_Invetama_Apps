@@ -5,6 +5,7 @@ import '../data/auth_exception.dart';
 import '../data/auth_service.dart';
 import '../domain/auth_gateway.dart';
 import '../../home/presentation/investor_home_page.dart';
+import '../../navigation/presentation/main_container.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, this.auth});
@@ -63,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
       _password.clear();
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute<void>(
-          builder: (_) => InvestorHomePage(
+          builder: (_) => MainContainer(
             auth: _auth,
             profile: profile,
             audience: profile.usesInvestorHome

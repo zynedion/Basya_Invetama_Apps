@@ -11,6 +11,7 @@ Status: spesifikasi implementasi dari canvas, bukan implementasi atau bukti uji 
 | IntegratedBalanceHero / CMP-26 | Gradient DecoratedBox + identity row + frosted elevated BackdropFilter panels | member, totalSaldo, panel saldo sesuai audience, visibility, notifications |
 | BasyaBalanceCard / CMP-21 | DecoratedBox + BoxDecoration + LinearGradient + Padding + Column | isInvestor, totalSaldo, totalSimpanan, sukarela, buyPower, visibility, loading/error |
 | BalanceSubpanel / CMP-22 | Expanded + DecoratedBox + Column; investor memakai Simpanan Sukarela dan Buy Power, non-investor memakai Simpanan Sukarela dan Simpanan Wajib | label, amount, semanticDescription |
+| MainContainer | Scaffold + IndexedStack; memiliki tab aktif dan floating bottom navigation agar state tiap halaman tetap tersimpan | audience, selectedIndex, destinations |
 | HomeShortcut / CMP-23 | Material + InkWell + Column | icon, label, callback, enabled, loading |
 | BasyaFloatingNav / CMP-24 | SafeArea + Padding + Row + AnimatedContainer/AnimatedSize | destinations, selectedIndex, onSelected |
 | TopUpDestinationSheet / CMP-25 | showModalBottomSheet dengan SafeArea, pilihan dan callback | pilihan yang diizinkan, onSelected, dismiss |

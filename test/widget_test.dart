@@ -8,6 +8,7 @@ import 'package:basya_investama/features/auth/domain/auth_session.dart';
 import 'package:basya_investama/features/auth/presentation/login_page.dart';
 import 'package:basya_investama/features/auth/presentation/splash_page.dart';
 import 'package:basya_investama/features/home/presentation/investor_home_page.dart';
+import 'package:basya_investama/features/navigation/presentation/main_container.dart';
 
 void main() {
   testWidgets(
@@ -211,7 +212,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: AppTheme.light,
-          home: InvestorHomePage(
+          home: MainContainer(
             auth: _FakeAuthGateway(),
             audience: HomeAudience.member,
           ),
@@ -272,7 +273,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light,
-        home: InvestorHomePage(auth: _FakeAuthGateway()),
+        home: MainContainer(auth: _FakeAuthGateway()),
       ),
     );
     final investorWidth = tester
@@ -287,6 +288,31 @@ void main() {
         .width;
     expect(memberWidth, lessThan(investorWidth));
     expect(memberWidth, 320);
+  });
+
+  testWidgets('Main navigation opens every investor placeholder tab', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light,
+        home: MainContainer(auth: _FakeAuthGateway()),
+      ),
+    );
+
+    for (final label in ['Simpanan', 'Investasi', 'Multiguna', 'Profil']) {
+      await tester.tap(find.byTooltip(label));
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(ValueKey('page-title-${label.toLowerCase()}')),
+        findsOneWidget,
+      );
+      expect(find.text(label), findsNWidgets(2));
+    }
+
+    await tester.tap(find.byTooltip('Beranda'));
+    await tester.pumpAndSettle();
+    expect(find.byType(InvestorHomePage), findsOneWidget);
   });
 
   testWidgets('Home keeps the hero fixed while its five activities scroll', (

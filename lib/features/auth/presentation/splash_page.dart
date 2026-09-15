@@ -7,6 +7,7 @@ import '../domain/auth_profile.dart';
 import '../domain/auth_session.dart';
 import 'login_page.dart';
 import '../../home/presentation/investor_home_page.dart';
+import '../../navigation/presentation/main_container.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key, this.auth});
@@ -57,7 +58,7 @@ class _SplashPageState extends State<SplashPage>
       MaterialPageRoute<void>(
         builder: (_) => restored == null
             ? LoginPage(auth: _auth)
-            : InvestorHomePage(
+            : MainContainer(
                 auth: _auth,
                 profile: restored.profile,
                 audience: restored.profile.usesInvestorHome

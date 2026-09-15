@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_theme.dart';
-import '../../auth/data/auth_service.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
-import '../../auth/presentation/login_page.dart';
 import '../domain/investor_home_data.dart';
 
 const _homeScrollPhysics = BouncingScrollPhysics(
@@ -45,13 +43,6 @@ class _QuickActionData {
   final IconData icon;
 }
 
-class _NavDestinationData {
-  const _NavDestinationData(this.label, this.icon);
-
-  final String label;
-  final IconData icon;
-}
-
 class InvestorHomePage extends StatefulWidget {
   const InvestorHomePage({
     super.key,
@@ -61,6 +52,7 @@ class InvestorHomePage extends StatefulWidget {
     this.data = InvestorHomeData.demo,
     this.memberData = MemberHomeData.demo,
     this.now,
+    this.onAudienceChanged,
   });
 
   final AuthGateway? auth;
@@ -69,16 +61,15 @@ class InvestorHomePage extends StatefulWidget {
   final InvestorHomeData data;
   final MemberHomeData memberData;
   final DateTime Function()? now;
+  final ValueChanged<HomeAudience>? onAudienceChanged;
 
   @override
   State<InvestorHomePage> createState() => _InvestorHomePageState();
 }
 
 class _InvestorHomePageState extends State<InvestorHomePage> {
-  late final AuthGateway _auth = widget.auth ?? AuthService();
   late HomeAudience _previewAudience = widget.audience;
   bool _balanceVisible = true;
-  bool _loggingOut = false;
   Timer? _greetingTimer;
   late DateTime _currentTime;
 
@@ -106,9 +97,6 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
   String get _heroSubtitle => _isInvestor
       ? 'Simpanan dan dana siap investasi'
       : 'Simpanan anggota dalam satu ringkasan';
-
-  String get _profileLabel =>
-      _isInvestor ? 'Profil investor' : 'Profil anggota';
 
   List<_HeroBalancePanelData> get _heroPanels => _isInvestor
       ? [
@@ -143,27 +131,6 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
           _QuickActionData('Top Up', Icons.add_rounded),
           _QuickActionData('Withdraw', Icons.arrow_downward_rounded),
           _QuickActionData('Pinjam', Icons.account_balance_outlined),
-        ];
-
-  List<_NavDestinationData> get _navDestinations => _isInvestor
-      ? const [
-          _NavDestinationData('Beranda', Icons.home_rounded),
-          _NavDestinationData(
-            'Simpanan',
-            Icons.account_balance_wallet_outlined,
-          ),
-          _NavDestinationData('Investasi', Icons.show_chart_rounded),
-          _NavDestinationData('Multiguna', Icons.account_balance_outlined),
-          _NavDestinationData('Profil', Icons.person_outline_rounded),
-        ]
-      : const [
-          _NavDestinationData('Beranda', Icons.home_rounded),
-          _NavDestinationData(
-            'Simpanan',
-            Icons.account_balance_wallet_outlined,
-          ),
-          _NavDestinationData('Multiguna', Icons.account_balance_outlined),
-          _NavDestinationData('Profil', Icons.person_outline_rounded),
         ];
 
   String _money(int value) {
@@ -210,53 +177,6 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
       ..showSnackBar(SnackBar(content: Text('$feature sedang disiapkan.')));
   }
 
-  Future<void> _openProfile() async {
-    final shouldLogout = await showModalBottomSheet<bool>(
-      context: context,
-      showDragHandle: true,
-      builder: (context) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                _memberName,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                _profileLabel,
-                style: const TextStyle(color: AppTheme.muted),
-              ),
-              const SizedBox(height: 20),
-              OutlinedButton.icon(
-                onPressed: () => Navigator.pop(context, true),
-                icon: const Icon(Icons.logout_rounded),
-                label: const Text('Keluar dari akun'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-    if (shouldLogout == true) await _logout();
-  }
-
-  Future<void> _logout() async {
-    if (_loggingOut) return;
-    setState(() => _loggingOut = true);
-    await _auth.logout();
-    if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute<void>(builder: (_) => LoginPage(auth: _auth)),
-      (_) => false,
-    );
-  }
-
   @override
   Widget build(BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
     value: SystemUiOverlayStyle.light,
@@ -294,8 +214,10 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                           children: [
                             _AudiencePreviewToggle(
                               audience: _previewAudience,
-                              onChanged: (audience) =>
-                                  setState(() => _previewAudience = audience),
+                              onChanged: (audience) {
+                                setState(() => _previewAudience = audience);
+                                widget.onAudienceChanged?.call(audience);
+                              },
                             ),
                             const SizedBox(height: 18),
                             const _SectionTitle(title: 'Aksi cepat'),
@@ -367,36 +289,6 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                     ],
                   );
                 },
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 126 + MediaQuery.paddingOf(context).bottom,
-            child: const IgnorePointer(child: _BottomGradientScrim()),
-          ),
-          Positioned(
-            left: 20,
-            right: 20,
-            bottom: MediaQuery.paddingOf(context).bottom + 10,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: _isInvestor ? double.infinity : 320,
-                ),
-                child: _FloatingNavigation(
-                  destinations: _navDestinations,
-                  onDestinationSelected: (index, label) {
-                    if (label == 'Profil') {
-                      _openProfile();
-                    } else if (label != 'Beranda') {
-                      _showComingSoon(label);
-                    }
-                  },
-                ),
               ),
             ),
           ),
@@ -1306,140 +1198,6 @@ class _ActivityRow extends StatelessWidget {
                 ],
               );
       },
-    ),
-  );
-}
-
-class _BottomGradientScrim extends StatelessWidget {
-  const _BottomGradientScrim();
-
-  @override
-  Widget build(BuildContext context) => const DecoratedBox(
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [Color(0x00FBFDFC), Color(0x99FBFDFC), AppTheme.loginCanvas],
-        stops: [0, 0.56, 1],
-      ),
-    ),
-  );
-}
-
-class _FloatingNavigation extends StatelessWidget {
-  const _FloatingNavigation({
-    required this.destinations,
-    required this.onDestinationSelected,
-  });
-
-  final List<_NavDestinationData> destinations;
-  final void Function(int index, String label) onDestinationSelected;
-
-  @override
-  Widget build(BuildContext context) => DecoratedBox(
-    key: ValueKey('home-floating-nav-${destinations.length}'),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(32),
-      boxShadow: const [
-        BoxShadow(
-          color: Color(0x1F006A66),
-          offset: Offset(0, 8),
-          blurRadius: 26,
-        ),
-        BoxShadow(
-          color: Color(0x0F17324A),
-          offset: Offset(0, 2),
-          blurRadius: 8,
-        ),
-      ],
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(6),
-      child: Row(
-        children: [
-          for (var index = 0; index < destinations.length; index++)
-            Expanded(
-              flex: index == 0 ? 2 : 1,
-              child: _NavigationItem(
-                selected: index == 0,
-                label: destinations[index].label,
-                icon: destinations[index].icon,
-                onTap: () =>
-                    onDestinationSelected(index, destinations[index].label),
-              ),
-            ),
-        ],
-      ),
-    ),
-  );
-}
-
-class _NavigationItem extends StatelessWidget {
-  const _NavigationItem({
-    required this.selected,
-    required this.label,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final bool selected;
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => Semantics(
-    button: true,
-    selected: selected,
-    label: label,
-    child: Tooltip(
-      message: label,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(26),
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          height: 48,
-          decoration: BoxDecoration(
-            gradient: selected
-                ? const LinearGradient(
-                    colors: [
-                      Color(0xFF004E50),
-                      Color(0xFF006A66),
-                      Color(0xFF008579),
-                    ],
-                  )
-                : null,
-            borderRadius: BorderRadius.circular(26),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 20,
-                color: selected ? Colors.white : AppTheme.muted,
-              ),
-              if (selected) ...[
-                const SizedBox(width: 7),
-                Flexible(
-                  child: Text(
-                    label,
-                    overflow: TextOverflow.fade,
-                    softWrap: false,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
     ),
   );
 }

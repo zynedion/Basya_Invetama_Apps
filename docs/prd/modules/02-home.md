@@ -39,6 +39,7 @@ Kontrak API Home belum tersedia; data contoh tidak dianggap sebagai kontrak back
 - Untuk preview sementara, Home menyediakan toggle Investor/Non-investor di layar agar dua mode dapat dibandingkan tanpa mengubah session.
 - Acuan visual: frame Pen Dev `12 / HOME-02A / Investor / Integrated hero`.
 - Hero atas memuat foto, sapaan, nama anggota, notifikasi, Total Saldo, dan panel saldo sesuai jenis anggota. Investor menampilkan Simpanan Sukarela + Buy Power agar dana yang dapat ditarik langsung terlihat; non-investor menampilkan Simpanan Sukarela + Simpanan Wajib.
+- Navigasi utama dimiliki `MainContainer` dan mempertahankan halaman melalui `IndexedStack`. Ikon selalu terlihat; hanya tab aktif yang berbentuk pil dan menampilkan label.
 - Pada viewport normal hero tetap di atas dan konten di bawahnya scroll mandiri. Layar pendek atau text scale besar melepas pin agar konten tetap dapat diakses.
 - Panel saldo memakai permukaan frosted-elevated dengan nominal yang ikut disamarkan oleh kontrol visibilitas saldo.
 - Aksi cepat investor: Top Up, Withdraw, Pinjam, dan Mutasi. Aksi cepat non-investor: Top Up, Withdraw, dan Pinjam.
