@@ -1130,6 +1130,12 @@ class _ActivityRow extends StatelessWidget {
     HomeActivityDirection.transfer => Icons.swap_horiz_rounded,
   };
 
+  Color get _amountColor => switch (activity.direction) {
+    HomeActivityDirection.incoming => AppTheme.positive,
+    HomeActivityDirection.outgoing => AppTheme.negative,
+    HomeActivityDirection.transfer => AppTheme.ink,
+  };
+
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -1140,9 +1146,7 @@ class _ActivityRow extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: activity.direction == HomeActivityDirection.incoming
-                ? AppTheme.teal
-                : AppTheme.ink,
+            color: _amountColor,
           ),
         );
         final details = Row(

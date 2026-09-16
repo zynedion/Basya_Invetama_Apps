@@ -289,7 +289,8 @@
           "content": "V2 · Gradient merek, panel saldo, shortcut formulir, dan navigasi mengambang. Data contoh.",
           "lineHeight": 1.4,
           "fontFamily": "$basya-font",
-          "fontSize": 14
+          "fontSize": 14,
+          "fontWeight": "normal"
         },
         {
           "type": "frame",
@@ -368,7 +369,8 @@
                           "content": "Total Saldo",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 14
+                          "fontSize": 14,
+                          "fontWeight": "normal"
                         },
                         {
                           "type": "icon",
@@ -405,7 +407,8 @@
                       "content": "Simpanan dan dana siap investasi",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -438,7 +441,8 @@
                           "content": "Total Simpanan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         },
                         {
                           "type": "text",
@@ -530,7 +534,8 @@
                   "content": "Investor: simpanan + Buy Power.\nNon-investor: Sukarela sebagai bagian saldo yang dapat diajukan untuk penarikan.",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 14
+                  "fontSize": 14,
+                  "fontWeight": "normal"
                 }
               ]
             }
@@ -889,7 +894,8 @@
           "content": "Ikon selalu terlihat. Hanya tab aktif menampilkan judul. Area sentuh minimal 48 tinggi; label aksesibilitas tetap tersedia.",
           "lineHeight": 1.4,
           "fontFamily": "$basya-font",
-          "fontSize": 12
+          "fontSize": 12,
+          "fontWeight": "normal"
         },
         {
           "type": "frame",
@@ -1289,7 +1295,8 @@
                   "content": "Pilih saldo yang ingin Anda tambahkan.",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 14
+                  "fontSize": 14,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "frame",
@@ -1343,7 +1350,8 @@
                           "content": "Untuk simpanan fleksibel Anda",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -1411,7 +1419,8 @@
                           "content": "Untuk membeli produk investasi",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -1437,7 +1446,8 @@
                   "content": "Tutup atau geser ke bawah untuk batal",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 12
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -1472,7 +1482,8 @@
                   "content": "Top Up investor → pilih tujuan → form\nTop Up anggota → form Sukarela\nWithdraw → form tarik Sukarela\nPinjam → form pengajuan\nMutasi → Buy Power ke Sukarela\nTab Investasi → Produk & Portofolio",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 14
+                  "fontSize": 14,
+                  "fontWeight": "normal"
                 }
               ]
             }
@@ -1607,7 +1618,8 @@
                       "content": "Selamat pagi,",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -1808,7 +1820,8 @@
                           "content": "Simpanan keanggotaan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -1867,7 +1880,8 @@
                           "content": "Iuran bulanan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -1926,7 +1940,8 @@
                           "content": "Dapat diajukan untuk penarikan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -1977,7 +1992,8 @@
                       "content": "Cicilan berikutnya",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -2002,7 +2018,8 @@
                       "content": "25 Sep 2026 · Sisa Rp 3.208.333",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -2261,7 +2278,8 @@
                       "content": "Selamat pagi,",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -2459,7 +2477,8 @@
                           "content": "Simpanan keanggotaan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2518,7 +2537,8 @@
                           "content": "Iuran bulanan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2577,7 +2597,8 @@
                           "content": "Dapat diajukan untuk penarikan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2659,7 +2680,8 @@
                   "content": "Dana diinvestasikan",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 12
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -2699,7 +2721,8 @@
                           "content": "Profit bulan ini",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         },
                         {
                           "type": "text",
@@ -2734,7 +2757,8 @@
                           "content": "Akumulasi profit",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         },
                         {
                           "type": "text",
@@ -2763,7 +2787,8 @@
                   "content": "September 2026",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 12
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -2796,7 +2821,8 @@
                       "content": "Cicilan berikutnya",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -2821,7 +2847,8 @@
                       "content": "25 Sep 2026 · Sisa Rp 3.208.333",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -3069,7 +3096,8 @@
                       "content": "Selamat pagi,",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -3270,7 +3298,8 @@
                           "content": "Simpanan keanggotaan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -3329,7 +3358,8 @@
                           "content": "Iuran bulanan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -3388,7 +3418,8 @@
                           "content": "Dapat diajukan untuk penarikan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -3439,7 +3470,8 @@
                       "content": "Cicilan berikutnya",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -3464,7 +3496,8 @@
                       "content": "25 Sep 2026 · Sisa Rp 3.208.333",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -3726,7 +3759,8 @@
                       "content": "Selamat pagi,",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -3924,7 +3958,8 @@
                           "content": "Simpanan keanggotaan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -3983,7 +4018,8 @@
                           "content": "Iuran bulanan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -4042,7 +4078,8 @@
                           "content": "Dapat diajukan untuk penarikan",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -4124,7 +4161,8 @@
                   "content": "Dana diinvestasikan",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 12
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -4164,7 +4202,8 @@
                           "content": "Profit bulan ini",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         },
                         {
                           "type": "text",
@@ -4199,7 +4238,8 @@
                           "content": "Akumulasi profit",
                           "lineHeight": 1.4,
                           "fontFamily": "$basya-font",
-                          "fontSize": 12
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         },
                         {
                           "type": "text",
@@ -4228,7 +4268,8 @@
                   "content": "September 2026",
                   "lineHeight": 1.4,
                   "fontFamily": "$basya-font",
-                  "fontSize": 12
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -4261,7 +4302,8 @@
                       "content": "Cicilan berikutnya",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -4286,7 +4328,8 @@
                       "content": "25 Sep 2026 · Sisa Rp 3.208.333",
                       "lineHeight": 1.4,
                       "fontFamily": "$basya-font",
-                      "fontSize": 12
+                      "fontSize": 12,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -5820,6 +5863,1236 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "Z58jz",
+      "x": 3800,
+      "y": 100,
+      "name": "11 / AUTH-01D / Login / Balanced frosted",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "x2xIPU",
+          "x": 0,
+          "y": 0,
+          "name": "Frosted brand background",
+          "clip": true,
+          "width": 390,
+          "height": 844,
+          "layout": "none",
+          "children": [
+            {
+              "type": "ellipse",
+              "id": "OdgFI",
+              "x": -150,
+              "y": -110,
+              "name": "Mint glow",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#5FDEA995",
+                    "position": 0
+                  },
+                  {
+                    "color": "#A4EDD267",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 480,
+              "height": 430,
+              "effect": {
+                "type": "blur",
+                "radius": 24
+              }
+            },
+            {
+              "type": "ellipse",
+              "id": "lRusF",
+              "x": 170,
+              "y": -90,
+              "name": "Teal glow",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#00857978",
+                    "position": 0
+                  },
+                  {
+                    "color": "#67D3C154",
+                    "position": 0.52
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 410,
+              "height": 390,
+              "effect": {
+                "type": "blur",
+                "radius": 28
+              }
+            },
+            {
+              "type": "ellipse",
+              "id": "rc96o",
+              "x": 175,
+              "y": 555,
+              "name": "Lower mint glow",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#5FDEA938",
+                    "position": 0
+                  },
+                  {
+                    "color": "#B9F3DE24",
+                    "position": 0.55
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 330,
+              "height": 330,
+              "effect": {
+                "type": "blur",
+                "radius": 56
+              }
+            },
+            {
+              "type": "rectangle",
+              "id": "SqiTz",
+              "x": 0,
+              "y": 0,
+              "name": "Frosted white veil",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#FFFFFF24",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FFFFFF68",
+                    "position": 0.42
+                  },
+                  {
+                    "color": "#FFFFFFD4",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 390,
+              "height": 844
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "A7y8n",
+          "x": 0,
+          "y": 0,
+          "name": "System status",
+          "width": 390,
+          "height": 62,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "Otivk",
+              "name": "Time",
+              "fill": "$basya-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "9:41",
+              "lineHeight": 1.45,
+              "fontFamily": "$basya-font",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "VL5Qg",
+              "name": "System icons",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "NtZGP",
+                  "name": "Signal",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "wifi",
+                  "library": "lucide",
+                  "fill": "$basya-ink"
+                },
+                {
+                  "type": "icon",
+                  "id": "FjzLk",
+                  "name": "Battery",
+                  "width": 20,
+                  "height": 20,
+                  "icon": "battery-full",
+                  "library": "lucide",
+                  "fill": "$basya-ink"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "dLe48",
+          "x": 0,
+          "y": 62,
+          "name": "Balanced content",
+          "width": 390,
+          "height": 782,
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            28,
+            24
+          ],
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "w2hOn4",
+              "name": "Welcome group",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Q8Pi70",
+                  "name": "Welcome line",
+                  "fill": "#17324A",
+                  "content": "Selamat datang",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 30,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "vJ02S",
+                  "name": "Inline brand",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wzMqg",
+                      "name": "Preposition",
+                      "fill": "#17324A",
+                      "content": "di",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 30,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "n05u4K",
+                      "name": "Basya logo",
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "assets/logo/logo_basya.png",
+                        "mode": "fit"
+                      },
+                      "width": 142,
+                      "height": 28
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "CTbht",
+                  "name": "Welcome description",
+                  "fill": "#5F6B76",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Simpanan dan investasi Anda,\ndalam satu genggaman.",
+                  "lineHeight": 1.45,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XkAnX",
+              "name": "Login form",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 18,
+              "children": [
+                {
+                  "id": "avzOd",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Username field",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Username atau email"
+                    },
+                    "j57vq": {
+                      "content": "Masukkan username atau email"
+                    },
+                    "tZ6ZV": {
+                      "icon": "user-round"
+                    }
+                  }
+                },
+                {
+                  "id": "DCr6K",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Password field",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Kata sandi"
+                    },
+                    "j57vq": {
+                      "content": "Masukkan kata sandi"
+                    },
+                    "tZ6ZV": {
+                      "icon": "eye-off"
+                    }
+                  }
+                },
+                {
+                  "id": "HnKJd",
+                  "type": "ref",
+                  "ref": "hMfe5",
+                  "name": "Login button",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TobOz",
+              "name": "Member support",
+              "width": "fill_container",
+              "height": 44,
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "Zsq22",
+                  "name": "Support icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "headphones",
+                  "library": "lucide",
+                  "fill": "#5F6B76"
+                },
+                {
+                  "type": "text",
+                  "id": "F84rCx",
+                  "name": "Support text",
+                  "fill": "#5F6B76",
+                  "content": "Butuh bantuan? Hubungi koperasi",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "CUbnI",
+              "name": "Brand promise",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 7,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "LXBaG",
+                  "name": "Promise text",
+                  "fill": "#006A66",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Tumbuh bersama, melangkah lebih jauh.",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "Z762v",
+                  "name": "Mint accent",
+                  "width": 48,
+                  "height": 4,
+                  "fill": "#5FDEA9",
+                  "cornerRadius": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "r7991",
+      "x": 0,
+      "y": 1444,
+      "name": "CMP-26 / Integrated balance hero",
+      "reusable": true,
+      "clip": true,
+      "width": 390,
+      "height": 320,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 145,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#003F42",
+            "position": 0
+          },
+          {
+            "color": "#006A66",
+            "position": 0.5
+          },
+          {
+            "color": "#08A39E",
+            "position": 0.8
+          },
+          {
+            "color": "#5FDEA9",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": 30,
+      "layout": "none",
+      "children": [
+        {
+          "type": "ellipse",
+          "id": "Rx1SI",
+          "x": 220,
+          "y": -110,
+          "name": "Hero mint glow",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "radial",
+            "enabled": true,
+            "rotation": 0,
+            "size": {
+              "width": 1,
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#A4EDD26B",
+                "position": 0
+              },
+              {
+                "color": "#A4EDD200",
+                "position": 1
+              }
+            ]
+          },
+          "width": 280,
+          "height": 260,
+          "effect": {
+            "type": "blur",
+            "radius": 24
+          }
+        },
+        {
+          "type": "ellipse",
+          "id": "XwC8Q",
+          "x": -100,
+          "y": 120,
+          "name": "Hero teal depth",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "radial",
+            "enabled": true,
+            "rotation": 0,
+            "size": {
+              "width": 1,
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#00383D70",
+                "position": 0
+              },
+              {
+                "color": "#00383D00",
+                "position": 1
+              }
+            ]
+          },
+          "width": 300,
+          "height": 260,
+          "effect": {
+            "type": "blur",
+            "radius": 28
+          }
+        },
+        {
+          "type": "text",
+          "id": "PxYT6",
+          "x": 24,
+          "y": 18,
+          "name": "System time",
+          "fill": "#FFFFFF",
+          "content": "9:41",
+          "fontFamily": "$basya-font",
+          "fontSize": 14,
+          "fontWeight": "600"
+        },
+        {
+          "type": "icon",
+          "id": "f1Agxl",
+          "x": 320,
+          "y": 19,
+          "name": "System wifi",
+          "width": 16,
+          "height": 16,
+          "icon": "wifi",
+          "library": "lucide",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "icon",
+          "id": "QHI7O",
+          "x": 348,
+          "y": 17,
+          "name": "System battery",
+          "width": 20,
+          "height": 20,
+          "icon": "battery-full",
+          "library": "lucide",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "frame",
+          "id": "G6qLC",
+          "x": 24,
+          "y": 58,
+          "name": "Member photo",
+          "metadata": {
+            "type": "unsplash",
+            "username": "jabarib",
+            "link": "https://unsplash.com/@jabarib",
+            "author": "Jabari Timothy"
+          },
+          "clip": true,
+          "width": 46,
+          "height": 46,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1658497714148-eb009d3ea195?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NDA0NTZ8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 23,
+          "stroke": "#FFFFFF80",
+          "strokeWidth": 2
+        },
+        {
+          "type": "text",
+          "id": "fWGjd",
+          "x": 82,
+          "y": 61,
+          "name": "Greeting",
+          "fill": "#FFFFFFC7",
+          "textGrowth": "fixed-width",
+          "width": 210,
+          "content": "Selamat pagi,",
+          "fontFamily": "$basya-font",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "OemaN",
+          "x": 82,
+          "y": 79,
+          "name": "Member name",
+          "fill": "#FFFFFF",
+          "textGrowth": "fixed-width",
+          "width": 210,
+          "content": "Nadia Putri",
+          "fontFamily": "$basya-font",
+          "fontSize": 18,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "oBHE5",
+          "x": 320,
+          "y": 58,
+          "name": "Notification button",
+          "width": 46,
+          "height": 46,
+          "fill": "#FFFFFF24",
+          "cornerRadius": 23,
+          "stroke": "#FFFFFF3D",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "icon",
+              "id": "ouVcf",
+              "x": 12.5,
+              "y": 12.5,
+              "name": "Bell",
+              "width": 21,
+              "height": 21,
+              "icon": "bell",
+              "library": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "ellipse",
+              "id": "JNsqh",
+              "x": 33,
+              "y": 3,
+              "name": "Unread badge",
+              "fill": "#5FDEA9",
+              "width": 8,
+              "height": 8,
+              "stroke": "#006A66",
+              "strokeWidth": 1
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "C3BrP",
+          "x": 24,
+          "y": 126,
+          "name": "Total label",
+          "fill": "#FFFFFFC7",
+          "content": "Total Saldo",
+          "fontFamily": "$basya-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "icon",
+          "id": "CYPJe",
+          "x": 112,
+          "y": 125,
+          "name": "Show balance",
+          "width": 18,
+          "height": 18,
+          "icon": "eye",
+          "library": "lucide",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "id": "l7FVb8",
+          "x": 24,
+          "y": 148,
+          "name": "Total amount",
+          "fill": "#FFFFFF",
+          "textGrowth": "fixed-width",
+          "width": 342,
+          "content": "Rp 17.500.000",
+          "fontFamily": "$basya-font",
+          "fontSize": 30,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "sA2DB",
+          "x": 24,
+          "y": 190,
+          "name": "Balance subtitle",
+          "fill": "#FFFFFFC7",
+          "textGrowth": "fixed-width",
+          "width": 342,
+          "content": "Simpanan dan dana siap investasi",
+          "fontFamily": "$basya-font",
+          "fontSize": 12,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "TBm2g",
+          "x": 16,
+          "y": 224,
+          "name": "Frosted balance panels",
+          "width": 358,
+          "height": 80,
+          "gap": 8,
+          "children": [
+            {
+              "type": "frame",
+              "id": "yKL1U",
+              "name": "Total savings panel",
+              "width": "fill_container",
+              "height": 80,
+              "fill": "#FFFFFF24",
+              "cornerRadius": 20,
+              "stroke": "#FFFFFF52",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 4,
+              "padding": [
+                13,
+                14
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mgDxw",
+                  "name": "Total savings panel label",
+                  "fill": "#FFFFFFC7",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Total Simpanan",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "F1Qc8g",
+                  "name": "Total savings panel amount",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Rp 12.500.000",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "c27Xi7",
+              "name": "Buy power panel",
+              "width": "fill_container",
+              "height": 80,
+              "fill": "#FFFFFF24",
+              "cornerRadius": 20,
+              "stroke": "#FFFFFF52",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 4,
+              "padding": [
+                13,
+                14
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kKnV0",
+                  "name": "Buy power panel label",
+                  "fill": "#FFFFFFC7",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Buy Power",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "c1ZXQ3",
+                  "name": "Buy power panel amount",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Rp 5.000.000",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "azfXG",
+      "x": 4270,
+      "y": 100,
+      "name": "12 / HOME-02A / Investor / Integrated hero",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "id": "vV1fC",
+          "type": "ref",
+          "ref": "r7991",
+          "name": "Integrated member and balance hero",
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 320
+        },
+        {
+          "type": "frame",
+          "id": "Fa0td",
+          "x": 0,
+          "y": 320,
+          "name": "Home content",
+          "width": 390,
+          "height": 524,
+          "fill": "#FBFDFC",
+          "layout": "vertical",
+          "gap": 18,
+          "padding": 20,
+          "children": [
+            {
+              "type": "text",
+              "id": "M1HYS",
+              "name": "Quick actions title",
+              "fill": "$basya-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Aksi cepat",
+              "fontFamily": "$basya-font",
+              "fontSize": 16,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "A2fnXo",
+              "name": "Quick actions",
+              "width": "fill_container",
+              "gap": 10,
+              "children": [
+                {
+                  "id": "f4Uxr",
+                  "type": "ref",
+                  "ref": "FurB3",
+                  "name": "Top Up shortcut",
+                  "width": "fill_container",
+                  "descendants": {
+                    "u0Vwl": {
+                      "icon": "plus"
+                    },
+                    "BhS0v": {
+                      "content": "Top Up"
+                    }
+                  }
+                },
+                {
+                  "id": "IM22F",
+                  "type": "ref",
+                  "ref": "FurB3",
+                  "name": "Withdraw shortcut",
+                  "width": "fill_container",
+                  "descendants": {
+                    "u0Vwl": {
+                      "icon": "arrow-down-to-line"
+                    },
+                    "BhS0v": {
+                      "content": "Withdraw"
+                    }
+                  }
+                },
+                {
+                  "id": "Rfwvp",
+                  "type": "ref",
+                  "ref": "FurB3",
+                  "name": "Pinjam shortcut",
+                  "width": "fill_container",
+                  "descendants": {
+                    "u0Vwl": {
+                      "icon": "landmark"
+                    },
+                    "BhS0v": {
+                      "content": "Pinjam"
+                    }
+                  }
+                },
+                {
+                  "id": "HYJ5T",
+                  "type": "ref",
+                  "ref": "FurB3",
+                  "name": "Mutasi shortcut",
+                  "width": "fill_container",
+                  "descendants": {
+                    "u0Vwl": {
+                      "icon": "refresh-cw"
+                    },
+                    "BhS0v": {
+                      "content": "Mutasi"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "H330t5",
+              "name": "Financial summary heading",
+              "width": "fill_container",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "MTX6t",
+                  "name": "Financial summary title",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Ringkasan keuangan",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "skyzp",
+                  "name": "View all",
+                  "fill": "$basya-primary",
+                  "content": "Lihat semua",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "hV2TW",
+              "name": "Financial summary rows",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 20,
+              "stroke": "#E2E8F0",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "padding": [
+                2,
+                16
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "B49n6u",
+                  "name": "Savings row",
+                  "width": "fill_container",
+                  "height": 66,
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "QT5t7",
+                      "name": "Savings row icon surface",
+                      "width": 38,
+                      "height": 38,
+                      "fill": "#EDF7F5",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "xcxJY",
+                          "name": "Savings row icon",
+                          "width": 19,
+                          "height": 19,
+                          "icon": "wallet",
+                          "library": "lucide",
+                          "fill": "$basya-primary"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hUcjS",
+                      "name": "Savings row copy",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "lSmJz",
+                          "name": "Savings row label",
+                          "fill": "$basya-ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Simpanan anggota",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "r6IFJ",
+                          "name": "Savings row subtitle",
+                          "fill": "$basya-muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Pokok, wajib, dan sukarela",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "Au03D",
+                      "name": "Savings row amount",
+                      "fill": "$basya-ink",
+                      "content": "Rp 12.500.000",
+                      "fontFamily": "$basya-font",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ykAEo",
+                  "name": "Investment row",
+                  "width": "fill_container",
+                  "height": 66,
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "hINzF",
+                      "name": "Investment row icon surface",
+                      "width": 38,
+                      "height": 38,
+                      "fill": "#EDF7F5",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "zJpAL",
+                          "name": "Investment row icon",
+                          "width": 19,
+                          "height": 19,
+                          "icon": "chart-no-axes-combined",
+                          "library": "lucide",
+                          "fill": "$basya-primary"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "pS4tA",
+                      "name": "Investment row copy",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "qboqr",
+                          "name": "Investment row label",
+                          "fill": "$basya-ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Investasi aktif",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "swEu9",
+                          "name": "Investment row subtitle",
+                          "fill": "$basya-muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "2 portofolio berjalan",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "D0JWe",
+                      "name": "Investment row amount",
+                      "fill": "$basya-ink",
+                      "content": "Rp 8.250.000",
+                      "fontFamily": "$basya-font",
+                      "fontSize": 12,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "vOMwH",
+              "name": "Recent activity heading",
+              "width": "fill_container",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "fM2no",
+                  "name": "Financial summary title",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Aktivitas terbaru",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "emev2",
+                  "name": "View all",
+                  "fill": "$basya-primary",
+                  "content": "Lihat semua",
+                  "fontFamily": "$basya-font",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "id": "vAafu",
+              "type": "ref",
+              "ref": "o90NGc",
+              "name": "Latest transaction",
+              "width": "fill_container"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Lp8GG",
+          "x": 0,
+          "y": 756,
+          "name": "Fixed bottom dock",
+          "width": 390,
+          "height": 88,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#FBFDFC00",
+                "position": 0
+              },
+              {
+                "color": "#FBFDFCEF",
+                "position": 0.36
+              },
+              {
+                "color": "#FBFDFC",
+                "position": 1
+              }
+            ]
+          },
+          "padding": [
+            12,
+            20,
+            20,
+            20
+          ],
+          "children": [
+            {
+              "id": "JmZqb",
+              "type": "ref",
+              "ref": "TlUY0",
+              "name": "Floating navigation / Home selected",
+              "width": "fill_container"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I9J3H",
+      "type": "ref",
+      "ref": "r7991"
     }
   ],
   "themes": {

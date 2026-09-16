@@ -5,6 +5,8 @@ abstract final class AppTheme {
   static const muted = Color(0xFF5F6B76);
   static const teal = Color(0xFF006A66);
   static const mint = Color(0xFF5FDEA9);
+  static const positive = Color(0xFF00A676);
+  static const negative = Color(0xFFD64545);
   static const loginCanvas = Color(0xFFFBFDFC);
   static final light = ThemeData(
     useMaterial3: true,

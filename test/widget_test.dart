@@ -341,6 +341,35 @@ void main() {
 
     expect(tester.getTopLeft(heroName), initialHeroPosition);
   });
+
+  testWidgets(
+    'Home activity amounts use status color by transaction direction',
+    (tester) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light,
+          home: InvestorHomePage(auth: _FakeAuthGateway()),
+        ),
+      );
+
+      final incoming = tester.widget<Text>(find.text('+Rp 500.000'));
+      expect(incoming.style?.color, AppTheme.positive);
+
+      final outgoing = tester.widget<Text>(find.text('-Rp 1.500.000'));
+      expect(outgoing.style?.color, AppTheme.negative);
+
+      await tester.ensureVisible(find.text('Mutasi ke Sukarela'));
+      await tester.pumpAndSettle();
+
+      final transfer = tester.widget<Text>(find.text('Rp 750.000'));
+      expect(transfer.style?.color, AppTheme.ink);
+    },
+  );
 }
 
 class _FakeAuthGateway implements AuthGateway {
