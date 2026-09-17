@@ -163,7 +163,11 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
       _balanceVisible ? _money(value) : 'Rp ••••••';
 
   String _summaryMoney(int value) {
-    if (widget.session != null && _summary == null) return '—';
+    if (widget.session != null &&
+        widget.summaryGateway != null &&
+        _summary == null) {
+      return '—';
+    }
     return _sensitiveMoney(value);
   }
 
@@ -259,9 +263,6 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                         setState(() => _balanceVisible = !_balanceVisible),
                     onNotifications: () =>
                         _showComingSoon('Halaman notifikasi'),
-                    scopeLabel: _summary?.isGlobal == true
-                        ? 'Ringkasan global'
-                        : null,
                   );
                   final content = Center(
                     child: ConstrainedBox(
@@ -379,7 +380,6 @@ class _BalanceHero extends StatelessWidget {
     required this.money,
     required this.onToggleBalance,
     required this.onNotifications,
-    this.scopeLabel,
   });
 
   final String memberName;
@@ -392,7 +392,6 @@ class _BalanceHero extends StatelessWidget {
   final String Function(int) money;
   final VoidCallback onToggleBalance;
   final VoidCallback onNotifications;
-  final String? scopeLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -446,33 +445,6 @@ class _BalanceHero extends StatelessWidget {
                         avatarUrl: avatarUrl,
                         onNotifications: onNotifications,
                       ),
-                      if (scopeLabel != null) ...[
-                        const SizedBox(height: 14),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0x24FFFFFF),
-                              borderRadius: BorderRadius.circular(999),
-                              border: Border.all(
-                                color: const Color(0x45FFFFFF),
-                              ),
-                            ),
-                            child: Text(
-                              scopeLabel!,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
                       const SizedBox(height: 20),
                       const Text(
                         'Total Saldo',

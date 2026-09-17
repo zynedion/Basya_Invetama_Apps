@@ -18,7 +18,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: AppTheme.light,
-          home: LoginPage(auth: auth),
+          home: LoginPage(auth: auth, animateBackground: false),
         ),
       );
       await tester.tap(find.text('Masuk'));
@@ -56,7 +56,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light,
-        home: LoginPage(auth: auth),
+        home: LoginPage(auth: auth, animateBackground: false),
       ),
     );
     await tester.enterText(
@@ -86,7 +86,7 @@ void main() {
             viewInsets: EdgeInsets.only(bottom: 260),
             textScaler: TextScaler.linear(1.5),
           ),
-          child: const LoginPage(),
+          child: const LoginPage(animateBackground: false),
         ),
       ),
     );
@@ -98,7 +98,12 @@ void main() {
 
   testWidgets('Splash opens login and cannot be returned to', (tester) async {
     await tester.pumpWidget(
-      MaterialApp(home: SplashPage(auth: _FakeAuthGateway())),
+      MaterialApp(
+        home: SplashPage(
+          auth: _FakeAuthGateway(),
+          animateLoginBackground: false,
+        ),
+      ),
     );
     await tester.pump(const Duration(seconds: 9));
     await tester.pumpAndSettle();
@@ -315,6 +320,27 @@ void main() {
     expect(find.byType(InvestorHomePage), findsOneWidget);
   });
 
+  testWidgets('Profile temporary logout clears session and opens login', (
+    tester,
+  ) async {
+    final auth = _FakeAuthGateway();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light,
+        home: MainContainer(auth: auth),
+      ),
+    );
+
+    await tester.tap(find.byTooltip('Profil'));
+    await tester.pump(const Duration(milliseconds: 700));
+    await tester.tap(find.byKey(const ValueKey('temporary-logout-button')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(auth.logoutCalled, isTrue);
+    expect(find.byType(LoginPage), findsOneWidget);
+  });
+
   testWidgets('Home keeps the hero fixed while its five activities scroll', (
     tester,
   ) async {
@@ -379,6 +405,7 @@ class _FakeAuthGateway implements AuthGateway {
   final AuthSession? restoredSession;
   String? lastUsername;
   String? lastPassword;
+  bool logoutCalled = false;
 
   static const profile = AuthProfile(
     id: '178',
@@ -411,7 +438,7 @@ class _FakeAuthGateway implements AuthGateway {
   }
 
   @override
-  Future<void> logout() async {}
+  Future<void> logout() async => logoutCalled = true;
 
   @override
   Future<AuthSession?> restoreSession() async => restoredSession;

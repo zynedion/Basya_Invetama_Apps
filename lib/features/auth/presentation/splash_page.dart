@@ -12,10 +12,16 @@ import '../../home/domain/home_summary_gateway.dart';
 import '../../navigation/presentation/main_container.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key, this.auth, this.summaryGateway});
+  const SplashPage({
+    super.key,
+    this.auth,
+    this.summaryGateway,
+    this.animateLoginBackground = true,
+  });
 
   final AuthGateway? auth;
   final HomeSummaryGateway? summaryGateway;
+  final bool animateLoginBackground;
   @override
   State<SplashPage> createState() => _SplashPageState();
 }
@@ -63,7 +69,11 @@ class _SplashPageState extends State<SplashPage>
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
         builder: (_) => restored == null
-            ? LoginPage(auth: _auth, summaryGateway: _summaryGateway)
+            ? LoginPage(
+                auth: _auth,
+                summaryGateway: _summaryGateway,
+                animateBackground: widget.animateLoginBackground,
+              )
             : MainContainer(
                 auth: _auth,
                 profile: restored.profile,

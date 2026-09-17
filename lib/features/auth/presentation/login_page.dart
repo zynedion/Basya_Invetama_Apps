@@ -10,10 +10,16 @@ import '../../home/domain/home_summary_gateway.dart';
 import '../../navigation/presentation/main_container.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, this.auth, this.summaryGateway});
+  const LoginPage({
+    super.key,
+    this.auth,
+    this.summaryGateway,
+    this.animateBackground = true,
+  });
 
   final AuthGateway? auth;
   final HomeSummaryGateway? summaryGateway;
+  final bool animateBackground;
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -100,7 +106,9 @@ class _LoginPageState extends State<LoginPage> {
     backgroundColor: AppTheme.loginCanvas,
     body: Stack(
       children: [
-        const Positioned.fill(child: FrostedBrandBackground()),
+        Positioned.fill(
+          child: FrostedBrandBackground(animated: widget.animateBackground),
+        ),
         SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) => SingleChildScrollView(

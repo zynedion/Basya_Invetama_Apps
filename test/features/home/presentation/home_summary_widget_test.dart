@@ -27,7 +27,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Ringkasan global'), findsOneWidget);
+    expect(find.text('Ringkasan global'), findsNothing);
     expect(find.text('Rp 655.132.334'), findsOneWidget);
     expect(find.text('Investor'), findsOneWidget);
     expect(find.text('Non-investor'), findsOneWidget);

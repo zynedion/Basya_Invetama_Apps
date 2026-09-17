@@ -4,6 +4,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
 import '../../auth/domain/auth_session.dart';
+import '../../auth/presentation/login_page.dart';
 import '../../home/domain/home_summary_gateway.dart';
 import '../../home/presentation/investor_home_page.dart';
 
@@ -30,6 +31,7 @@ class MainContainer extends StatefulWidget {
 class _MainContainerState extends State<MainContainer> {
   late HomeAudience _audience = widget.audience;
   int _selectedIndex = 0;
+  bool _loggingOut = false;
 
   List<_MainDestination> get _destinations => _audience == HomeAudience.investor
       ? const [
@@ -53,6 +55,33 @@ class _MainContainerState extends State<MainContainer> {
     });
   }
 
+  Future<void> _logout() async {
+    final auth = widget.auth;
+    if (auth == null || _loggingOut) return;
+    setState(() => _loggingOut = true);
+    try {
+      await auth.logout();
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute<void>(
+          builder: (_) =>
+              LoginPage(auth: auth, summaryGateway: widget.summaryGateway),
+        ),
+        (_) => false,
+      );
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _loggingOut = false);
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+            content: Text('Belum dapat keluar. Silakan coba lagi.'),
+          ),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final destinations = _destinations;
@@ -69,6 +98,8 @@ class _MainContainerState extends State<MainContainer> {
         _EmptyFeaturePage(
           key: ValueKey('empty-${destination.label.toLowerCase()}'),
           destination: destination,
+          onLogout: destination.label == 'Profil' ? _logout : null,
+          loggingOut: _loggingOut,
         ),
     ];
     return Scaffold(
@@ -121,9 +152,16 @@ class _MainDestination {
 }
 
 class _EmptyFeaturePage extends StatelessWidget {
-  const _EmptyFeaturePage({super.key, required this.destination});
+  const _EmptyFeaturePage({
+    super.key,
+    required this.destination,
+    this.onLogout,
+    this.loggingOut = false,
+  });
 
   final _MainDestination destination;
+  final VoidCallback? onLogout;
+  final bool loggingOut;
 
   @override
   Widget build(BuildContext context) => SafeArea(
@@ -158,6 +196,25 @@ class _EmptyFeaturePage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(color: AppTheme.muted),
             ),
+            if (onLogout != null) ...[
+              const SizedBox(height: 28),
+              OutlinedButton.icon(
+                key: const ValueKey('temporary-logout-button'),
+                onPressed: loggingOut ? null : onLogout,
+                icon: loggingOut
+                    ? const SizedBox.square(
+                        dimension: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.logout_rounded),
+                label: Text(loggingOut ? 'Keluar...' : 'Keluar'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFFB42318),
+                  side: const BorderSide(color: Color(0xFFE8B4AE)),
+                  minimumSize: const Size(180, 48),
+                ),
+              ),
+            ],
           ],
         ),
       ),

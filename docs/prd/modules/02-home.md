@@ -35,7 +35,7 @@ Susunan navigasi; field ringkasan; definisi saldo dapat digunakan; periode profi
 
 - `GET /app/summary` memakai bearer token sesi aktif.
 - `scope: personal` menampilkan ringkasan milik anggota. Jenis Home mengikuti capability dari profile dan switch preview disembunyikan.
-- `scope: global` dipakai root/admin/MGR. Home menampilkan label `Ringkasan global` dan mempertahankan switch Investor/Non-investor untuk kebutuhan development.
+- `scope: global` dipakai root/admin/MGR dan mempertahankan switch Investor/Non-investor untuk kebutuhan development.
 - Nilai API yang digunakan: total saldo, Buy Power, Simpanan Sukarela/Pokok/Wajib, dana aktif diinvestasikan, profit bulan berjalan, akumulasi profit, dan periode.
 - Pada preview non-investor dengan scope global, Total Saldo dihitung dari jumlah tiga jenis simpanan agar Buy Power global tidak tercampur ke tampilan anggota non-investor.
 - Multiguna dan aktivitas terakhir masih menggunakan data frontend sementara sampai endpoint masing-masing tersedia.
