@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
@@ -16,7 +18,7 @@ class _FrostedBrandBackgroundState extends State<FrostedBrandBackground>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 14),
+    duration: const Duration(seconds: 8),
   );
 
   bool _reduceMotion = false;
@@ -53,7 +55,7 @@ class _FrostedBrandBackgroundState extends State<FrostedBrandBackground>
 
   void _syncAnimation() {
     if (_shouldAnimate) {
-      if (!_controller.isAnimating) _controller.repeat(reverse: true);
+      if (!_controller.isAnimating) _controller.repeat();
     } else {
       _controller
         ..stop()
@@ -83,7 +85,8 @@ class _FrostedBrandBackgroundState extends State<FrostedBrandBackground>
               animation: _controller,
               builder: (context, _) => _GlowComposition(
                 scale: scale,
-                progress: Curves.easeInOutSine.transform(_controller.value),
+                progress: _controller.value,
+                animated: true,
               ),
             );
           },
@@ -94,14 +97,26 @@ class _FrostedBrandBackgroundState extends State<FrostedBrandBackground>
 }
 
 class _GlowComposition extends StatelessWidget {
-  const _GlowComposition({required this.scale, this.progress = 0});
+  const _GlowComposition({
+    required this.scale,
+    this.progress = 0,
+    this.animated = false,
+  });
 
   final double scale;
   final double progress;
+  final bool animated;
 
   @override
   Widget build(BuildContext context) {
-    final centered = (progress * 2) - 1;
+    final angle = progress * math.pi * 2;
+    final motion = animated ? 1.0 : 0.0;
+    final primaryX = math.sin(angle) * motion;
+    final primaryY = math.cos(angle) * motion;
+    final secondaryX = math.sin(angle + (math.pi * 0.8)) * motion;
+    final secondaryY = math.cos(angle + (math.pi * 0.8)) * motion;
+    final tertiaryX = math.sin(angle + (math.pi * 1.35)) * motion;
+    final tertiaryY = math.cos(angle + (math.pi * 1.35)) * motion;
     return Stack(
       clipBehavior: Clip.hardEdge,
       children: [
@@ -111,16 +126,25 @@ class _GlowComposition extends StatelessWidget {
           width: 480 * scale,
           height: 430 * scale,
           child: Transform.translate(
-            offset: Offset(24 * centered * scale, 12 * progress * scale),
+            offset: Offset(58 * primaryX * scale, 30 * primaryY * scale),
             child: Transform.scale(
-              scale: 1 + (0.045 * progress),
-              child: const _Glow(
-                colors: [
-                  Color(0x955FDEA9),
-                  Color(0x67A4EDD2),
-                  Color(0x00FFFFFF),
-                ],
-                stops: [0, 0.5, 1],
+              scale: 1 + (0.075 * ((primaryY + motion) / 2)),
+              child: Opacity(
+                opacity: animated ? 0.82 + (0.18 * ((primaryX + 1) / 2)) : 1,
+                child: _Glow(
+                  colors: animated
+                      ? const [
+                          Color(0xA85FDEA9),
+                          Color(0x72A4EDD2),
+                          Color(0x00FFFFFF),
+                        ]
+                      : const [
+                          Color(0x955FDEA9),
+                          Color(0x67A4EDD2),
+                          Color(0x00FFFFFF),
+                        ],
+                  stops: const [0, 0.5, 1],
+                ),
               ),
             ),
           ),
@@ -131,16 +155,25 @@ class _GlowComposition extends StatelessWidget {
           width: 410 * scale,
           height: 390 * scale,
           child: Transform.translate(
-            offset: Offset(-20 * centered * scale, 9 * (1 - progress) * scale),
+            offset: Offset(52 * secondaryX * scale, 28 * secondaryY * scale),
             child: Transform.scale(
-              scale: 1.045 - (0.045 * progress),
-              child: const _Glow(
-                colors: [
-                  Color(0x78008579),
-                  Color(0x5467D3C1),
-                  Color(0x00FFFFFF),
-                ],
-                stops: [0, 0.52, 1],
+              scale: 1 + (0.07 * ((secondaryX + motion) / 2)),
+              child: Opacity(
+                opacity: animated ? 0.84 + (0.16 * ((secondaryY + 1) / 2)) : 1,
+                child: _Glow(
+                  colors: animated
+                      ? const [
+                          Color(0x8A008579),
+                          Color(0x6267D3C1),
+                          Color(0x00FFFFFF),
+                        ]
+                      : const [
+                          Color(0x78008579),
+                          Color(0x5467D3C1),
+                          Color(0x00FFFFFF),
+                        ],
+                  stops: const [0, 0.52, 1],
+                ),
               ),
             ),
           ),
@@ -151,9 +184,9 @@ class _GlowComposition extends StatelessWidget {
           width: 330 * scale,
           height: 330 * scale,
           child: Transform.translate(
-            offset: Offset(10 * centered * scale, -8 * progress * scale),
+            offset: Offset(34 * tertiaryX * scale, 22 * tertiaryY * scale),
             child: Opacity(
-              opacity: 0.92 + (0.08 * progress),
+              opacity: animated ? 0.78 + (0.22 * ((tertiaryX + 1) / 2)) : 1,
               child: const _Glow(
                 colors: [
                   Color(0x385FDEA9),

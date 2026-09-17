@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                                 textInputAction: TextInputAction.next,
                                 autocorrect: false,
                                 decoration: const InputDecoration(
-                                  hintText: 'Masukkan username atau email',
+                                  hintText: 'contoh@mahirland.id',
                                   errorStyle: TextStyle(fontSize: 0, height: 0),
                                   suffixIcon: Icon(
                                     Icons.person_outline,
@@ -206,7 +206,6 @@ class _LoginPageState extends State<LoginPage> {
                                   if (!_submitting) _submit();
                                 },
                                 decoration: InputDecoration(
-                                  hintText: 'Masukkan kata sandi',
                                   errorStyle: const TextStyle(
                                     fontSize: 0,
                                     height: 0,

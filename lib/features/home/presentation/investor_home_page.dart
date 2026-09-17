@@ -1111,7 +1111,7 @@ class _ProfitMetric extends StatelessWidget {
         style: const TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.w700,
-          color: AppTheme.teal,
+          color: AppTheme.positive,
         ),
       ),
     ],
