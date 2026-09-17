@@ -1,6 +1,6 @@
 ﻿# Autentikasi dan Profil
 
-Status: kerangka awal, belum menjadi PRD final.
+Status: login diterapkan; konsep utama profil Pen Dev dibuat, PRD lengkap belum final.
 Acuan: [konteks utama](../../../mobile_cooperative_investment_app_context.md) · [indeks PRD](../README.md).
 Cakupan rilis: rilis pertama. Detail modul menunggu pembahasan.
 
@@ -12,6 +12,16 @@ Ruang lingkup awal: Login, membaca status investor dari API profile, profil angg
 ## Journey awal
 
 Login → profile/capability dimuat → Home yang sesuai; Profil → perubahan data → hasil.
+
+## Konsep halaman profil utama
+
+- Kartu anggota digital menjadi identitas utama halaman.
+- Kartu memuat foto, nama lengkap, nomor anggota, tanggal bergabung, status keanggotaan, dan badge investor bila relevan.
+- Informasi akun menampilkan email, nomor telepon, rekening pencairan yang disamarkan, dan status keanggotaan.
+- Aksi utama: Edit Profil dan Ganti Password.
+- Logout dipisahkan sebagai aksi berisiko dan membutuhkan konfirmasi sebelum sesi dihapus.
+- Nomor anggota dan tanggal bergabung belum tersedia pada contoh kontrak profile yang diterima; integrasi membutuhkan field backend untuk keduanya.
+- Desain harus mendukung foto default, nama panjang, investor/non-investor, dan status anggota nonaktif.
 
 ## Dependensi
 

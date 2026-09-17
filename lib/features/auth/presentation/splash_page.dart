@@ -7,12 +7,15 @@ import '../domain/auth_profile.dart';
 import '../domain/auth_session.dart';
 import 'login_page.dart';
 import '../../home/presentation/investor_home_page.dart';
+import '../../home/data/home_summary_api_client.dart';
+import '../../home/domain/home_summary_gateway.dart';
 import '../../navigation/presentation/main_container.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key, this.auth});
+  const SplashPage({super.key, this.auth, this.summaryGateway});
 
   final AuthGateway? auth;
+  final HomeSummaryGateway? summaryGateway;
   @override
   State<SplashPage> createState() => _SplashPageState();
 }
@@ -21,6 +24,9 @@ class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animation;
   late final AuthGateway _auth = widget.auth ?? AuthService();
+  late final HomeSummaryGateway? _summaryGateway =
+      widget.summaryGateway ??
+      (widget.auth == null ? HomeSummaryApiClient() : null);
   late final Future<({AuthSession session, AuthProfile profile})?> _session;
   Timer? _fallback;
   bool _leaving = false;
@@ -57,10 +63,12 @@ class _SplashPageState extends State<SplashPage>
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
         builder: (_) => restored == null
-            ? LoginPage(auth: _auth)
+            ? LoginPage(auth: _auth, summaryGateway: _summaryGateway)
             : MainContainer(
                 auth: _auth,
                 profile: restored.profile,
+                session: restored.session,
+                summaryGateway: _summaryGateway,
                 audience: restored.profile.usesInvestorHome
                     ? HomeAudience.investor
                     : HomeAudience.member,

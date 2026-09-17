@@ -26,6 +26,11 @@ Core: HhPLV. Home: EisN4. Master dipakai melalui instance dan override; jangan m
 - `03 / AUTH-01 / Login`: login frosted sesuai implementasi Flutter.
 - `04 / HOME-01 / Non-investor / Viewport` dan `07 / HOME-01 / Non-investor / Full content`.
 - `05 / HOME-02 / Investor / Viewport` dan `06 / HOME-02 / Investor / Full content`.
+- `08 / SAVINGS-01 / Likuiditas First`: konsep halaman Simpanan dengan fokus Simpanan Sukarela, info Pokok/Wajib, SHU berjalan, dan transaksi simpanan.
+- `09 / INVEST-01 / Dashboard / Peluang`: konsep dashboard investor dengan hero bar chart bulanan, ringkasan modal/profit, Buy Power, pengajuan aktif, tab Peluang/Portofolio, dan card produk per lot.
+- `10 / INVEST-02 / Dashboard / Portofolio`: varian tab Portofolio dengan filter posisi, nilai/modal/profit per produk, status aktif, serta contoh penjualan lot yang menunggu approval.
+- `11 / MULTIGUNA-01 / Dashboard / Multiple loans`: dashboard beberapa pinjaman dengan total kewajiban, limit backend, tagihan menunggak, pengajuan aktif, dan dua kontrak dengan progres berbeda.
+- `12 / PROFILE-01 / Member identity`: halaman profil dengan kartu anggota digital, informasi akun, Edit Profil, Ganti Password, dan Logout terpisah.
 - Toggle preview Investor/Non-investor hanya alat development di Flutter dan tidak masuk desain final Pen Dev.
 
 ## Variasi yang tersedia

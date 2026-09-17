@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
+import '../../auth/domain/auth_session.dart';
+import '../../home/domain/home_summary_gateway.dart';
 import '../../home/presentation/investor_home_page.dart';
 
 class MainContainer extends StatefulWidget {
@@ -10,11 +12,15 @@ class MainContainer extends StatefulWidget {
     super.key,
     this.auth,
     this.profile,
+    this.session,
+    this.summaryGateway,
     this.audience = HomeAudience.investor,
   });
 
   final AuthGateway? auth;
   final AuthProfile? profile;
+  final AuthSession? session;
+  final HomeSummaryGateway? summaryGateway;
   final HomeAudience audience;
 
   @override
@@ -54,6 +60,8 @@ class _MainContainerState extends State<MainContainer> {
       InvestorHomePage(
         auth: widget.auth,
         profile: widget.profile,
+        session: widget.session,
+        summaryGateway: widget.summaryGateway,
         audience: _audience,
         onAudienceChanged: _changeAudience,
       ),

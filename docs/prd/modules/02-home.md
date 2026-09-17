@@ -1,6 +1,6 @@
 # Home dan Ringkasan Keuangan
 
-Status: prototipe frontend investor diterapkan; PRD bisnis dan kontrak API belum final.
+Status: frontend Home investor/non-investor diterapkan dan ringkasan keuangan terhubung ke API.
 Acuan: [konteks utama](../../../mobile_cooperative_investment_app_context.md) · [indeks PRD](../README.md).
 Cakupan rilis: rilis pertama. Detail modul menunggu pembahasan.
 
@@ -31,7 +31,14 @@ Susunan navigasi; field ringkasan; definisi saldo dapat digunakan; periode profi
 - Keputusan terbuka yang menghalangi alur diselesaikan bersama pengguna.
 - Setelah desain/prototipe ditinjau, implementasi dan hasil verifikasi dicatat.
 
-Kontrak API Home belum tersedia; data contoh tidak dianggap sebagai kontrak backend.
+## Kontrak API ringkasan
+
+- `GET /app/summary` memakai bearer token sesi aktif.
+- `scope: personal` menampilkan ringkasan milik anggota. Jenis Home mengikuti capability dari profile dan switch preview disembunyikan.
+- `scope: global` dipakai root/admin/MGR. Home menampilkan label `Ringkasan global` dan mempertahankan switch Investor/Non-investor untuk kebutuhan development.
+- Nilai API yang digunakan: total saldo, Buy Power, Simpanan Sukarela/Pokok/Wajib, dana aktif diinvestasikan, profit bulan berjalan, akumulasi profit, dan periode.
+- Pada preview non-investor dengan scope global, Total Saldo dihitung dari jumlah tiga jenis simpanan agar Buy Power global tidak tercampur ke tampilan anggota non-investor.
+- Multiguna dan aktivitas terakhir masih menggunakan data frontend sementara sampai endpoint masing-masing tersedia.
 
 ## Implementasi frontend sementara
 
@@ -47,5 +54,5 @@ Kontrak API Home belum tersedia; data contoh tidak dianggap sebagai kontrak back
 - Navbar investor: Beranda, Simpanan, Investasi, Multiguna, Profil. Navbar non-investor: Beranda, Simpanan, Multiguna, Profil dengan pill lebih compact.
 - Aktivitas terakhir menampilkan lima aktivitas contoh.
 - Pill navbar mengambang di atas konten dengan gradient putih di bagian bawah; konten tetap terlihat di belakang dan memiliki ruang scroll aman.
-- Seluruh nilai Home masih berasal dari `InvestorHomeData.demo` dan `MemberHomeData.demo`; belum ada endpoint Home atau profile capability yang dihubungkan.
+- Nilai ringkasan keuangan berasal dari `/app/summary`; data demo hanya menjadi fallback preview dan sumber sementara untuk Multiguna serta aktivitas terakhir.
 - Tujuan fitur yang belum dibuat menampilkan feedback sementara dan tidak menjalankan transaksi.

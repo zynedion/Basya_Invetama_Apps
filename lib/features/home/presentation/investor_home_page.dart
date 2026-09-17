@@ -7,6 +7,9 @@ import 'package:flutter/services.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
+import '../../auth/domain/auth_session.dart';
+import '../domain/home_summary.dart';
+import '../domain/home_summary_gateway.dart';
 import '../domain/investor_home_data.dart';
 
 const _homeScrollPhysics = BouncingScrollPhysics(
@@ -48,6 +51,8 @@ class InvestorHomePage extends StatefulWidget {
     super.key,
     this.auth,
     this.profile,
+    this.session,
+    this.summaryGateway,
     this.audience = HomeAudience.investor,
     this.data = InvestorHomeData.demo,
     this.memberData = MemberHomeData.demo,
@@ -57,6 +62,8 @@ class InvestorHomePage extends StatefulWidget {
 
   final AuthGateway? auth;
   final AuthProfile? profile;
+  final AuthSession? session;
+  final HomeSummaryGateway? summaryGateway;
   final HomeAudience audience;
   final InvestorHomeData data;
   final MemberHomeData memberData;
@@ -72,8 +79,17 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
   bool _balanceVisible = true;
   Timer? _greetingTimer;
   late DateTime _currentTime;
+  HomeSummary? _summary;
+  bool _summaryLoading = false;
+  String? _summaryError;
 
   bool get _isInvestor => _previewAudience == HomeAudience.investor;
+  InvestorHomeData get _investorData =>
+      _summary?.mergeInvestor(widget.data) ?? widget.data;
+  MemberHomeData get _memberData =>
+      _summary?.mergeMember(widget.memberData) ?? widget.memberData;
+  bool get _showAudienceSwitcher =>
+      widget.session == null || _summary?.isGlobal == true;
 
   String get _greeting {
     final hour = _currentTime.hour;
@@ -85,14 +101,14 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
 
   String get _memberName =>
       widget.profile?.displayName ??
-      (_isInvestor ? widget.data.memberName : widget.memberData.memberName);
+      (_isInvestor ? _investorData.memberName : _memberData.memberName);
 
   String? get _avatarUrl => widget.profile == null
-      ? (_isInvestor ? widget.data.avatarUrl : widget.memberData.avatarUrl)
+      ? (_isInvestor ? _investorData.avatarUrl : _memberData.avatarUrl)
       : widget.profile!.avatarUrl;
 
   int get _totalBalance =>
-      _isInvestor ? widget.data.totalBalance : widget.memberData.totalBalance;
+      _isInvestor ? _investorData.totalBalance : _memberData.totalBalance;
 
   String get _heroSubtitle => _isInvestor
       ? 'Simpanan dan dana siap investasi'
@@ -102,21 +118,21 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
       ? [
           _HeroBalancePanelData(
             label: 'Simpanan Sukarela',
-            amount: widget.data.voluntarySavings,
+            amount: _investorData.voluntarySavings,
           ),
           _HeroBalancePanelData(
             label: 'Buy Power',
-            amount: widget.data.buyPower,
+            amount: _investorData.buyPower,
           ),
         ]
       : [
           _HeroBalancePanelData(
             label: 'Simpanan Sukarela',
-            amount: widget.memberData.voluntarySavings,
+            amount: _memberData.voluntarySavings,
           ),
           _HeroBalancePanelData(
             label: 'Simpanan Wajib',
-            amount: widget.memberData.mandatorySavings,
+            amount: _memberData.mandatorySavings,
           ),
         ];
 
@@ -146,6 +162,11 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
   String _sensitiveMoney(int value) =>
       _balanceVisible ? _money(value) : 'Rp ••••••';
 
+  String _summaryMoney(int value) {
+    if (widget.session != null && _summary == null) return '—';
+    return _sensitiveMoney(value);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -155,6 +176,36 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
         if (mounted) setState(() => _currentTime = DateTime.now());
       });
     }
+    _loadSummary();
+  }
+
+  Future<void> _loadSummary() async {
+    final session = widget.session;
+    final gateway = widget.summaryGateway;
+    if (session == null || gateway == null) return;
+    setState(() {
+      _summaryLoading = true;
+      _summaryError = null;
+    });
+    try {
+      final summary = await gateway.getSummary(session);
+      if (!mounted) return;
+      setState(() {
+        _summary = summary;
+        _summaryLoading = false;
+        if (!summary.isGlobal) {
+          _previewAudience = widget.profile?.usesInvestorHome == true
+              ? HomeAudience.investor
+              : HomeAudience.member;
+        }
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _summaryLoading = false;
+        _summaryError = 'Ringkasan belum dapat dimuat.';
+      });
+    }
   }
 
   @override
@@ -162,6 +213,11 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.audience != widget.audience) {
       _previewAudience = widget.audience;
+    }
+    if (oldWidget.session?.accessToken != widget.session?.accessToken ||
+        oldWidget.summaryGateway != widget.summaryGateway) {
+      _summary = null;
+      _loadSummary();
     }
   }
 
@@ -198,11 +254,14 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                     subtitle: _heroSubtitle,
                     panels: _heroPanels,
                     balanceVisible: _balanceVisible,
-                    money: _sensitiveMoney,
+                    money: _summaryMoney,
                     onToggleBalance: () =>
                         setState(() => _balanceVisible = !_balanceVisible),
                     onNotifications: () =>
                         _showComingSoon('Halaman notifikasi'),
+                    scopeLabel: _summary?.isGlobal == true
+                        ? 'Ringkasan global'
+                        : null,
                   );
                   final content = Center(
                     child: ConstrainedBox(
@@ -212,14 +271,24 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            _AudiencePreviewToggle(
-                              audience: _previewAudience,
-                              onChanged: (audience) {
-                                setState(() => _previewAudience = audience);
-                                widget.onAudienceChanged?.call(audience);
-                              },
-                            ),
-                            const SizedBox(height: 18),
+                            if (_summaryLoading || _summaryError != null) ...[
+                              _SummaryStatus(
+                                loading: _summaryLoading,
+                                message: _summaryError,
+                                onRetry: _loadSummary,
+                              ),
+                              const SizedBox(height: 14),
+                            ],
+                            if (_showAudienceSwitcher) ...[
+                              _AudiencePreviewToggle(
+                                audience: _previewAudience,
+                                onChanged: (audience) {
+                                  setState(() => _previewAudience = audience);
+                                  widget.onAudienceChanged?.call(audience);
+                                },
+                              ),
+                              const SizedBox(height: 18),
+                            ],
                             const _SectionTitle(title: 'Aksi cepat'),
                             const SizedBox(height: 12),
                             _QuickActions(
@@ -229,22 +298,22 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                             const SizedBox(height: 24),
                             if (_isInvestor) ...[
                               _InvestmentOverview(
-                                data: widget.data,
-                                money: _sensitiveMoney,
+                                data: _investorData,
+                                money: _summaryMoney,
                                 onOpen: () => _showComingSoon('Investasi'),
                               ),
                               const SizedBox(height: 30),
                             ],
                             _MultigunaOverview(
                               nextInstallment: _isInvestor
-                                  ? widget.data.nextInstallment
-                                  : widget.memberData.nextInstallment,
+                                  ? _investorData.nextInstallment
+                                  : _memberData.nextInstallment,
                               installmentDueDate: _isInvestor
-                                  ? widget.data.installmentDueDate
-                                  : widget.memberData.installmentDueDate,
+                                  ? _investorData.installmentDueDate
+                                  : _memberData.installmentDueDate,
                               remainingInstallment: _isInvestor
-                                  ? widget.data.remainingInstallment
-                                  : widget.memberData.remainingInstallment,
+                                  ? _investorData.remainingInstallment
+                                  : _memberData.remainingInstallment,
                               money: _sensitiveMoney,
                               onOpen: () => _showComingSoon('Multiguna'),
                             ),
@@ -258,8 +327,8 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                             const SizedBox(height: 4),
                             _ActivityList(
                               activities: _isInvestor
-                                  ? widget.data.activities
-                                  : widget.memberData.activities,
+                                  ? _investorData.activities
+                                  : _memberData.activities,
                               money: _sensitiveMoney,
                             ),
                           ],
@@ -310,6 +379,7 @@ class _BalanceHero extends StatelessWidget {
     required this.money,
     required this.onToggleBalance,
     required this.onNotifications,
+    this.scopeLabel,
   });
 
   final String memberName;
@@ -322,6 +392,7 @@ class _BalanceHero extends StatelessWidget {
   final String Function(int) money;
   final VoidCallback onToggleBalance;
   final VoidCallback onNotifications;
+  final String? scopeLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -375,6 +446,33 @@ class _BalanceHero extends StatelessWidget {
                         avatarUrl: avatarUrl,
                         onNotifications: onNotifications,
                       ),
+                      if (scopeLabel != null) ...[
+                        const SizedBox(height: 14),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0x24FFFFFF),
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(
+                                color: const Color(0x45FFFFFF),
+                              ),
+                            ),
+                            child: Text(
+                              scopeLabel!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 20),
                       const Text(
                         'Total Saldo',
@@ -469,6 +567,48 @@ class _BalanceHero extends StatelessWidget {
       ),
     );
   }
+}
+
+class _SummaryStatus extends StatelessWidget {
+  const _SummaryStatus({
+    required this.loading,
+    required this.message,
+    required this.onRetry,
+  });
+
+  final bool loading;
+  final String? message;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+    decoration: BoxDecoration(
+      color: const Color(0xFFEDF7F5),
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: const Color(0xFFD5E9E5)),
+    ),
+    child: Row(
+      children: [
+        if (loading)
+          const SizedBox.square(
+            dimension: 18,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          )
+        else
+          const Icon(Icons.cloud_off_outlined, size: 19, color: AppTheme.teal),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            loading ? 'Memuat ringkasan terbaru...' : message!,
+            style: const TextStyle(color: AppTheme.ink, fontSize: 12),
+          ),
+        ),
+        if (!loading)
+          TextButton(onPressed: onRetry, child: const Text('Coba lagi')),
+      ],
+    ),
+  );
 }
 
 class _HeroGlow extends StatelessWidget {

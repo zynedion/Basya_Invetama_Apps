@@ -5,12 +5,15 @@ import '../data/auth_exception.dart';
 import '../data/auth_service.dart';
 import '../domain/auth_gateway.dart';
 import '../../home/presentation/investor_home_page.dart';
+import '../../home/data/home_summary_api_client.dart';
+import '../../home/domain/home_summary_gateway.dart';
 import '../../navigation/presentation/main_container.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, this.auth});
+  const LoginPage({super.key, this.auth, this.summaryGateway});
 
   final AuthGateway? auth;
+  final HomeSummaryGateway? summaryGateway;
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -20,6 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   final _memberId = TextEditingController();
   final _password = TextEditingController();
   late final AuthGateway _auth = widget.auth ?? AuthService();
+  late final HomeSummaryGateway? _summaryGateway =
+      widget.summaryGateway ??
+      (widget.auth == null ? HomeSummaryApiClient() : null);
   bool _obscure = true;
   bool _submitting = false;
   String? _loginError;
@@ -67,6 +73,8 @@ class _LoginPageState extends State<LoginPage> {
           builder: (_) => MainContainer(
             auth: _auth,
             profile: profile,
+            session: session,
+            summaryGateway: _summaryGateway,
             audience: profile.usesInvestorHome
                 ? HomeAudience.investor
                 : HomeAudience.member,
