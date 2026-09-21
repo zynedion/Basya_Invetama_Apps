@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Basya Investama — UI/UX Design Review</title>
+  <style>
+    :root {
+      --ink: #eaf5f2;
+      --muted: #8fa8a3;
+      --line: rgba(190, 231, 222, .14);
+      --panel: #0b2928;
+      --panel-2: #0e3431;
+      --accent: #62dfb2;
+      --accent-strong: #16ad91;
+      --stage: #061c1b;
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100dvh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 86% 8%, rgba(61, 218, 172, .10), transparent 28rem),
+        linear-gradient(145deg, #041513, #082523 56%, #051918);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    button, select { font: inherit; }
+    button { color: inherit; }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 294px minmax(0, 1fr);
+      min-height: 100dvh;
+    }
+    .rail {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 22px 22px;
+      border-right: 1px solid var(--line);
+      background: rgba(4, 21, 19, .86);
+      backdrop-filter: blur(20px);
+      z-index: 5;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      color: #003f39;
+      background: linear-gradient(135deg, #76eac0, #1bb49a);
+      font-size: 22px;
+      font-weight: 800;
+      box-shadow: 0 14px 40px rgba(31, 190, 156, .20);
+    }
+    .brand strong { display: block; font-size: 15px; letter-spacing: .01em; }
+    .brand span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .rail-copy { margin: 34px 0 20px; }
+    .eyebrow {
+      margin: 0 0 9px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .rail h1 { margin: 0; font-size: 27px; line-height: 1.06; letter-spacing: -.04em; }
+    .rail-copy p { margin: 13px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+    .module-nav { display: grid; gap: 6px; overflow: auto; padding-right: 3px; }
+    .module-button {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 48px;
+      padding: 7px 10px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+    .module-button:hover { background: rgba(255,255,255,.04); transform: translateX(2px); }
+    .module-button[aria-selected="true"] {
+      background: linear-gradient(100deg, rgba(64, 219, 178, .16), rgba(64, 219, 178, .04));
+      border-color: rgba(102, 230, 194, .23);
+    }
+    .module-index {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      color: var(--muted);
+      background: rgba(255,255,255,.045);
+      font: 700 11px/1 "Cascadia Mono", Consolas, monospace;
+    }
+    .module-button[aria-selected="true"] .module-index { color: #043c35; background: var(--accent); }
+    .module-name { font-size: 13px; font-weight: 650; }
+    .module-count { color: var(--muted); font-size: 11px; }
+    .rail-footer { margin-top: auto; padding-top: 18px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .rail-footer a { color: var(--accent); text-decoration: none; }
+
+    .workspace { min-width: 0; padding: 24px clamp(18px, 4vw, 54px) 34px; }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 54px;
+      margin-bottom: 20px;
+    }
+    .mobile-select { display: none; }
+    .screen-heading { min-width: 0; }
+    .screen-kicker { color: var(--accent); font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    .screen-heading h2 { margin: 5px 0 0; overflow: hidden; font-size: clamp(20px, 2.2vw, 30px); line-height: 1.08; letter-spacing: -.035em; text-overflow: ellipsis; white-space: nowrap; }
+    .tools { display: flex; align-items: center; gap: 8px; }
+    .tool-button {
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.035);
+      cursor: pointer;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .tool-button:hover { border-color: rgba(98, 223, 178, .42); background: rgba(98, 223, 178, .08); }
+    .tool-button[aria-pressed="true"] { color: #052b27; background: var(--accent); }
+
+    .stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: 56px minmax(0, 1fr) 56px;
+      align-items: center;
+      height: calc(100dvh - 180px);
+      min-height: 560px;
+      max-height: 920px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(98, 223, 178, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(98, 223, 178, .035) 1px, transparent 1px),
+        var(--stage);
+      background-size: 36px 36px;
+      box-shadow: 0 38px 100px rgba(0, 0, 0, .26);
+    }
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 35%, rgba(54, 206, 170, .11), transparent 35%);
+    }
+    .arrow {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 64px;
+      margin: auto;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(6, 30, 28, .72);
+      cursor: pointer;
+      font-size: 22px;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .arrow:hover { background: rgba(98, 223, 178, .13); transform: scale(1.04); }
+    .arrow:active { transform: scale(.97); }
+    .canvas {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: start center;
+      align-self: stretch;
+      overflow: auto;
+      padding: 34px 18px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(98,223,178,.45) transparent;
+    }
+    .screen-frame {
+      position: relative;
+      display: block;
+      width: min(390px, 100%);
+      height: auto;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 30px 72px rgba(0,0,0,.44), 0 0 0 1px rgba(255,255,255,.12);
+      transform-origin: top center;
+      animation: reveal .32s cubic-bezier(.2,.8,.2,1);
+    }
+    .canvas.actual { place-items: start; }
+    .canvas.actual .screen-frame { width: auto; max-width: none; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(10px) scale(.985); } }
+
+    .meta {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 4px 0;
+    }
+    .meta p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .meta strong { color: var(--ink); font-weight: 650; }
+    .position { font: 700 12px/1 "Cascadia Mono", Consolas, monospace; color: var(--accent); }
+    .screen-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 18px 2px 3px;
+      scrollbar-width: thin;
+    }
+    .screen-tab {
+      flex: 0 0 auto;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,.025);
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .screen-tab[aria-selected="true"] { color: #052b27; border-color: transparent; background: var(--accent); }
+    .hint { margin: 13px 2px 0; color: #68827d; font-size: 11px; }
+
+    @media (max-width: 860px) {
+      .shell { display: block; }
+      .rail { position: relative; width: 100%; height: auto; padding: 20px 18px 14px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .rail-copy, .module-nav, .rail-footer { display: none; }
+      .workspace { padding: 16px 12px 26px; }
+      .toolbar { align-items: flex-end; margin-bottom: 14px; }
+      .mobile-select {
+        display: block;
+        width: 152px;
+        min-height: 40px;
+        padding: 0 34px 0 11px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--ink);
+        background: var(--panel);
+      }
+      .tools .tool-label { display: none; }
+      .stage { grid-template-columns: 42px minmax(0,1fr) 42px; height: 66dvh; min-height: 520px; max-height: none; border-radius: 22px; }
+      .arrow { width: 34px; height: 54px; border-radius: 12px; }
+      .canvas { padding: 22px 8px; }
+      .screen-frame { border-radius: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">B</div>
+        <div><strong>Basya Investama</strong><span>UI/UX design review</span></div>
+      </div>
+      <div class="rail-copy">
+        <p class="eyebrow">Design report · v1</p>
+        <h1>Product screen library</h1>
+        <p>Preview interaktif untuk menyelaraskan product, engineering, operasional, dan stakeholder.</p>
+      </div>
+      <nav class="module-nav" id="moduleNav" aria-label="Modul desain"></nav>
+      <div class="rail-footer">
+        Sumber: Pen Dev canvas<br>
+        Diperbarui 21 September 2026<br>
+        <a href="./components.md">Dokumentasi komponen</a> · <a href="./flutter-handoff.md">Flutter handoff</a>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="toolbar">
+        <div class="screen-heading">
+          <div class="screen-kicker" id="moduleLabel"></div>
+          <h2 id="screenTitle"></h2>
+        </div>
+        <div class="tools">
+          <select class="mobile-select" id="mobileModule" aria-label="Pilih modul"></select>
+          <button class="tool-button" id="fitButton" type="button" aria-pressed="false" title="Tampilkan ukuran gambar asli">1:1 <span class="tool-label">Ukuran</span></button>
+          <button class="tool-button" id="fullscreenButton" type="button" title="Buka layar penuh">⛶ <span class="tool-label">Layar penuh</span></button>
+        </div>
+      </header>
+
+      <section class="stage" aria-label="Preview desain">
+        <button class="arrow" id="previousButton" type="button" aria-label="Desain sebelumnya">‹</button>
+        <div class="canvas" id="canvas">
+          <img class="screen-frame" id="screenImage" alt="">
+        </div>
+        <button class="arrow" id="nextButton" type="button" aria-label="Desain berikutnya">›</button>
+      </section>
+
+      <div class="meta">
+        <p id="screenDescription"></p>
+        <div class="position" id="position"></div>
+      </div>
+      <div class="screen-tabs" id="screenTabs" role="tablist" aria-label="Layar dalam modul"></div>
+      <p class="hint">Gunakan tombol ← dan → pada keyboard untuk berpindah. URL menyimpan layar aktif agar dapat dibagikan.</p>
+    </main>
+  </div>
+
+  <script>
+    const modules = [
+      { id: 'auth', name: 'Autentikasi', note: 'Akses awal dan identitas brand.', screens: [
+        { id: 'login', title: 'Login', file: 'Z58jz.png', size: '390 × 844', description: 'Login dengan username atau email, kata sandi, dan latar brand Basya.' }
+      ]},
+      { id: 'home', name: 'Beranda', note: 'Ringkasan investor dan anggota.', screens: [
+        { id: 'home-investor-viewport', title: 'Investor · viewport', file: 'cuggs.png', size: '390 × 844', description: 'Tampilan pertama beranda investor pada tinggi perangkat.' },
+        { id: 'home-investor-full', title: 'Investor · full content', file: 'V0yKp.png', size: '390 × 1510', description: 'Alur konten lengkap investor: saldo, aksi cepat, investasi, multiguna, dan aktivitas.' },
+        { id: 'home-member-viewport', title: 'Non-investor · viewport', file: 'KeOQU.png', size: '390 × 844', description: 'Tampilan pertama beranda anggota non-investor.' },
+        { id: 'home-member-full', title: 'Non-investor · full content', file: 'MjSnq.png', size: '390 × 1250', description: 'Alur lengkap anggota dengan fokus simpanan dan multiguna.' }
+      ]},
+      { id: 'savings', name: 'Simpanan', note: 'Likuiditas, keanggotaan, SHU, dan transaksi.', screens: [
+        { id: 'savings-overview', title: 'Simpanan · overview', file: 'nJ5GG.png', size: '390 × 1200', description: 'Saldo sukarela, aksi top up dan withdraw, simpanan anggota, SHU, serta riwayat.' }
+      ]},
+      { id: 'investment', name: 'Investasi', note: 'Nilai investasi, peluang, dan portofolio.', screens: [
+        { id: 'investment-opportunities', title: 'Investasi · peluang', file: 'Cm0iB.png', size: '390 × 1500', description: 'Dashboard investasi dengan chart bulanan, Buy Power, pengajuan aktif, dan peluang.' },
+        { id: 'investment-portfolio', title: 'Investasi · portofolio', file: 'OdDeT.png', size: '390 × 1680', description: 'Portofolio aktif dan diproses dengan modal, nilai berjalan, serta profit.' }
+      ]},
+      { id: 'multiguna', name: 'Multiguna', note: 'Limit, cicilan, dan pinjaman aktif.', screens: [
+        { id: 'multiguna-overview', title: 'Multiguna · overview', file: 'ApBJi.png', size: '390 × 1450', description: 'Ringkasan kewajiban, limit tersedia, status tunggakan, pengajuan, dan beberapa pinjaman aktif.' }
+      ]},
+      { id: 'profile', name: 'Profil', note: 'Identitas anggota dan pengaturan akun.', screens: [
+        { id: 'profile-overview', title: 'Profil anggota', file: 'G6Ak7K.png', size: '390 × 1080', description: 'Kartu anggota digital, data rekening, status keanggotaan, keamanan, dan logout.' }
+      ]},
+      { id: 'forms', name: 'Formulir', note: 'Input transaksi dan pengaturan akun.', screens: [
+        { id: 'form-topup-savings', title: 'Top Up Simpanan Sukarela', file: 'ET3xX.png', size: '390 × 930', description: 'Form setoran sukarela dengan metode, rekening tujuan, dan bukti pembayaran.' },
+        { id: 'form-topup-buy-power', title: 'Top Up Buy Power', file: 'iVFKB.png', size: '390 × 930', description: 'Form penambahan Buy Power untuk kebutuhan investasi.' },
+        { id: 'form-pay-mandatory', title: 'Bayar Simpanan Wajib', file: 'P1ctP.png', size: '390 × 930', description: 'Pembayaran iuran wajib bulanan dengan bukti pembayaran.' },
+        { id: 'form-withdraw', title: 'Withdraw Simpanan Sukarela', file: 'L4i227.png', size: '390 × 1220', description: 'Data anggota dan rekening terisi otomatis; pengguna menentukan nilai penarikan.' },
+        { id: 'form-mutation', title: 'Mutasi Buy Power', file: 'Xawq5.png', size: '390 × 800', description: 'Pemindahan Buy Power ke Simpanan Sukarela tanpa biaya dan bukti transfer.' },
+        { id: 'form-installment', title: 'Bayar Cicilan', file: 'VCGzg.png', size: '390 × 1510', description: 'Pembayaran cicilan fleksibel, termasuk pelunasan lebih awal dan unggah bukti.' },
+        { id: 'form-multiguna', title: 'Pengajuan Multiguna', file: 'C66Fv.png', size: '390 × 2530', description: 'Form lengkap pembiayaan, simulasi backend, supplier, jaminan, penagihan, dan akad.' },
+        { id: 'form-edit-profile', title: 'Edit Profil', file: 'Fm6AU.png', size: '390 × 1320', description: 'Pembaruan foto, kontak, alamat, serta rekening pencairan anggota.' },
+        { id: 'form-password', title: 'Ganti Password', file: 'DxsIi.png', size: '390 × 720', description: 'Perubahan kata sandi dengan verifikasi kata sandi lama.' }
+      ]}
+    ];
+
+    const assets = './ui-preview-assets/';
+    const allScreens = modules.flatMap((module, moduleIndex) =>
+      module.screens.map((screen, screenIndex) => ({ ...screen, module, moduleIndex, screenIndex }))
+    );
+    let active = Math.max(0, allScreens.findIndex(screen => screen.id === location.hash.slice(1)));
+
+    const moduleNav = document.querySelector('#moduleNav');
+    const mobileModule = document.querySelector('#mobileModule');
+    const moduleLabel = document.querySelector('#moduleLabel');
+    const screenTitle = document.querySelector('#screenTitle');
+    const screenImage = document.querySelector('#screenImage');
+    const screenDescription = document.querySelector('#screenDescription');
+    const position = document.querySelector('#position');
+    const screenTabs = document.querySelector('#screenTabs');
+    const canvas = document.querySelector('#canvas');
+    const fitButton = document.querySelector('#fitButton');
+
+    modules.forEach((module, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'module-button';
+      button.dataset.module = module.id;
+      button.innerHTML = `<span class="module-index">${String(index + 1).padStart(2, '0')}</span><span class="module-name">${module.name}</span><span class="module-count">${module.screens.length}</span>`;
+      button.addEventListener('click', () => show(allScreens.findIndex(screen => screen.module.id === module.id)));
+      moduleNav.appendChild(button);
+
+      const option = document.createElement('option');
+      option.value = module.id;
+      option.textContent = module.name;
+      mobileModule.appendChild(option);
+    });
+
+    function show(index, updateHash = true) {
+      active = (index + allScreens.length) % allScreens.length;
+      const screen = allScreens[active];
+      moduleLabel.textContent = `${screen.module.name} · ${screen.module.note}`;
+      screenTitle.textContent = screen.title;
+      screenImage.src = assets + screen.file;
+      screenImage.alt = `Desain ${screen.title}`;
+      screenDescription.innerHTML = `<strong>${screen.size}</strong> · ${screen.description}`;
+      position.textContent = `${String(active + 1).padStart(2, '0')} / ${String(allScreens.length).padStart(2, '0')}`;
+      mobileModule.value = screen.module.id;
+      document.querySelectorAll('.module-button').forEach(button => button.setAttribute('aria-selected', button.dataset.module === screen.module.id));
+      screenTabs.replaceChildren();
+      screen.module.screens.forEach(item => {
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'screen-tab';
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-selected', item.id === screen.id);
+        tab.textContent = item.title.replace(screen.module.name + ' · ', '');
+        tab.addEventListener('click', () => show(allScreens.findIndex(entry => entry.id === item.id)));
+        screenTabs.appendChild(tab);
+      });
+      canvas.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      if (updateHash) history.replaceState(null, '', `#${screen.id}`);
+    }
+
+    document.querySelector('#previousButton').addEventListener('click', () => show(active - 1));
+    document.querySelector('#nextButton').addEventListener('click', () => show(active + 1));
+    mobileModule.addEventListener('change', event => show(allScreens.findIndex(screen => screen.module.id === event.target.value)));
+    fitButton.addEventListener('click', () => {
+      const actual = canvas.classList.toggle('actual');
+      fitButton.setAttribute('aria-pressed', actual);
+      fitButton.firstChild.textContent = actual ? 'Fit ' : '1:1 ';
+    });
+    document.querySelector('#fullscreenButton').addEventListener('click', () => {
+      if (!document.fullscreenElement) document.querySelector('.stage').requestFullscreen?.();
+      else document.exitFullscreen?.();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft') show(active - 1);
+      if (event.key === 'ArrowRight') show(active + 1);
+    });
+    window.addEventListener('hashchange', () => {
+      const index = allScreens.findIndex(screen => screen.id === location.hash.slice(1));
+      if (index >= 0) show(index, false);
+    });
+
+    show(active, !location.hash);
+  </script>
+</body>
+</html>

@@ -404,13 +404,8 @@ class _BalanceHero extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF003F42),
-              Color(0xFF006A66),
-              Color(0xFF08A39E),
-              AppTheme.mint,
-            ],
-            stops: [0, 0.5, 0.8, 1],
+            colors: AppTheme.heroGradientColors,
+            stops: AppTheme.heroGradientStops,
           ),
         ),
         child: Stack(

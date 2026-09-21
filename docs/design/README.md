@@ -2,6 +2,12 @@
 
 Canvas: `basya_ui_canvas.pen` di root proyek. Akses melalui MCP Pen Dev.
 
+## Preview interaktif
+
+Buka [UI/UX Design Review](ui-preview.html) untuk melihat 19 layar aktif dalam format laporan HTML. Preview menyediakan navigasi per modul, perpindahan kiri/kanan, shortcut keyboard, mode fit/ukuran asli, layar penuh, dan tautan langsung ke setiap layar.
+
+Gambar di `ui-preview-assets/` merupakan ekspor Pen Dev per 21 September 2026. Ekspor ulang gambar ketika desain canvas berubah agar laporan tetap sinkron.
+
 ## Susunan canvas
 
 Board komponen di atas; layar di bawah dari kiri ke kanan.

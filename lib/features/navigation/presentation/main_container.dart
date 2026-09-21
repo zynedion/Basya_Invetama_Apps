@@ -7,6 +7,9 @@ import '../../auth/domain/auth_session.dart';
 import '../../auth/presentation/login_page.dart';
 import '../../home/domain/home_summary_gateway.dart';
 import '../../home/presentation/investor_home_page.dart';
+import '../../investment/presentation/investment_page.dart';
+import '../../multiguna/presentation/multiguna_page.dart';
+import '../../savings/presentation/savings_page.dart';
 
 class MainContainer extends StatefulWidget {
   const MainContainer({
@@ -86,21 +89,26 @@ class _MainContainerState extends State<MainContainer> {
   Widget build(BuildContext context) {
     final destinations = _destinations;
     final pages = [
-      InvestorHomePage(
-        auth: widget.auth,
-        profile: widget.profile,
-        session: widget.session,
-        summaryGateway: widget.summaryGateway,
-        audience: _audience,
-        onAudienceChanged: _changeAudience,
-      ),
-      for (final destination in destinations.skip(1))
-        _EmptyFeaturePage(
-          key: ValueKey('empty-${destination.label.toLowerCase()}'),
-          destination: destination,
-          onLogout: destination.label == 'Profil' ? _logout : null,
-          loggingOut: _loggingOut,
-        ),
+      for (final destination in destinations)
+        switch (destination.label) {
+          'Beranda' => InvestorHomePage(
+            auth: widget.auth,
+            profile: widget.profile,
+            session: widget.session,
+            summaryGateway: widget.summaryGateway,
+            audience: _audience,
+            onAudienceChanged: _changeAudience,
+          ),
+          'Simpanan' => const SavingsPage(),
+          'Investasi' => const InvestmentPage(),
+          'Multiguna' => const MultigunaPage(),
+          _ => _EmptyFeaturePage(
+            key: ValueKey('empty-${destination.label.toLowerCase()}'),
+            destination: destination,
+            onLogout: destination.label == 'Profil' ? _logout : null,
+            loggingOut: _loggingOut,
+          ),
+        },
     ];
     return Scaffold(
       extendBody: true,

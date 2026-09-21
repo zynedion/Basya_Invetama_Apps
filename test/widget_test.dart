@@ -8,7 +8,10 @@ import 'package:basya_investama/features/auth/domain/auth_session.dart';
 import 'package:basya_investama/features/auth/presentation/login_page.dart';
 import 'package:basya_investama/features/auth/presentation/splash_page.dart';
 import 'package:basya_investama/features/home/presentation/investor_home_page.dart';
+import 'package:basya_investama/features/investment/presentation/investment_page.dart';
+import 'package:basya_investama/features/multiguna/presentation/multiguna_page.dart';
 import 'package:basya_investama/features/navigation/presentation/main_container.dart';
+import 'package:basya_investama/features/savings/presentation/savings_page.dart';
 
 void main() {
   testWidgets(
@@ -182,6 +185,29 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('Investment hero metrics grow with larger text', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light,
+        home: const MediaQuery(
+          data: MediaQueryData(
+            size: Size(390, 844),
+            textScaler: TextScaler.linear(1.3),
+          ),
+          child: InvestmentPage(),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(find.text('Modal aktif'), findsOneWidget);
+    expect(find.text('Akumulasi profit'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Home uses iOS style bouncing scroll physics', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -295,30 +321,63 @@ void main() {
     expect(memberWidth, 320);
   });
 
-  testWidgets('Main navigation opens every investor placeholder tab', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: AppTheme.light,
-        home: MainContainer(auth: _FakeAuthGateway()),
-      ),
-    );
+  testWidgets(
+    'Main navigation opens implemented tabs and profile placeholder',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light,
+          home: MainContainer(auth: _FakeAuthGateway()),
+        ),
+      );
 
-    for (final label in ['Simpanan', 'Investasi', 'Multiguna', 'Profil']) {
-      await tester.tap(find.byTooltip(label));
+      await tester.tap(find.byTooltip('Simpanan'));
       await tester.pumpAndSettle();
+      expect(find.byType(SavingsPage), findsOneWidget);
       expect(
-        find.byKey(ValueKey('page-title-${label.toLowerCase()}')),
+        find.byKey(const ValueKey('savings-voluntary-balance')),
         findsOneWidget,
       );
-      expect(find.text(label), findsNWidgets(2));
-    }
 
-    await tester.tap(find.byTooltip('Beranda'));
-    await tester.pumpAndSettle();
-    expect(find.byType(InvestorHomePage), findsOneWidget);
-  });
+      await tester.tap(find.byTooltip('Investasi'));
+      await tester.pumpAndSettle();
+      expect(find.byType(InvestmentPage), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('investment-total-value')),
+        findsOneWidget,
+      );
+      await tester.drag(
+        find.byKey(const ValueKey('investment-page-scroll')),
+        const Offset(0, -900),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Portofolio'));
+      await tester.pumpAndSettle();
+      expect(find.text('Green Valley Fund'), findsOneWidget);
+
+      await tester.tap(find.byTooltip('Multiguna'));
+      await tester.pumpAndSettle();
+      expect(find.byType(MultigunaPage), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('multiguna-total-obligation')),
+        findsOneWidget,
+      );
+
+      for (final label in ['Profil']) {
+        await tester.tap(find.byTooltip(label));
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(ValueKey('page-title-${label.toLowerCase()}')),
+          findsOneWidget,
+        );
+        expect(find.text(label), findsNWidgets(2));
+      }
+
+      await tester.tap(find.byTooltip('Beranda'));
+      await tester.pumpAndSettle();
+      expect(find.byType(InvestorHomePage), findsOneWidget);
+    },
+  );
 
   testWidgets('Profile temporary logout clears session and opens login', (
     tester,

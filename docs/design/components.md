@@ -35,7 +35,7 @@ Core: HhPLV. Home: EisN4. Master dipakai melalui instance dan override; jangan m
 
 ## Variasi yang tersedia
 
-- Tombol: primary gradient, secondary, disabled; master primary dipakai Login.
+- Tombol: primary gradient, secondary, tonal, danger, dan disabled. Tombol transaksi memakai rounded rectangle radius 14 dengan area sentuh minimum 48; bentuk pill penuh hanya untuk navigasi, filter, dan status.
 - Field: ID anggota dan kata sandi pada Login, masih usulan autentikasi.
 - Status: pending, berhasil, gagal. Upload bukti tetap acuan untuk modul pembayaran manual.
 - Kartu saldo: investor dengan Simpanan Sukarela + Buy Power; non-investor dengan Simpanan Sukarela + Simpanan Wajib sebagai rincian dari Total Saldo.
@@ -48,6 +48,8 @@ Core: HhPLV. Home: EisN4. Master dipakai melalui instance dan override; jangan m
 
 ## Aturan konsistensi
 
-Font Plus Jakarta Sans dan ikon Lucide. Warna, radius dan gradient mengikuti DESIGN.md. Tampilan loading/error/hidden yang belum digambar diselesaikan pada modul terkait. Bukti terkirim tidak sama dengan pembayaran disahkan. Total Saldo tidak menjumlahkan investasi aktif atau metrik profit.
+Font Plus Jakarta Sans. Implementasi Flutter saat ini menggunakan Material Icons secara konsisten; migrasi ke Lucide ditunda sampai aset atau paket ikon ditetapkan. Warna, radius dan gradient mengikuti DESIGN.md. Tampilan loading/error/hidden yang belum digambar diselesaikan pada modul terkait. Bukti terkirim tidak sama dengan pembayaran disahkan. Total Saldo tidak menjumlahkan investasi aktif atau metrik profit.
+
+Komponen Flutter bersama berada di `lib/core/widgets/basya_components.dart`: `BasyaActionButton`, `BasyaSegmentedControl`, `BasyaStatusBadge`, dan `BasyaFilterChip`. Token warna, radius, border, dan bayangan berada di `AppTheme`; layar modul tidak membuat ulang spesifikasi kontrol yang sama.
 
 Rincian simpanan, investasi terbuka dan pengingat cicilan mengikuti layar Home aktif; master kartu V1 untuk bagian tersebut sudah dihapus. Komponen lain yang diperlukan nantinya ditambahkan setelah modul dibahas, bukan menggunakan kembali desain lama.

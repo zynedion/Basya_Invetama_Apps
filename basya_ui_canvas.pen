@@ -2283,7 +2283,7 @@
       "type": "frame",
       "id": "r7991",
       "x": 510,
-      "y": -717,
+      "y": -647,
       "name": "CMP-26 / Integrated balance hero",
       "reusable": true,
       "clip": true,
@@ -2670,7 +2670,7 @@
       "type": "frame",
       "id": "g7TIxU",
       "x": -80,
-      "y": -717,
+      "y": -647,
       "name": "CMP-27 / Activity list status colors",
       "width": 560,
       "height": 460,
@@ -7804,7 +7804,7 @@
       "name": "08 / SAVINGS-01 / Likuiditas First",
       "clip": true,
       "width": 390,
-      "height": 1360,
+      "height": 1200,
       "fill": "#FBFDFC",
       "layout": "none",
       "children": [
@@ -7848,7 +7848,7 @@
             ]
           },
           "width": 390,
-          "height": 346
+          "height": 322
         },
         {
           "type": "text",
@@ -7953,186 +7953,137 @@
         },
         {
           "type": "rectangle",
-          "cornerRadius": 22,
-          "id": "JzD2Y",
-          "x": 24,
-          "y": 220,
-          "name": "Hero info glass",
-          "fill": "#FFFFFF24",
-          "width": 342,
-          "height": 84,
-          "stroke": "#FFFFFF73",
-          "strokeWidth": 1,
-          "effect": {
-            "type": "background_blur",
-            "radius": 14
-          }
-        },
-        {
-          "type": "text",
-          "id": "cVpT0",
-          "x": 42,
-          "y": 238,
-          "name": "Hero info title",
-          "fill": "#E8FFFA",
-          "content": "Bisa digunakan sekarang",
-          "lineHeight": 1.18,
-          "fontFamily": "Plus Jakarta Sans",
-          "fontSize": 13,
-          "fontWeight": "700"
-        },
-        {
-          "type": "text",
-          "id": "z1vfbT",
-          "x": 42,
-          "y": 262,
-          "name": "Hero info body",
-          "fill": "#D5F3E9",
-          "textGrowth": "fixed-width",
-          "width": 282,
-          "content": "Top up dan withdraw hanya berlaku untuk Simpanan Sukarela.",
-          "lineHeight": 1.18,
-          "fontFamily": "Plus Jakarta Sans",
-          "fontSize": 13,
-          "fontWeight": "500"
-        },
-        {
-          "type": "rectangle",
           "cornerRadius": 20,
           "id": "dzd8W",
-          "x": 20,
-          "y": 372,
+          "x": 24,
+          "y": 220,
           "name": "Top up button",
-          "fill": {
-            "type": "gradient",
-            "gradientType": "linear",
-            "enabled": true,
-            "rotation": 135,
-            "size": {
-              "height": 1
-            },
-            "colors": [
-              {
-                "color": "#F6FCFA",
-                "position": 0
-              },
-              {
-                "color": "#DDF6ED",
-                "position": 1
-              }
-            ]
-          },
-          "width": 166,
-          "height": 78,
-          "stroke": "#FFFFFF",
+          "fill": "#FFFFFF24",
+          "width": 164,
+          "height": 66,
+          "stroke": "#FFFFFF66",
           "strokeWidth": 1,
-          "effect": {
-            "type": "shadow",
-            "shadowType": "outer",
-            "color": "#17324A12",
-            "offset": {
-              "x": 0,
-              "y": 8
+          "effect": [
+            {
+              "type": "background_blur",
+              "radius": 16
             },
-            "blur": 18
-          }
+            {
+              "type": "shadow",
+              "shadowType": "outer",
+              "color": "#FFFFFF28",
+              "offset": {
+                "x": 0,
+                "y": 1
+              },
+              "blur": 3
+            },
+            {
+              "type": "shadow",
+              "shadowType": "outer",
+              "color": "#003F401F",
+              "offset": {
+                "x": 0,
+                "y": 8
+              },
+              "blur": 18
+            }
+          ]
         },
         {
           "type": "icon",
           "id": "QkmIZ",
-          "x": 92,
-          "y": 386,
+          "x": 40,
+          "y": 241,
           "name": "Top up icon",
-          "width": 24,
-          "height": 24,
+          "width": 22,
+          "height": 22,
           "icon": "add",
           "library": "Material Symbols Rounded",
-          "fill": "#006A66"
+          "fill": "#FFFFFF"
         },
         {
           "type": "text",
           "id": "z2zSCQ",
-          "x": 48,
-          "y": 422,
+          "x": 72,
+          "y": 236,
           "name": "Top up label",
-          "fill": "#17324A",
-          "content": "Top Up Sukarela",
-          "lineHeight": 1.18,
+          "fill": "#FFFFFF",
+          "content": "Top Up\nSukarela",
+          "lineHeight": 1.15,
           "fontFamily": "Plus Jakarta Sans",
           "fontSize": 14,
-          "fontWeight": "800"
+          "fontWeight": "700"
         },
         {
           "type": "rectangle",
           "cornerRadius": 20,
           "id": "gAkJB",
-          "x": 204,
-          "y": 372,
+          "x": 202,
+          "y": 220,
           "name": "Withdraw button",
-          "fill": {
-            "type": "gradient",
-            "gradientType": "linear",
-            "enabled": true,
-            "rotation": 135,
-            "size": {
-              "height": 1
-            },
-            "colors": [
-              {
-                "color": "#F6FCFA",
-                "position": 0
-              },
-              {
-                "color": "#DDF6ED",
-                "position": 1
-              }
-            ]
-          },
-          "width": 166,
-          "height": 78,
-          "stroke": "#FFFFFF",
+          "fill": "#FFFFFF24",
+          "width": 164,
+          "height": 66,
+          "stroke": "#FFFFFF66",
           "strokeWidth": 1,
-          "effect": {
-            "type": "shadow",
-            "shadowType": "outer",
-            "color": "#17324A12",
-            "offset": {
-              "x": 0,
-              "y": 8
+          "effect": [
+            {
+              "type": "background_blur",
+              "radius": 16
             },
-            "blur": 18
-          }
+            {
+              "type": "shadow",
+              "shadowType": "outer",
+              "color": "#FFFFFF28",
+              "offset": {
+                "x": 0,
+                "y": 1
+              },
+              "blur": 3
+            },
+            {
+              "type": "shadow",
+              "shadowType": "outer",
+              "color": "#003F401F",
+              "offset": {
+                "x": 0,
+                "y": 8
+              },
+              "blur": 18
+            }
+          ]
         },
         {
           "type": "icon",
           "id": "XN1wB",
-          "x": 276,
-          "y": 386,
+          "x": 220,
+          "y": 242,
           "name": "Withdraw icon",
-          "width": 24,
-          "height": 24,
+          "width": 22,
+          "height": 22,
           "icon": "arrow_downward",
           "library": "Material Symbols Rounded",
-          "fill": "#006A66"
+          "fill": "#FFFFFF"
         },
         {
           "type": "text",
           "id": "SleWm",
           "x": 252,
-          "y": 422,
+          "y": 244,
           "name": "Withdraw label",
-          "fill": "#17324A",
+          "fill": "#FFFFFF",
           "content": "Withdraw",
           "lineHeight": 1.18,
           "fontFamily": "Plus Jakarta Sans",
           "fontSize": 14,
-          "fontWeight": "800"
+          "fontWeight": "700"
         },
         {
           "type": "text",
           "id": "D0OeeC",
           "x": 20,
-          "y": 490,
+          "y": 358,
           "name": "Membership heading",
           "fill": "#17324A",
           "content": "Simpanan keanggotaan",
@@ -8145,7 +8096,7 @@
           "type": "text",
           "id": "O8t9pM",
           "x": 20,
-          "y": 524,
+          "y": 393,
           "name": "Membership note",
           "fill": "#5F6B76",
           "textGrowth": "fixed-width",
@@ -8161,7 +8112,7 @@
           "cornerRadius": 20,
           "id": "qB6XP",
           "x": 20,
-          "y": 570,
+          "y": 634,
           "name": "Simpanan Pokok bg",
           "fill": "#FFFFFF",
           "width": 350,
@@ -8184,7 +8135,7 @@
           "cornerRadius": 14,
           "id": "o2Dq6",
           "x": 36,
-          "y": 586,
+          "y": 650,
           "name": "Simpanan Pokok icon bg",
           "fill": "#EDF7F5",
           "width": 42,
@@ -8194,7 +8145,7 @@
           "type": "icon",
           "id": "o4rD56",
           "x": 46,
-          "y": 596,
+          "y": 660,
           "name": "Simpanan Pokok icon",
           "width": 22,
           "height": 22,
@@ -8206,7 +8157,7 @@
           "type": "text",
           "id": "Qdusn",
           "x": 92,
-          "y": 584,
+          "y": 648,
           "name": "Simpanan Pokok label",
           "fill": "#5F6B76",
           "content": "Simpanan Pokok",
@@ -8219,7 +8170,7 @@
           "type": "text",
           "id": "bikZP",
           "x": 92,
-          "y": 606,
+          "y": 670,
           "name": "Simpanan Pokok amount",
           "fill": "#17324A",
           "content": "Rp 1.000.000",
@@ -8232,7 +8183,7 @@
           "type": "text",
           "id": "RrHQB",
           "x": 248,
-          "y": 594,
+          "y": 658,
           "name": "Simpanan Pokok caption",
           "fill": "#5F6B76",
           "textGrowth": "fixed-width",
@@ -8248,11 +8199,11 @@
           "cornerRadius": 20,
           "id": "G6fBar",
           "x": 20,
-          "y": 656,
+          "y": 540,
           "name": "Simpanan Wajib bg",
           "fill": "#FFFFFF",
           "width": 350,
-          "height": 74,
+          "height": 80,
           "stroke": "#E6F0ED",
           "strokeWidth": 1,
           "effect": {
@@ -8271,7 +8222,7 @@
           "cornerRadius": 14,
           "id": "R5cgdI",
           "x": 36,
-          "y": 672,
+          "y": 559,
           "name": "Simpanan Wajib icon bg",
           "fill": "#EDF7F5",
           "width": 42,
@@ -8281,7 +8232,7 @@
           "type": "icon",
           "id": "R5nyL",
           "x": 46,
-          "y": 682,
+          "y": 569,
           "name": "Simpanan Wajib icon",
           "width": 22,
           "height": 22,
@@ -8293,7 +8244,7 @@
           "type": "text",
           "id": "DaNQE",
           "x": 92,
-          "y": 670,
+          "y": 554,
           "name": "Simpanan Wajib label",
           "fill": "#5F6B76",
           "content": "Simpanan Wajib",
@@ -8306,7 +8257,7 @@
           "type": "text",
           "id": "XdYhG",
           "x": 92,
-          "y": 692,
+          "y": 578,
           "name": "Simpanan Wajib amount",
           "fill": "#17324A",
           "content": "Rp 2.000.000",
@@ -8318,10 +8269,10 @@
         {
           "type": "text",
           "id": "ZXYIW",
-          "x": 248,
-          "y": 680,
+          "x": 246,
+          "y": 554,
           "name": "Simpanan Wajib caption",
-          "fill": "#5F6B76",
+          "fill": "#68757D",
           "textGrowth": "fixed-width",
           "width": 96,
           "content": "Iuran bulanan",
@@ -8335,7 +8286,7 @@
           "cornerRadius": 22,
           "id": "AOuAi",
           "x": 20,
-          "y": 756,
+          "y": 438,
           "name": "SHU card",
           "fill": "#FFFFFF",
           "width": 350,
@@ -8358,7 +8309,7 @@
           "cornerRadius": 14,
           "id": "hKpZx",
           "x": 36,
-          "y": 779,
+          "y": 461,
           "name": "SHU icon bg",
           "fill": "#ECF9F2",
           "width": 42,
@@ -8368,7 +8319,7 @@
           "type": "icon",
           "id": "wmi38",
           "x": 46,
-          "y": 789,
+          "y": 471,
           "name": "SHU icon",
           "width": 22,
           "height": 22,
@@ -8380,7 +8331,7 @@
           "type": "text",
           "id": "vgnOU",
           "x": 92,
-          "y": 774,
+          "y": 456,
           "name": "SHU label",
           "fill": "#5F6B76",
           "content": "SHU berjalan 2026",
@@ -8393,7 +8344,7 @@
           "type": "text",
           "id": "i0kuMA",
           "x": 92,
-          "y": 798,
+          "y": 480,
           "name": "SHU amount",
           "fill": "#17324A",
           "content": "Rp 825.000",
@@ -8406,7 +8357,7 @@
           "type": "text",
           "id": "C37paI",
           "x": 92,
-          "y": 827,
+          "y": 509,
           "name": "SHU caption",
           "fill": "#5F6B76",
           "textGrowth": "fixed-width",
@@ -8421,7 +8372,7 @@
           "type": "text",
           "id": "Z44PM",
           "x": 20,
-          "y": 888,
+          "y": 754,
           "name": "Transactions heading",
           "fill": "#17324A",
           "content": "Transaksi simpanan",
@@ -8434,7 +8385,7 @@
           "type": "text",
           "id": "kmEpq",
           "x": 298,
-          "y": 894,
+          "y": 760,
           "name": "See all",
           "fill": "#006A66",
           "content": "Lihat semua",
@@ -8448,7 +8399,7 @@
           "cornerRadius": 12,
           "id": "s1l9xL",
           "x": 20,
-          "y": 934,
+          "y": 800,
           "name": "Tx icon bg Setoran sukarela",
           "fill": "#EDF7F5",
           "width": 38,
@@ -8458,7 +8409,7 @@
           "type": "icon",
           "id": "UaSFM",
           "x": 29,
-          "y": 943,
+          "y": 809,
           "name": "Tx icon Setoran sukarela",
           "width": 20,
           "height": 20,
@@ -8470,7 +8421,7 @@
           "type": "text",
           "id": "KrDG2",
           "x": 72,
-          "y": 933,
+          "y": 799,
           "name": "Tx title Setoran sukarela",
           "fill": "#17324A",
           "textGrowth": "fixed-width",
@@ -8485,7 +8436,7 @@
           "type": "text",
           "id": "MVkej",
           "x": 72,
-          "y": 955,
+          "y": 821,
           "name": "Tx meta Setoran sukarela",
           "fill": "#5F6B76",
           "textGrowth": "fixed-width",
@@ -8500,7 +8451,7 @@
           "type": "text",
           "id": "q598NJ",
           "x": 252,
-          "y": 943,
+          "y": 809,
           "name": "Tx amount Setoran sukarela",
           "fill": "#00A676",
           "textGrowth": "fixed-width",
@@ -8515,7 +8466,7 @@
           "type": "rectangle",
           "id": "vmfkC",
           "x": 72,
-          "y": 982,
+          "y": 848,
           "name": "Tx divider 0",
           "fill": "#C9D3D0",
           "width": 298,
@@ -8526,7 +8477,7 @@
           "cornerRadius": 12,
           "id": "J0NkM",
           "x": 20,
-          "y": 992,
+          "y": 858,
           "name": "Tx icon bg Withdraw sukarela",
           "fill": "#EDF7F5",
           "width": 38,
@@ -8536,7 +8487,7 @@
           "type": "icon",
           "id": "wyE1h",
           "x": 29,
-          "y": 1001,
+          "y": 867,
           "name": "Tx icon Withdraw sukarela",
           "width": 20,
           "height": 20,
@@ -8548,7 +8499,7 @@
           "type": "text",
           "id": "lwmoZ",
           "x": 72,
-          "y": 991,
+          "y": 857,
           "name": "Tx title Withdraw sukarela",
           "fill": "#17324A",
           "textGrowth": "fixed-width",
@@ -8563,7 +8514,7 @@
           "type": "text",
           "id": "FJK6F",
           "x": 72,
-          "y": 1013,
+          "y": 879,
           "name": "Tx meta Withdraw sukarela",
           "fill": "#5F6B76",
           "textGrowth": "fixed-width",
@@ -8578,7 +8529,7 @@
           "type": "text",
           "id": "G9WeYl",
           "x": 252,
-          "y": 1001,
+          "y": 867,
           "name": "Tx amount Withdraw sukarela",
           "fill": "#D64545",
           "textGrowth": "fixed-width",
@@ -8593,7 +8544,7 @@
           "type": "rectangle",
           "id": "q4qff",
           "x": 72,
-          "y": 1040,
+          "y": 906,
           "name": "Tx divider 1",
           "fill": "#C9D3D0",
           "width": 298,
@@ -8604,7 +8555,7 @@
           "cornerRadius": 12,
           "id": "HF5RX",
           "x": 20,
-          "y": 1050,
+          "y": 916,
           "name": "Tx icon bg Iuran wajib",
           "fill": "#EDF7F5",
           "width": 38,
@@ -8614,7 +8565,7 @@
           "type": "icon",
           "id": "uuTrI",
           "x": 29,
-          "y": 1059,
+          "y": 925,
           "name": "Tx icon Iuran wajib",
           "width": 20,
           "height": 20,
@@ -8626,7 +8577,7 @@
           "type": "text",
           "id": "fwU8G",
           "x": 72,
-          "y": 1049,
+          "y": 915,
           "name": "Tx title Iuran wajib",
           "fill": "#17324A",
           "textGrowth": "fixed-width",
@@ -8641,7 +8592,7 @@
           "type": "text",
           "id": "PSl1r",
           "x": 72,
-          "y": 1071,
+          "y": 937,
           "name": "Tx meta Iuran wajib",
           "fill": "#5F6B76",
           "textGrowth": "fixed-width",
@@ -8656,7 +8607,7 @@
           "type": "text",
           "id": "ssnUx",
           "x": 252,
-          "y": 1059,
+          "y": 925,
           "name": "Tx amount Iuran wajib",
           "fill": "#D64545",
           "textGrowth": "fixed-width",
@@ -8671,7 +8622,7 @@
           "type": "rectangle",
           "id": "QhaU8",
           "x": 72,
-          "y": 1098,
+          "y": 964,
           "name": "Tx divider 2",
           "fill": "#C9D3D0",
           "width": 298,
@@ -8682,7 +8633,7 @@
           "cornerRadius": 12,
           "id": "NtQ65",
           "x": 20,
-          "y": 1108,
+          "y": 974,
           "name": "Tx icon bg Simpanan pokok",
           "fill": "#EDF7F5",
           "width": 38,
@@ -8692,7 +8643,7 @@
           "type": "icon",
           "id": "X00by",
           "x": 29,
-          "y": 1117,
+          "y": 983,
           "name": "Tx icon Simpanan pokok",
           "width": 20,
           "height": 20,
@@ -8704,7 +8655,7 @@
           "type": "text",
           "id": "goz5T",
           "x": 72,
-          "y": 1107,
+          "y": 973,
           "name": "Tx title Simpanan pokok",
           "fill": "#17324A",
           "textGrowth": "fixed-width",
@@ -8719,7 +8670,7 @@
           "type": "text",
           "id": "FALja",
           "x": 72,
-          "y": 1129,
+          "y": 995,
           "name": "Tx meta Simpanan pokok",
           "fill": "#5F6B76",
           "textGrowth": "fixed-width",
@@ -8734,7 +8685,7 @@
           "type": "text",
           "id": "AbjAc",
           "x": 252,
-          "y": 1117,
+          "y": 983,
           "name": "Tx amount Simpanan pokok",
           "fill": "#17324A",
           "textGrowth": "fixed-width",
@@ -8749,7 +8700,7 @@
           "type": "rectangle",
           "id": "Y14sna",
           "x": 0,
-          "y": 1196,
+          "y": 1028,
           "name": "Bottom scrim",
           "fill": {
             "type": "gradient",
@@ -8782,7 +8733,7 @@
           "cornerRadius": 30,
           "id": "jb81W",
           "x": 20,
-          "y": 1248,
+          "y": 1080,
           "name": "Floating nav",
           "fill": "#FFFFFF",
           "width": 350,
@@ -8803,7 +8754,7 @@
           "cornerRadius": 24,
           "id": "F23Ge",
           "x": 118,
-          "y": 1254,
+          "y": 1086,
           "name": "Nav active",
           "fill": {
             "type": "gradient",
@@ -8835,7 +8786,7 @@
           "type": "icon",
           "id": "G5R3H",
           "x": 50,
-          "y": 1267,
+          "y": 1099,
           "name": "Nav home",
           "width": 22,
           "height": 22,
@@ -8847,7 +8798,7 @@
           "type": "icon",
           "id": "m52Y9",
           "x": 138,
-          "y": 1267,
+          "y": 1099,
           "name": "Nav savings icon",
           "width": 22,
           "height": 22,
@@ -8859,7 +8810,7 @@
           "type": "text",
           "id": "eapnn",
           "x": 168,
-          "y": 1269,
+          "y": 1101,
           "name": "Nav savings label",
           "fill": "#FFFFFF",
           "content": "Simpanan",
@@ -8872,7 +8823,7 @@
           "type": "icon",
           "id": "VRMhU",
           "x": 270,
-          "y": 1267,
+          "y": 1099,
           "name": "Nav invest",
           "width": 22,
           "height": 22,
@@ -8884,13 +8835,5181 @@
           "type": "icon",
           "id": "k9zLJ",
           "x": 320,
-          "y": 1267,
+          "y": 1099,
           "name": "Nav multi",
           "width": 22,
           "height": 22,
           "icon": "account_balance",
           "library": "Material Symbols Rounded",
           "fill": "#5F6B76"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 15,
+          "id": "tLNbH",
+          "x": 282,
+          "y": 577,
+          "name": "Bayar simpanan wajib button",
+          "fill": "#E4F7F1",
+          "width": 68,
+          "height": 30,
+          "stroke": "#BDE8DB",
+          "strokeWidth": 1
+        },
+        {
+          "type": "icon",
+          "id": "W0tPD",
+          "x": 293,
+          "y": 584,
+          "name": "Bayar simpanan wajib icon",
+          "width": 16,
+          "height": 16,
+          "icon": "plus",
+          "library": "lucide",
+          "fill": "#007C73"
+        },
+        {
+          "type": "text",
+          "id": "ukmUF",
+          "x": 313,
+          "y": 583,
+          "name": "Bayar simpanan wajib label",
+          "fill": "#007C73",
+          "content": "Bayar",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "700"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Cm0iB",
+      "x": 2860,
+      "y": 100,
+      "name": "09 / INVEST-01 / Dashboard / Peluang",
+      "clip": true,
+      "width": 390,
+      "height": 1500,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            0,
+            0,
+            32,
+            32
+          ],
+          "id": "FxKce",
+          "x": 0,
+          "y": 0,
+          "name": "Investment hero gradient",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 132,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#003F42",
+                "position": 0
+              },
+              {
+                "color": "#006A66",
+                "position": 0.48
+              },
+              {
+                "color": "#08A39E",
+                "position": 0.78
+              },
+              {
+                "color": "#5FDEA9",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 446
+        },
+        {
+          "type": "text",
+          "id": "XlUXj",
+          "x": 20,
+          "y": 11,
+          "name": "Status time",
+          "fill": "#FFFFFF",
+          "content": "9:41",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "ZfOMR",
+          "x": 324,
+          "y": 10,
+          "name": "Status wifi",
+          "width": 14,
+          "height": 14,
+          "icon": "wifi",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "icon",
+          "id": "DlZnA",
+          "x": 350,
+          "y": 9,
+          "name": "Status battery",
+          "width": 16,
+          "height": 16,
+          "icon": "battery_full",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "id": "l5ogzz",
+          "x": 20,
+          "y": 50,
+          "name": "Investment page title",
+          "fill": "#FFFFFF",
+          "content": "Investasi",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "BkYI8",
+          "x": 346,
+          "y": 51,
+          "name": "Investment info",
+          "width": 22,
+          "height": 22,
+          "icon": "help",
+          "library": "Material Symbols Rounded",
+          "fill": "#D5F3E9"
+        },
+        {
+          "type": "text",
+          "id": "phwrw",
+          "x": 20,
+          "y": 88,
+          "name": "Total value label",
+          "fill": "#D5F3E9",
+          "content": "Total nilai investasi",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "XnyV3",
+          "x": 20,
+          "y": 112,
+          "name": "Total value amount",
+          "fill": "#FFFFFF",
+          "content": "Rp 556.967.439",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 34,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "PnByr",
+          "x": 342,
+          "y": 122,
+          "name": "Investment visibility",
+          "width": 24,
+          "height": 24,
+          "icon": "visibility",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "id": "u1v2TY",
+          "x": 20,
+          "y": 158,
+          "name": "Monthly profit",
+          "fill": "#BFFFE5",
+          "content": "+Rp 18.400.000 bulan ini",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "DJxjZ",
+          "x": 20,
+          "y": 192,
+          "name": "Chart title",
+          "fill": "#FFFFFF",
+          "content": "Performa portofolio",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "rectangle",
+          "id": "NOc0r",
+          "x": 20,
+          "y": 236,
+          "name": "Chart grid line 236",
+          "fill": "#FFFFFF24",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "id": "o4Iuy",
+          "x": 20,
+          "y": 274,
+          "name": "Chart grid line 274",
+          "fill": "#FFFFFF24",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "id": "S6uTd2",
+          "x": 20,
+          "y": 312,
+          "name": "Chart grid line 312",
+          "fill": "#FFFFFF24",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "WbXjv",
+          "x": 35,
+          "y": 279,
+          "name": "Chart bar Apr",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 44
+        },
+        {
+          "type": "text",
+          "id": "j2Xng",
+          "x": 33,
+          "y": 330,
+          "name": "Chart month Apr",
+          "fill": "#D5F3E9",
+          "content": "Apr",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "AVlWO",
+          "x": 91,
+          "y": 261,
+          "name": "Chart bar Mei",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 62
+        },
+        {
+          "type": "text",
+          "id": "kBNd2",
+          "x": 89,
+          "y": 330,
+          "name": "Chart month Mei",
+          "fill": "#D5F3E9",
+          "content": "Mei",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "UuTH9",
+          "x": 147,
+          "y": 269,
+          "name": "Chart bar Jun",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 54
+        },
+        {
+          "type": "text",
+          "id": "b7PaY",
+          "x": 145,
+          "y": 330,
+          "name": "Chart month Jun",
+          "fill": "#D5F3E9",
+          "content": "Jun",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "fSPDI",
+          "x": 203,
+          "y": 247,
+          "name": "Chart bar Jul",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 76
+        },
+        {
+          "type": "text",
+          "id": "aApYs",
+          "x": 201,
+          "y": 330,
+          "name": "Chart month Jul",
+          "fill": "#D5F3E9",
+          "content": "Jul",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "bbivK",
+          "x": 259,
+          "y": 235,
+          "name": "Chart bar Agu",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 88
+        },
+        {
+          "type": "text",
+          "id": "EOJ2U",
+          "x": 257,
+          "y": 330,
+          "name": "Chart month Agu",
+          "fill": "#D5F3E9",
+          "content": "Agu",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "eVvRj",
+          "x": 315,
+          "y": 217,
+          "name": "Chart bar Sep",
+          "fill": "#BFFFE5",
+          "width": 28,
+          "height": 106
+        },
+        {
+          "type": "text",
+          "id": "x0d6K",
+          "x": 313,
+          "y": 330,
+          "name": "Chart month Sep",
+          "fill": "#D5F3E9",
+          "content": "Sep",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "id": "IZJWi",
+          "x": 20,
+          "y": 323,
+          "name": "Chart baseline",
+          "fill": "#FFFFFF73",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 18,
+          "id": "JWoRX",
+          "x": 20,
+          "y": 360,
+          "name": "Capital glass",
+          "fill": "#FFFFFF20",
+          "width": 168,
+          "height": 62,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 14
+          }
+        },
+        {
+          "type": "text",
+          "id": "A72bc1",
+          "x": 36,
+          "y": 372,
+          "name": "Capital label",
+          "fill": "#D5F3E9",
+          "content": "Modal aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "O7wMZj",
+          "x": 36,
+          "y": 393,
+          "name": "Capital value",
+          "fill": "#FFFFFF",
+          "content": "Rp 400.000.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 16,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 18,
+          "id": "H3N0M",
+          "x": 202,
+          "y": 360,
+          "name": "Profit glass",
+          "fill": "#FFFFFF20",
+          "width": 168,
+          "height": 62,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 14
+          }
+        },
+        {
+          "type": "text",
+          "id": "xd03i",
+          "x": 218,
+          "y": 372,
+          "name": "Profit total label",
+          "fill": "#D5F3E9",
+          "content": "Akumulasi profit",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "n1OomK",
+          "x": 218,
+          "y": 393,
+          "name": "Profit total value",
+          "fill": "#FFFFFF",
+          "content": "Rp 156.967.439",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 16,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "yVHcP",
+          "x": 20,
+          "y": 474,
+          "name": "Buy Power card",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 135,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#F6FCFA",
+                "position": 0
+              },
+              {
+                "color": "#DDF6ED",
+                "position": 1
+              }
+            ]
+          },
+          "width": 350,
+          "height": 158,
+          "stroke": "#FFFFFF",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A12",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "pB8Yi",
+          "x": 36,
+          "y": 492,
+          "name": "Buy Power icon bg",
+          "width": 40,
+          "height": 40,
+          "fill": "#FFFFFFB8",
+          "cornerRadius": 13,
+          "stroke": "#FFFFFF",
+          "strokeWidth": 1,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "L6vOR",
+              "name": "Buy Power icon",
+              "width": 21,
+              "height": 21,
+              "icon": "wallet-cards",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "z01Kp3",
+          "x": 88,
+          "y": 490,
+          "name": "Buy Power label",
+          "fill": "#5F6B76",
+          "content": "Buy Power tersedia",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "q89ryu",
+          "x": 88,
+          "y": 513,
+          "name": "Buy Power amount",
+          "fill": "#17324A",
+          "content": "Rp 320.234.999",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 23,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "MxOLH",
+          "x": 36,
+          "y": 545,
+          "name": "Buy Power caption",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 314,
+          "content": "Saldo untuk membeli produk investasi.",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "vSa95",
+          "x": 36,
+          "y": 574,
+          "name": "Buy Power action Top Up",
+          "width": 151,
+          "height": 42,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 110,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#004E50",
+                "position": 0
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "cornerRadius": 16,
+          "stroke": "#007A76",
+          "strokeWidth": 1,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "nKBtP",
+              "name": "Top Up icon",
+              "width": 17,
+              "height": 17,
+              "icon": "plus",
+              "library": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "text",
+              "id": "XT6Q3",
+              "name": "Top Up label",
+              "fill": "#FFFFFF",
+              "content": "Top Up",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Jiq2s",
+          "x": 203,
+          "y": 574,
+          "name": "Buy Power action Mutasi ke Sukarela",
+          "width": 151,
+          "height": 42,
+          "fill": "#FFFFFFB8",
+          "cornerRadius": 16,
+          "stroke": "#D8EAE5",
+          "strokeWidth": 1,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "yk61m",
+              "name": "Mutasi ke Sukarela icon",
+              "width": 17,
+              "height": 17,
+              "icon": "arrow-left-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "zF6w2",
+              "name": "Mutasi ke Sukarela label",
+              "fill": "#006A66",
+              "content": "Mutasi ke Sukarela",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "I3HdC5",
+          "x": 20,
+          "y": 666,
+          "name": "Active submission heading",
+          "fill": "#17324A",
+          "content": "Pengajuan aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 20,
+          "id": "HYwCD",
+          "x": 20,
+          "y": 706,
+          "name": "Pending purchase card",
+          "fill": "#FFF9ED",
+          "width": 350,
+          "height": 94,
+          "stroke": "#F0D9A5",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A0A",
+            "offset": {
+              "x": 0,
+              "y": 6
+            },
+            "blur": 16
+          }
+        },
+        {
+          "type": "frame",
+          "id": "yIJv1",
+          "x": 36,
+          "y": 727,
+          "name": "Pending investment icon bg",
+          "width": 42,
+          "height": 42,
+          "fill": "#FFF0C9",
+          "cornerRadius": 14,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "OcEtF",
+              "name": "Pending investment icon",
+              "width": 21,
+              "height": 21,
+              "icon": "clock-3",
+              "library": "lucide",
+              "fill": "#A16400"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "c8VMaX",
+          "x": 92,
+          "y": 718,
+          "name": "Pending product name",
+          "fill": "#17324A",
+          "content": "Sarasaland Residence",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "CsSWB",
+          "x": 92,
+          "y": 743,
+          "name": "Pending purchase detail",
+          "fill": "#5F6B76",
+          "content": "3 lot · Rp 1.500.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "FIG1N",
+          "x": 228,
+          "y": 764,
+          "name": "Pending status",
+          "width": 126,
+          "height": 24,
+          "fill": "#FFE8AF",
+          "cornerRadius": 12,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "b9sSUp",
+              "name": "Pending status label",
+              "fill": "#885500",
+              "content": "Menunggu approval",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "icon",
+          "id": "E330b",
+          "x": 336,
+          "y": 728,
+          "name": "Pending chevron",
+          "width": 20,
+          "height": 20,
+          "icon": "chevron-right",
+          "library": "lucide",
+          "fill": "#006A66"
+        },
+        {
+          "type": "text",
+          "id": "CeI4s",
+          "x": 20,
+          "y": 838,
+          "name": "Explore investments heading",
+          "fill": "#17324A",
+          "content": "Jelajahi investasi",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 22,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "L1Gvw",
+          "x": 293,
+          "y": 844,
+          "name": "Explore see all",
+          "fill": "#006A66",
+          "content": "Lihat semua",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 26,
+          "id": "h2bKTL",
+          "x": 20,
+          "y": 878,
+          "name": "Investment tabs bg",
+          "fill": "#F0F5F3",
+          "width": 350,
+          "height": 52,
+          "stroke": "#E2EBE8",
+          "strokeWidth": 1
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 20,
+          "id": "t5z5tW",
+          "x": 26,
+          "y": 884,
+          "name": "Opportunities tab active",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 110,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#004E50",
+                "position": 0
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "width": 166,
+          "height": 40
+        },
+        {
+          "type": "text",
+          "id": "JkR5Z",
+          "x": 75,
+          "y": 895,
+          "name": "Opportunities tab label",
+          "fill": "#FFFFFF",
+          "content": "Peluang",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "pp6D0",
+          "x": 247,
+          "y": 895,
+          "name": "Portfolio tab label",
+          "fill": "#5F6B76",
+          "content": "Portofolio",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "eJ5cE",
+          "x": 20,
+          "y": 950,
+          "name": "Investment product card",
+          "fill": "#FFFFFF",
+          "width": 350,
+          "height": 342,
+          "stroke": "#E5EEEB",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A12",
+            "offset": {
+              "x": 0,
+              "y": 9
+            },
+            "blur": 22
+          }
+        },
+        {
+          "type": "frame",
+          "id": "Zo660",
+          "x": 36,
+          "y": 966,
+          "name": "Sarasaland product image",
+          "metadata": {
+            "type": "unsplash",
+            "username": "setsj",
+            "link": "https://unsplash.com/@setsj",
+            "author": "set.sj"
+          },
+          "clip": true,
+          "width": 318,
+          "height": 126,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1782179147105-4af0b8105356?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk2MTU2MDV8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 18
+        },
+        {
+          "type": "frame",
+          "id": "ZDQVo",
+          "x": 48,
+          "y": 978,
+          "name": "Product category badge",
+          "width": 68,
+          "height": 24,
+          "fill": "#FFFFFFDE",
+          "cornerRadius": 12,
+          "effect": {
+            "type": "background_blur",
+            "radius": 10
+          },
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "kTSrI",
+              "name": "Product category label",
+              "fill": "#006A66",
+              "content": "Properti",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "bw0ep",
+          "x": 36,
+          "y": 1110,
+          "name": "Product name",
+          "fill": "#17324A",
+          "content": "Sarasaland Residence",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "TSocP",
+          "x": 36,
+          "y": 1139,
+          "name": "Product location row",
+          "gap": 6,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "O2LYmM",
+              "name": "Product location icon",
+              "width": 15,
+              "height": 15,
+              "icon": "map-pin",
+              "library": "lucide",
+              "fill": "#5F6B76"
+            },
+            {
+              "type": "text",
+              "id": "Q7Fzc8",
+              "name": "Product location",
+              "fill": "#5F6B76",
+              "content": "Bogor, Jawa Barat",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "EcWLY",
+          "x": 36,
+          "y": 1174,
+          "name": "Price per lot label",
+          "fill": "#5F6B76",
+          "content": "Harga per lot",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "ciMZp",
+          "x": 36,
+          "y": 1194,
+          "name": "Price per lot value",
+          "fill": "#17324A",
+          "content": "Rp 500.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 17,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "BQVmy",
+          "x": 238,
+          "y": 1174,
+          "name": "Lot quota label",
+          "fill": "#5F6B76",
+          "content": "Sisa kuota",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "QFMXv",
+          "x": 238,
+          "y": 1194,
+          "name": "Lot quota value",
+          "fill": "#17324A",
+          "content": "500 / 2.500 lot",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 4,
+          "id": "z5K4Xy",
+          "x": 36,
+          "y": 1229,
+          "name": "Quota progress bg",
+          "fill": "#E4EEEB",
+          "width": 318,
+          "height": 7
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 4,
+          "id": "OefK3",
+          "x": 36,
+          "y": 1229,
+          "name": "Quota progress value",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 90,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#5FDEA9",
+                "position": 0
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "width": 254,
+          "height": 7
+        },
+        {
+          "type": "text",
+          "id": "jd08g",
+          "x": 36,
+          "y": 1243,
+          "name": "Quota progress caption",
+          "fill": "#5F6B76",
+          "content": "80% lot telah teralokasi",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "gguEG",
+          "x": 36,
+          "y": 1262,
+          "name": "View product detail button",
+          "width": 318,
+          "height": 46,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 110,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#004E50",
+                "position": 0
+              },
+              {
+                "color": "#006A66",
+                "position": 0.5
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "cornerRadius": 17,
+          "gap": 8,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "bKYxH",
+              "name": "View product detail label",
+              "fill": "#FFFFFF",
+              "content": "Lihat detail investasi",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "800"
+            },
+            {
+              "type": "icon",
+              "id": "Z4cdG8",
+              "name": "View product detail icon",
+              "width": 17,
+              "height": 17,
+              "icon": "arrow-up-right",
+              "library": "lucide",
+              "fill": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "jtFju",
+          "x": 34,
+          "y": 1330,
+          "name": "Investment approval note",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 322,
+          "content": "Pembelian dan penjualan investasi memerlukan persetujuan admin.",
+          "textAlign": "center",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "rectangle",
+          "id": "vqWpR",
+          "x": 0,
+          "y": 1370,
+          "name": "Bottom scrim",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#FBFDFC00",
+                "position": 0
+              },
+              {
+                "color": "#FBFDFCCC",
+                "position": 0.55
+              },
+              {
+                "color": "#FBFDFC",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 130
+        },
+        {
+          "id": "i0ul76",
+          "type": "ref",
+          "ref": "TlUY0",
+          "name": "Investment floating navigation",
+          "x": 20,
+          "y": 1422,
+          "descendants": {
+            "J1GpKD": {
+              "width": "fill_container",
+              "fill": "#FFFFFF"
+            },
+            "q1f3mg": {
+              "fill": "#5F6B76"
+            },
+            "efJPr": {
+              "enabled": false
+            },
+            "uW8yJ": {
+              "width": 120,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 110,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#004E50",
+                    "position": 0
+                  },
+                  {
+                    "color": "#006A66",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#008579",
+                    "position": 1
+                  }
+                ]
+              }
+            },
+            "gpTM0": {
+              "fill": "#FFFFFF"
+            },
+            "deD6p": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "OdDeT",
+      "x": 3330,
+      "y": 100,
+      "name": "10 / INVEST-02 / Dashboard / Portofolio",
+      "clip": true,
+      "width": 390,
+      "height": 1680,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            0,
+            0,
+            32,
+            32
+          ],
+          "id": "xxoQ7",
+          "x": 0,
+          "y": 0,
+          "name": "Investment hero gradient",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 132,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#003F42",
+                "position": 0
+              },
+              {
+                "color": "#006A66",
+                "position": 0.48
+              },
+              {
+                "color": "#08A39E",
+                "position": 0.78
+              },
+              {
+                "color": "#5FDEA9",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 446
+        },
+        {
+          "type": "text",
+          "id": "ECSUp",
+          "x": 20,
+          "y": 11,
+          "name": "Status time",
+          "fill": "#FFFFFF",
+          "content": "9:41",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "G2UZL",
+          "x": 324,
+          "y": 10,
+          "name": "Status wifi",
+          "width": 14,
+          "height": 14,
+          "icon": "wifi",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "icon",
+          "id": "mO06U",
+          "x": 350,
+          "y": 9,
+          "name": "Status battery",
+          "width": 16,
+          "height": 16,
+          "icon": "battery_full",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "id": "l2VWe",
+          "x": 20,
+          "y": 50,
+          "name": "Investment page title",
+          "fill": "#FFFFFF",
+          "content": "Investasi",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "D5tk5",
+          "x": 346,
+          "y": 51,
+          "name": "Investment info",
+          "width": 22,
+          "height": 22,
+          "icon": "help",
+          "library": "Material Symbols Rounded",
+          "fill": "#D5F3E9"
+        },
+        {
+          "type": "text",
+          "id": "Rq7Go",
+          "x": 20,
+          "y": 88,
+          "name": "Total value label",
+          "fill": "#D5F3E9",
+          "content": "Total nilai investasi",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "G43DMy",
+          "x": 20,
+          "y": 112,
+          "name": "Total value amount",
+          "fill": "#FFFFFF",
+          "content": "Rp 556.967.439",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 34,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "y8U4GX",
+          "x": 342,
+          "y": 122,
+          "name": "Investment visibility",
+          "width": 24,
+          "height": 24,
+          "icon": "visibility",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "id": "P02Rlt",
+          "x": 20,
+          "y": 158,
+          "name": "Monthly profit",
+          "fill": "#BFFFE5",
+          "content": "+Rp 18.400.000 bulan ini",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "gtBXV",
+          "x": 20,
+          "y": 192,
+          "name": "Chart title",
+          "fill": "#FFFFFF",
+          "content": "Performa portofolio",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "rectangle",
+          "id": "C3atF",
+          "x": 20,
+          "y": 236,
+          "name": "Chart grid line 236",
+          "fill": "#FFFFFF24",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "id": "TeplT",
+          "x": 20,
+          "y": 274,
+          "name": "Chart grid line 274",
+          "fill": "#FFFFFF24",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "id": "T5dfU",
+          "x": 20,
+          "y": 312,
+          "name": "Chart grid line 312",
+          "fill": "#FFFFFF24",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "UuthW",
+          "x": 35,
+          "y": 279,
+          "name": "Chart bar Apr",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 44
+        },
+        {
+          "type": "text",
+          "id": "P3Yzgr",
+          "x": 33,
+          "y": 330,
+          "name": "Chart month Apr",
+          "fill": "#D5F3E9",
+          "content": "Apr",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "x2eu5",
+          "x": 91,
+          "y": 261,
+          "name": "Chart bar Mei",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 62
+        },
+        {
+          "type": "text",
+          "id": "Z3sNg",
+          "x": 89,
+          "y": 330,
+          "name": "Chart month Mei",
+          "fill": "#D5F3E9",
+          "content": "Mei",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "U2UFnm",
+          "x": 147,
+          "y": 269,
+          "name": "Chart bar Jun",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 54
+        },
+        {
+          "type": "text",
+          "id": "BPaWy",
+          "x": 145,
+          "y": 330,
+          "name": "Chart month Jun",
+          "fill": "#D5F3E9",
+          "content": "Jun",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "M9ev9q",
+          "x": 203,
+          "y": 247,
+          "name": "Chart bar Jul",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 76
+        },
+        {
+          "type": "text",
+          "id": "ASnZb",
+          "x": 201,
+          "y": 330,
+          "name": "Chart month Jul",
+          "fill": "#D5F3E9",
+          "content": "Jul",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "A7rLTv",
+          "x": 259,
+          "y": 235,
+          "name": "Chart bar Agu",
+          "fill": "#FFFFFF66",
+          "width": 28,
+          "height": 88
+        },
+        {
+          "type": "text",
+          "id": "b9l4CM",
+          "x": 257,
+          "y": 330,
+          "name": "Chart month Agu",
+          "fill": "#D5F3E9",
+          "content": "Agu",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            8,
+            8,
+            3,
+            3
+          ],
+          "id": "nQdn2",
+          "x": 315,
+          "y": 217,
+          "name": "Chart bar Sep",
+          "fill": "#BFFFE5",
+          "width": 28,
+          "height": 106
+        },
+        {
+          "type": "text",
+          "id": "d87X5s",
+          "x": 313,
+          "y": 330,
+          "name": "Chart month Sep",
+          "fill": "#D5F3E9",
+          "content": "Sep",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "id": "E6sfTa",
+          "x": 20,
+          "y": 323,
+          "name": "Chart baseline",
+          "fill": "#FFFFFF73",
+          "width": 350,
+          "height": 1
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 18,
+          "id": "E0eAQ",
+          "x": 20,
+          "y": 360,
+          "name": "Capital glass",
+          "fill": "#FFFFFF20",
+          "width": 168,
+          "height": 62,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 14
+          }
+        },
+        {
+          "type": "text",
+          "id": "b5w2h",
+          "x": 36,
+          "y": 372,
+          "name": "Capital label",
+          "fill": "#D5F3E9",
+          "content": "Modal aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "im2l3",
+          "x": 36,
+          "y": 393,
+          "name": "Capital value",
+          "fill": "#FFFFFF",
+          "content": "Rp 400.000.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 16,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 18,
+          "id": "CUj4F",
+          "x": 202,
+          "y": 360,
+          "name": "Profit glass",
+          "fill": "#FFFFFF20",
+          "width": 168,
+          "height": 62,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 14
+          }
+        },
+        {
+          "type": "text",
+          "id": "j8ckj",
+          "x": 218,
+          "y": 372,
+          "name": "Profit total label",
+          "fill": "#D5F3E9",
+          "content": "Akumulasi profit",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "xoeGY",
+          "x": 218,
+          "y": 393,
+          "name": "Profit total value",
+          "fill": "#FFFFFF",
+          "content": "Rp 156.967.439",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 16,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "E59cEu",
+          "x": 20,
+          "y": 474,
+          "name": "Buy Power card",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 135,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#F6FCFA",
+                "position": 0
+              },
+              {
+                "color": "#DDF6ED",
+                "position": 1
+              }
+            ]
+          },
+          "width": 350,
+          "height": 158,
+          "stroke": "#FFFFFF",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A12",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "Q9y2i",
+          "x": 36,
+          "y": 492,
+          "name": "Buy Power icon bg",
+          "width": 40,
+          "height": 40,
+          "fill": "#FFFFFFB8",
+          "cornerRadius": 13,
+          "stroke": "#FFFFFF",
+          "strokeWidth": 1,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "w5wBG6",
+              "name": "Buy Power icon",
+              "width": 21,
+              "height": 21,
+              "icon": "wallet-cards",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "WwIQG",
+          "x": 88,
+          "y": 490,
+          "name": "Buy Power label",
+          "fill": "#5F6B76",
+          "content": "Buy Power tersedia",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "O3Wqd",
+          "x": 88,
+          "y": 513,
+          "name": "Buy Power amount",
+          "fill": "#17324A",
+          "content": "Rp 320.234.999",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 23,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "ZbqR8",
+          "x": 36,
+          "y": 545,
+          "name": "Buy Power caption",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 314,
+          "content": "Saldo untuk membeli produk investasi.",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "T8vtiV",
+          "x": 36,
+          "y": 574,
+          "name": "Buy Power action Top Up",
+          "width": 151,
+          "height": 42,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 110,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#004E50",
+                "position": 0
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "cornerRadius": 16,
+          "stroke": "#007A76",
+          "strokeWidth": 1,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "LGfg9",
+              "name": "Top Up icon",
+              "width": 17,
+              "height": 17,
+              "icon": "plus",
+              "library": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "text",
+              "id": "TGEQ4",
+              "name": "Top Up label",
+              "fill": "#FFFFFF",
+              "content": "Top Up",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "NbLMv",
+          "x": 203,
+          "y": 574,
+          "name": "Buy Power action Mutasi ke Sukarela",
+          "width": 151,
+          "height": 42,
+          "fill": "#FFFFFFB8",
+          "cornerRadius": 16,
+          "stroke": "#D8EAE5",
+          "strokeWidth": 1,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "Tgh5X",
+              "name": "Mutasi ke Sukarela icon",
+              "width": 17,
+              "height": 17,
+              "icon": "arrow-left-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "CFYIJ",
+              "name": "Mutasi ke Sukarela label",
+              "fill": "#006A66",
+              "content": "Mutasi ke Sukarela",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "v8vqv",
+          "x": 20,
+          "y": 666,
+          "name": "Active submission heading",
+          "fill": "#17324A",
+          "content": "Pengajuan aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 20,
+          "id": "gjjob",
+          "x": 20,
+          "y": 706,
+          "name": "Pending purchase card",
+          "fill": "#FFF9ED",
+          "width": 350,
+          "height": 94,
+          "stroke": "#F0D9A5",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A0A",
+            "offset": {
+              "x": 0,
+              "y": 6
+            },
+            "blur": 16
+          }
+        },
+        {
+          "type": "frame",
+          "id": "mzHBe",
+          "x": 36,
+          "y": 727,
+          "name": "Pending investment icon bg",
+          "width": 42,
+          "height": 42,
+          "fill": "#FFF0C9",
+          "cornerRadius": 14,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "SRSc8",
+              "name": "Pending investment icon",
+              "width": 21,
+              "height": 21,
+              "icon": "clock-3",
+              "library": "lucide",
+              "fill": "#A16400"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "GGDI8",
+          "x": 92,
+          "y": 718,
+          "name": "Pending product name",
+          "fill": "#17324A",
+          "content": "Sarasaland Residence",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "Iz88T",
+          "x": 92,
+          "y": 743,
+          "name": "Pending purchase detail",
+          "fill": "#5F6B76",
+          "content": "3 lot · Rp 1.500.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "L6Piwn",
+          "x": 228,
+          "y": 764,
+          "name": "Pending status",
+          "width": 126,
+          "height": 24,
+          "fill": "#FFE8AF",
+          "cornerRadius": 12,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "y4ir3k",
+              "name": "Pending status label",
+              "fill": "#885500",
+              "content": "Menunggu approval",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "icon",
+          "id": "IBTiA",
+          "x": 336,
+          "y": 728,
+          "name": "Pending chevron",
+          "width": 20,
+          "height": 20,
+          "icon": "chevron-right",
+          "library": "lucide",
+          "fill": "#006A66"
+        },
+        {
+          "type": "text",
+          "id": "DtE66",
+          "x": 20,
+          "y": 838,
+          "name": "Explore investments heading",
+          "fill": "#17324A",
+          "content": "Portofolio Anda",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 22,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "V4YmaS",
+          "x": 312,
+          "y": 844,
+          "name": "Explore see all",
+          "fill": "#006A66",
+          "content": "3 produk",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 26,
+          "id": "NZCZe",
+          "x": 20,
+          "y": 878,
+          "name": "Investment tabs bg",
+          "fill": "#F0F5F3",
+          "width": 350,
+          "height": 52,
+          "stroke": "#E2EBE8",
+          "strokeWidth": 1
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 20,
+          "id": "Bmycq",
+          "x": 198,
+          "y": 884,
+          "name": "Opportunities tab active",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 110,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#004E50",
+                "position": 0
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "width": 166,
+          "height": 40
+        },
+        {
+          "type": "text",
+          "id": "A9yZx",
+          "x": 75,
+          "y": 895,
+          "name": "Opportunities tab label",
+          "fill": "#5F6B76",
+          "content": "Peluang",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "dr99q",
+          "x": 247,
+          "y": 895,
+          "name": "Portfolio tab label",
+          "fill": "#FFFFFF",
+          "content": "Portofolio",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "id": "XcCf0",
+          "x": 0,
+          "y": 1550,
+          "name": "Bottom scrim",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#FBFDFC00",
+                "position": 0
+              },
+              {
+                "color": "#FBFDFCCC",
+                "position": 0.55
+              },
+              {
+                "color": "#FBFDFC",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 130
+        },
+        {
+          "id": "siBmz",
+          "type": "ref",
+          "ref": "TlUY0",
+          "name": "Investment floating navigation",
+          "x": 20,
+          "y": 1602,
+          "descendants": {
+            "J1GpKD": {
+              "width": "fill_container",
+              "fill": "#FFFFFF"
+            },
+            "q1f3mg": {
+              "fill": "#5F6B76"
+            },
+            "efJPr": {
+              "enabled": false
+            },
+            "uW8yJ": {
+              "width": 120,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 110,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#004E50",
+                    "position": 0
+                  },
+                  {
+                    "color": "#006A66",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#008579",
+                    "position": 1
+                  }
+                ]
+              }
+            },
+            "gpTM0": {
+              "fill": "#FFFFFF"
+            },
+            "deD6p": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "type": "frame",
+          "id": "RHLOh",
+          "x": 20,
+          "y": 950,
+          "name": "Portfolio filter Semua 3",
+          "width": 91,
+          "height": 34,
+          "fill": "#006A66",
+          "cornerRadius": 17,
+          "stroke": "#006A66",
+          "strokeWidth": 1,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "SLqOX",
+              "name": "Portfolio filter label Semua 3",
+              "fill": "#FFFFFF",
+              "content": "Semua",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "PM043",
+          "x": 119,
+          "y": 950,
+          "name": "Portfolio filter Aktif 2",
+          "width": 91,
+          "height": 34,
+          "fill": "#F0F5F3",
+          "cornerRadius": 17,
+          "stroke": "#DFE9E6",
+          "strokeWidth": 1,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "y3AQRc",
+              "name": "Portfolio filter label Aktif 2",
+              "fill": "#5F6B76",
+              "content": "Aktif ",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "lRdXn",
+          "x": 218,
+          "y": 950,
+          "name": "Portfolio filter Diproses 1",
+          "width": 112,
+          "height": 34,
+          "fill": "#F0F5F3",
+          "cornerRadius": 17,
+          "stroke": "#DFE9E6",
+          "strokeWidth": 1,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "KPEpU",
+              "name": "Portfolio filter label Diproses 1",
+              "fill": "#5F6B76",
+              "content": "Diproses ",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "giFIf",
+          "x": 20,
+          "y": 1002,
+          "name": "Portfolio card Sarasaland",
+          "fill": "#FFFFFF",
+          "width": 350,
+          "height": 250,
+          "stroke": "#E5EEEB",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A10",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "D8I1t",
+          "x": 36,
+          "y": 1018,
+          "name": "Portfolio image Sarasaland",
+          "metadata": {
+            "type": "unsplash",
+            "username": "adriannetulod",
+            "link": "https://unsplash.com/@adriannetulod",
+            "author": "Adrianne Tulod"
+          },
+          "clip": true,
+          "width": 76,
+          "height": 76,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1650519520215-96c5566bfbae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk2MTYxMjR8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 17
+        },
+        {
+          "type": "text",
+          "id": "HCxSl",
+          "x": 126,
+          "y": 1017,
+          "name": "Portfolio name Sarasaland",
+          "fill": "#17324A",
+          "content": "Sarasaland Residence",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 15,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "cusYU",
+          "x": 126,
+          "y": 1045,
+          "name": "Portfolio active badge",
+          "width": 52,
+          "height": 22,
+          "fill": "#E5F8EF",
+          "cornerRadius": 11,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "SPMlv",
+              "name": "Portfolio active badge label",
+              "fill": "#00865D",
+              "content": "Aktif",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "YLwXG",
+          "x": 126,
+          "y": 1075,
+          "name": "Portfolio lots Sarasaland",
+          "fill": "#5F6B76",
+          "content": "12 lot dimiliki",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "Qy54I",
+          "x": 36,
+          "y": 1112,
+          "name": "Current value label Sarasaland",
+          "fill": "#5F6B76",
+          "content": "Nilai saat ini",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "eJsSO",
+          "x": 36,
+          "y": 1132,
+          "name": "Current value Sarasaland",
+          "fill": "#17324A",
+          "content": "Rp 6.450.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "nf8oT",
+          "x": 36,
+          "y": 1166,
+          "name": "Capital label Sarasaland",
+          "fill": "#5F6B76",
+          "content": "Modal",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "Cw5OI",
+          "x": 36,
+          "y": 1183,
+          "name": "Capital Sarasaland",
+          "fill": "#17324A",
+          "content": "Rp 6.000.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "gMMay",
+          "x": 218,
+          "y": 1166,
+          "name": "Profit label Sarasaland",
+          "fill": "#5F6B76",
+          "content": "Profit",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "Rq7P3",
+          "x": 218,
+          "y": 1183,
+          "name": "Profit Sarasaland",
+          "fill": "#00A676",
+          "content": "+Rp 450.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "H5UZ9R",
+          "x": 36,
+          "y": 1210,
+          "name": "Portfolio detail Sarasaland",
+          "width": 318,
+          "height": 30,
+          "fill": "#EDF7F5",
+          "cornerRadius": 15,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "k9gGC",
+              "name": "Portfolio detail label Sarasaland",
+              "fill": "#006A66",
+              "content": "Lihat detail portofolio",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "hUNz2",
+              "name": "Portfolio detail icon Sarasaland",
+              "width": 15,
+              "height": 15,
+              "icon": "arrow-up-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "AHbGQ",
+          "x": 20,
+          "y": 1270,
+          "name": "Portfolio card Green Valley",
+          "fill": "#FFFFFF",
+          "width": 350,
+          "height": 280,
+          "stroke": "#E5EEEB",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A10",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "TVjoL",
+          "x": 36,
+          "y": 1286,
+          "name": "Portfolio image Green Valley",
+          "metadata": {
+            "type": "unsplash",
+            "username": "ssszy",
+            "link": "https://unsplash.com/@ssszy",
+            "author": "Zhiyuan Sun"
+          },
+          "clip": true,
+          "width": 76,
+          "height": 76,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1747588541727-2b83b23158d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk2MTYxNjR8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 17
+        },
+        {
+          "type": "text",
+          "id": "nICcq",
+          "x": 126,
+          "y": 1285,
+          "name": "Portfolio name Green Valley",
+          "fill": "#17324A",
+          "content": "Green Valley Fund",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 15,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "mvI0E",
+          "x": 126,
+          "y": 1313,
+          "name": "Portfolio processed badge",
+          "width": 130,
+          "height": 22,
+          "fill": "#FFF0C9",
+          "cornerRadius": 11,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "XyL6v",
+              "name": "Portfolio processed badge label",
+              "fill": "#885500",
+              "content": "Penjualan diproses",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "ywbvW",
+          "x": 126,
+          "y": 1343,
+          "name": "Portfolio lots Green Valley",
+          "fill": "#5F6B76",
+          "content": "20 lot dimiliki",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "cg4rH",
+          "x": 36,
+          "y": 1376,
+          "name": "Portfolio selling notice",
+          "width": 318,
+          "height": 34,
+          "fill": "#FFF9ED",
+          "cornerRadius": 12,
+          "stroke": "#F0D9A5",
+          "strokeWidth": 1,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "FoJts",
+              "name": "Portfolio selling notice icon",
+              "width": 15,
+              "height": 15,
+              "icon": "clock-3",
+              "library": "lucide",
+              "fill": "#A16400"
+            },
+            {
+              "type": "text",
+              "id": "hyBRn",
+              "name": "Portfolio selling notice label",
+              "fill": "#885500",
+              "content": "2 lot dalam proses penjualan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "aBD8h",
+          "x": 36,
+          "y": 1424,
+          "name": "Current value label Green Valley",
+          "fill": "#5F6B76",
+          "content": "Nilai saat ini",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "W8lvg",
+          "x": 36,
+          "y": 1444,
+          "name": "Current value Green Valley",
+          "fill": "#17324A",
+          "content": "Rp 9.750.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "G1Ill",
+          "x": 36,
+          "y": 1478,
+          "name": "Capital label Green Valley",
+          "fill": "#5F6B76",
+          "content": "Modal",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "u7wdE",
+          "x": 36,
+          "y": 1495,
+          "name": "Capital Green Valley",
+          "fill": "#17324A",
+          "content": "Rp 10.000.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "uDxn7",
+          "x": 218,
+          "y": 1478,
+          "name": "Profit label Green Valley",
+          "fill": "#5F6B76",
+          "content": "Profit/loss",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "mvzxc",
+          "x": 218,
+          "y": 1495,
+          "name": "Profit Green Valley",
+          "fill": "#D64545",
+          "content": "-Rp 250.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "iCLmA",
+          "x": 36,
+          "y": 1520,
+          "name": "Portfolio detail Green Valley",
+          "width": 318,
+          "height": 30,
+          "fill": "#EDF7F5",
+          "cornerRadius": 15,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "mYuUr",
+              "name": "Portfolio detail label Green Valley",
+              "fill": "#006A66",
+              "content": "Lihat detail portofolio",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "Z9ywrs",
+              "name": "Portfolio detail icon Green Valley",
+              "width": 15,
+              "height": 15,
+              "icon": "arrow-up-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ApBJi",
+      "x": 3800,
+      "y": 100,
+      "name": "11 / MULTIGUNA-01 / Dashboard / Multiple loans",
+      "clip": true,
+      "width": 390,
+      "height": 1450,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "cornerRadius": [
+            0,
+            0,
+            32,
+            32
+          ],
+          "id": "q29Tcb",
+          "x": 0,
+          "y": 0,
+          "name": "Multiguna hero gradient",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 132,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#003F42",
+                "position": 0
+              },
+              {
+                "color": "#006A66",
+                "position": 0.48
+              },
+              {
+                "color": "#08A39E",
+                "position": 0.78
+              },
+              {
+                "color": "#5FDEA9",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 366
+        },
+        {
+          "type": "text",
+          "id": "p2QLk",
+          "x": 20,
+          "y": 11,
+          "name": "Status time",
+          "fill": "#FFFFFF",
+          "content": "9:41",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "lfzlX",
+          "x": 324,
+          "y": 10,
+          "name": "Status wifi",
+          "width": 14,
+          "height": 14,
+          "icon": "wifi",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "icon",
+          "id": "AFY2S",
+          "x": 350,
+          "y": 9,
+          "name": "Status battery",
+          "width": 16,
+          "height": 16,
+          "icon": "battery_full",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "id": "oUAz5",
+          "x": 20,
+          "y": 50,
+          "name": "Multiguna page title",
+          "fill": "#FFFFFF",
+          "content": "Multiguna",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "m7Amu",
+          "x": 346,
+          "y": 51,
+          "name": "Multiguna info",
+          "width": 22,
+          "height": 22,
+          "icon": "help",
+          "library": "Material Symbols Rounded",
+          "fill": "#D5F3E9"
+        },
+        {
+          "type": "text",
+          "id": "si7FT",
+          "x": 20,
+          "y": 94,
+          "name": "Total obligation label",
+          "fill": "#D5F3E9",
+          "content": "Total sisa kewajiban",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "qfOYu",
+          "x": 20,
+          "y": 120,
+          "name": "Total obligation amount",
+          "fill": "#FFFFFF",
+          "content": "Rp 18.750.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 34,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "L13pr",
+          "x": 342,
+          "y": 130,
+          "name": "Obligation visibility",
+          "width": 24,
+          "height": 24,
+          "icon": "visibility",
+          "library": "Material Symbols Rounded",
+          "fill": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "id": "oTmig",
+          "x": 20,
+          "y": 166,
+          "name": "Obligation caption",
+          "fill": "#D5F3E9",
+          "content": "Gabungan dari seluruh pinjaman aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 19,
+          "id": "JCA1S",
+          "x": 20,
+          "y": 206,
+          "name": "Available limit glass",
+          "fill": "#FFFFFF20",
+          "width": 168,
+          "height": 70,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 14
+          }
+        },
+        {
+          "type": "text",
+          "id": "zQrbp",
+          "x": 36,
+          "y": 220,
+          "name": "Available limit label",
+          "fill": "#D5F3E9",
+          "content": "Limit tersedia",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "uv2vF",
+          "x": 36,
+          "y": 243,
+          "name": "Available limit amount",
+          "fill": "#FFFFFF",
+          "content": "Rp 7.250.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 17,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 19,
+          "id": "hBWql",
+          "x": 202,
+          "y": 206,
+          "name": "Active loans glass",
+          "fill": "#FFFFFF20",
+          "width": 168,
+          "height": 70,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 14
+          }
+        },
+        {
+          "type": "text",
+          "id": "q0fAVM",
+          "x": 218,
+          "y": 220,
+          "name": "Active loans label",
+          "fill": "#D5F3E9",
+          "content": "Pinjaman aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "PKuNX",
+          "x": 218,
+          "y": 243,
+          "name": "Active loans count",
+          "fill": "#FFFFFF",
+          "content": "2 kontrak",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 17,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "C8d0Ls",
+          "x": 20,
+          "y": 296,
+          "name": "Apply Multiguna button",
+          "width": 350,
+          "height": 48,
+          "fill": "#FFFFFFE8",
+          "cornerRadius": 18,
+          "stroke": "#FFFFFF",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#003F4026",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 18
+          },
+          "gap": 9,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "gpzGP",
+              "name": "Apply Multiguna icon",
+              "width": 19,
+              "height": 19,
+              "icon": "plus",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "EqcNh",
+              "name": "Apply Multiguna label",
+              "fill": "#006A66",
+              "content": "Ajukan Multiguna",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "Aogvw",
+          "x": 20,
+          "y": 402,
+          "name": "Next installment heading",
+          "fill": "#17324A",
+          "content": "Tagihan terdekat",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 22,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "m6eKGb",
+          "x": 292,
+          "y": 408,
+          "name": "See schedule",
+          "fill": "#006A66",
+          "content": "Lihat jadwal",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "r3ID4z",
+          "x": 20,
+          "y": 444,
+          "name": "Overdue installment card",
+          "fill": "#FFF8F5",
+          "width": 350,
+          "height": 154,
+          "stroke": "#F2B8A9",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#A83B2112",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "sf87C",
+          "x": 36,
+          "y": 462,
+          "name": "Overdue icon bg",
+          "width": 42,
+          "height": 42,
+          "fill": "#FFE4DC",
+          "cornerRadius": 14,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "Ad6HK",
+              "name": "Overdue icon",
+              "width": 22,
+              "height": 22,
+              "icon": "triangle-alert",
+              "library": "lucide",
+              "fill": "#C33F28"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "m37ILx",
+          "x": 92,
+          "y": 458,
+          "name": "Overdue installment label",
+          "fill": "#C33F28",
+          "content": "Cicilan menunggak",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "qbIGt",
+          "x": 92,
+          "y": 481,
+          "name": "Overdue installment amount",
+          "fill": "#17324A",
+          "content": "Rp 625.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 23,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "h7sIS",
+          "x": 268,
+          "y": 459,
+          "name": "Overdue badge",
+          "width": 84,
+          "height": 24,
+          "fill": "#FFDCD3",
+          "cornerRadius": 12,
+          "gap": 5,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "ehVxu",
+              "name": "Overdue badge icon",
+              "width": 13,
+              "height": 13,
+              "icon": "clock-alert",
+              "library": "lucide",
+              "fill": "#B73520"
+            },
+            {
+              "type": "text",
+              "id": "r6ivgk",
+              "name": "Overdue badge label",
+              "fill": "#B73520",
+              "content": "Menunggak",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 9,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "EAFna",
+          "x": 36,
+          "y": 519,
+          "name": "Overdue contract",
+          "fill": "#5F6B76",
+          "content": "MG-2026-001 · Jatuh tempo 10 Sep 2026",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "Jg7HZ",
+          "x": 36,
+          "y": 543,
+          "name": "Overdue period",
+          "fill": "#B73520",
+          "content": "1 periode belum dibayar",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "NHvYv",
+          "x": 218,
+          "y": 532,
+          "name": "Pay overdue button",
+          "width": 134,
+          "height": 48,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 110,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#004E50",
+                "position": 0
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "cornerRadius": 17,
+          "gap": 7,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "V7VgDU",
+              "name": "Pay overdue icon",
+              "width": 17,
+              "height": 17,
+              "icon": "wallet-cards",
+              "library": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "text",
+              "id": "p44Om",
+              "name": "Pay overdue label",
+              "fill": "#FFFFFF",
+              "content": "Bayar cicilan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "Ywdfc",
+          "x": 20,
+          "y": 628,
+          "name": "Loan application heading",
+          "fill": "#17324A",
+          "content": "Pengajuan aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 20,
+          "id": "NXttj",
+          "x": 20,
+          "y": 668,
+          "name": "Pending loan application card",
+          "fill": "#FFF9ED",
+          "width": 350,
+          "height": 92,
+          "stroke": "#F0D9A5",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A0A",
+            "offset": {
+              "x": 0,
+              "y": 6
+            },
+            "blur": 16
+          }
+        },
+        {
+          "type": "frame",
+          "id": "bY96q",
+          "x": 36,
+          "y": 689,
+          "name": "Pending loan icon bg",
+          "width": 42,
+          "height": 42,
+          "fill": "#FFF0C9",
+          "cornerRadius": 14,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "u6X5N",
+              "name": "Pending loan icon",
+              "width": 21,
+              "height": 21,
+              "icon": "file-clock",
+              "library": "lucide",
+              "fill": "#A16400"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "vjzo8",
+          "x": 92,
+          "y": 680,
+          "name": "Pending loan title",
+          "fill": "#17324A",
+          "content": "Pengajuan Rp 4.000.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "hg6Nv",
+          "x": 92,
+          "y": 706,
+          "name": "Pending loan meta",
+          "fill": "#5F6B76",
+          "content": "Tenor 12 bulan · 15 Sep 2026",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "WCLJc",
+          "x": 218,
+          "y": 727,
+          "name": "Pending loan status",
+          "width": 134,
+          "height": 23,
+          "fill": "#FFE8AF",
+          "cornerRadius": 12,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "BAS0E",
+              "name": "Pending loan status label",
+              "fill": "#885500",
+              "content": "Sedang diproses",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "icon",
+          "id": "k1evD",
+          "x": 336,
+          "y": 687,
+          "name": "Pending loan chevron",
+          "width": 20,
+          "height": 20,
+          "icon": "chevron-right",
+          "library": "lucide",
+          "fill": "#006A66"
+        },
+        {
+          "type": "text",
+          "id": "unuub",
+          "x": 20,
+          "y": 798,
+          "name": "Active loans heading",
+          "fill": "#17324A",
+          "content": "Pinjaman aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 22,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "l4K2aB",
+          "x": 298,
+          "y": 804,
+          "name": "Active loans count link",
+          "fill": "#006A66",
+          "content": "2 kontrak",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "600"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "cxUzV",
+          "x": 20,
+          "y": 840,
+          "name": "Active loan card normal",
+          "fill": "#FFFFFF",
+          "width": 350,
+          "height": 204,
+          "stroke": "#E5EEEB",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A10",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "OwwOp",
+          "x": 36,
+          "y": 858,
+          "name": "Normal loan icon bg",
+          "width": 42,
+          "height": 42,
+          "fill": "#EDF7F5",
+          "cornerRadius": 14,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "R9YldA",
+              "name": "Normal loan icon",
+              "width": 21,
+              "height": 21,
+              "icon": "landmark",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "D8AKiB",
+          "x": 92,
+          "y": 854,
+          "name": "Normal loan contract",
+          "fill": "#17324A",
+          "content": "Multiguna MG-2026-002",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "B768g",
+          "x": 300,
+          "y": 880,
+          "name": "Normal loan active badge",
+          "width": 52,
+          "height": 22,
+          "fill": "#E5F8EF",
+          "cornerRadius": 11,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "U95KoS",
+              "name": "Normal loan active badge label",
+              "fill": "#00865D",
+              "content": "Aktif",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "HDMFr",
+          "x": 36,
+          "y": 916,
+          "name": "Normal loan obligation label",
+          "fill": "#5F6B76",
+          "content": "Sisa kewajiban",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "VXgbH",
+          "x": 36,
+          "y": 936,
+          "name": "Normal loan obligation",
+          "fill": "#17324A",
+          "content": "Rp 6.250.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 4,
+          "id": "APKgQ",
+          "x": 36,
+          "y": 970,
+          "name": "Normal loan progress bg",
+          "fill": "#E4EEEB",
+          "width": 318,
+          "height": 7
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 4,
+          "id": "D7w2Tg",
+          "x": 36,
+          "y": 970,
+          "name": "Normal loan progress",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 90,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#5FDEA9",
+                "position": 0
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "width": 143,
+          "height": 7
+        },
+        {
+          "type": "text",
+          "id": "SSjh7",
+          "x": 36,
+          "y": 983,
+          "name": "Normal loan paid progress",
+          "fill": "#5F6B76",
+          "content": "45% terbayar",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "FVwob",
+          "x": 36,
+          "y": 1008,
+          "name": "Normal loan installment",
+          "fill": "#17324A",
+          "content": "Cicilan Rp 525.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "AR9pA",
+          "x": 206,
+          "y": 1008,
+          "name": "Normal loan next due",
+          "fill": "#5F6B76",
+          "content": "Berikutnya 25 Sep 2026",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "600"
+        },
+        {
+          "type": "icon",
+          "id": "nAmQ1",
+          "x": 336,
+          "y": 854,
+          "name": "Normal loan detail",
+          "width": 20,
+          "height": 20,
+          "icon": "chevron-right",
+          "library": "lucide",
+          "fill": "#006A66"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "p46Bt",
+          "x": 20,
+          "y": 1062,
+          "name": "Active loan card overdue",
+          "fill": "#FFFFFF",
+          "width": 350,
+          "height": 220,
+          "stroke": "#F0CCC2",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#A83B2110",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "hhfTY",
+          "x": 36,
+          "y": 1080,
+          "name": "Overdue loan icon bg",
+          "width": 42,
+          "height": 42,
+          "fill": "#FFE9E2",
+          "cornerRadius": 14,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "Pn7zt",
+              "name": "Overdue loan icon",
+              "width": 21,
+              "height": 21,
+              "icon": "landmark",
+              "library": "lucide",
+              "fill": "#C33F28"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "U5FayT",
+          "x": 92,
+          "y": 1076,
+          "name": "Overdue loan contract",
+          "fill": "#17324A",
+          "content": "Multiguna MG-2025-004",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "xDrMZ",
+          "x": 260,
+          "y": 1102,
+          "name": "Overdue loan badge",
+          "width": 92,
+          "height": 22,
+          "fill": "#FFDCD3",
+          "cornerRadius": 11,
+          "gap": 5,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "p21KTC",
+              "name": "Overdue loan badge icon",
+              "width": 12,
+              "height": 12,
+              "icon": "triangle-alert",
+              "library": "lucide",
+              "fill": "#B73520"
+            },
+            {
+              "type": "text",
+              "id": "pTgzU",
+              "name": "Overdue loan badge label",
+              "fill": "#B73520",
+              "content": "Menunggak",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 9,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "AiNC7",
+          "x": 36,
+          "y": 1140,
+          "name": "Overdue loan obligation label",
+          "fill": "#5F6B76",
+          "content": "Sisa kewajiban",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "xs63t",
+          "x": 36,
+          "y": 1160,
+          "name": "Overdue loan obligation",
+          "fill": "#17324A",
+          "content": "Rp 12.500.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 4,
+          "id": "eGmf7",
+          "x": 36,
+          "y": 1194,
+          "name": "Overdue loan progress bg",
+          "fill": "#E4EEEB",
+          "width": 318,
+          "height": 7
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 4,
+          "id": "H2ovy",
+          "x": 36,
+          "y": 1194,
+          "name": "Overdue loan progress",
+          "fill": "#E58A73",
+          "width": 95,
+          "height": 7
+        },
+        {
+          "type": "text",
+          "id": "wVQrg",
+          "x": 36,
+          "y": 1207,
+          "name": "Overdue loan paid progress",
+          "fill": "#5F6B76",
+          "content": "30% terbayar",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "AB4Na",
+          "x": 36,
+          "y": 1232,
+          "name": "Overdue loan installment",
+          "fill": "#17324A",
+          "content": "Cicilan Rp 625.000",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "RzZVj",
+          "x": 206,
+          "y": 1232,
+          "name": "Overdue loan due meta",
+          "fill": "#B73520",
+          "content": "Terlambat 1 periode",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "LEDGm",
+          "x": 336,
+          "y": 1076,
+          "name": "Overdue loan detail",
+          "width": 20,
+          "height": 20,
+          "icon": "chevron-right",
+          "library": "lucide",
+          "fill": "#006A66"
+        },
+        {
+          "type": "rectangle",
+          "id": "tDOS3",
+          "x": 0,
+          "y": 1320,
+          "name": "Bottom scrim",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#FBFDFC00",
+                "position": 0
+              },
+              {
+                "color": "#FBFDFCCC",
+                "position": 0.55
+              },
+              {
+                "color": "#FBFDFC",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 130
+        },
+        {
+          "id": "z3avq",
+          "type": "ref",
+          "ref": "TlUY0",
+          "name": "Multiguna floating navigation",
+          "x": 20,
+          "y": 1372,
+          "descendants": {
+            "J1GpKD": {
+              "width": "fill_container",
+              "fill": "#FFFFFF"
+            },
+            "q1f3mg": {
+              "fill": "#5F6B76"
+            },
+            "efJPr": {
+              "enabled": false
+            },
+            "g6uMt": {
+              "width": 126,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 110,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#004E50",
+                    "position": 0
+                  },
+                  {
+                    "color": "#006A66",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#008579",
+                    "position": 1
+                  }
+                ]
+              }
+            },
+            "dlk52": {
+              "fill": "#FFFFFF"
+            },
+            "qLK09": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "G6Ak7K",
+      "x": 4270,
+      "y": 100,
+      "name": "12 / PROFILE-01 / Member identity",
+      "clip": true,
+      "width": 390,
+      "height": 1080,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "h59JmN",
+          "x": 20,
+          "y": 11,
+          "name": "Status time",
+          "fill": "#17324A",
+          "content": "9:41",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "x0vXz",
+          "x": 324,
+          "y": 10,
+          "name": "Status wifi",
+          "width": 14,
+          "height": 14,
+          "icon": "wifi",
+          "library": "Material Symbols Rounded",
+          "fill": "#17324A"
+        },
+        {
+          "type": "icon",
+          "id": "uIoMQ",
+          "x": 350,
+          "y": 9,
+          "name": "Status battery",
+          "width": 16,
+          "height": 16,
+          "icon": "battery_full",
+          "library": "Material Symbols Rounded",
+          "fill": "#17324A"
+        },
+        {
+          "type": "text",
+          "id": "j66Ru",
+          "x": 20,
+          "y": 50,
+          "name": "Profile page title",
+          "fill": "#17324A",
+          "content": "Profil",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 24,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 28,
+          "id": "u4Mb6B",
+          "x": 20,
+          "y": 88,
+          "name": "Digital member card",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 132,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#003F42",
+                "position": 0
+              },
+              {
+                "color": "#006A66",
+                "position": 0.5
+              },
+              {
+                "color": "#08A39E",
+                "position": 0.8
+              },
+              {
+                "color": "#5FDEA9",
+                "position": 1
+              }
+            ]
+          },
+          "width": 350,
+          "height": 258,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#006A6633",
+            "offset": {
+              "x": 0,
+              "y": 14
+            },
+            "blur": 30
+          }
+        },
+        {
+          "type": "ellipse",
+          "id": "zsS4t",
+          "x": 250,
+          "y": 66,
+          "name": "Member card glow",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "radial",
+            "enabled": true,
+            "opacity": 0.36,
+            "rotation": 0,
+            "size": {
+              "width": 1,
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#C7FFE6",
+                "position": 0
+              },
+              {
+                "color": "#C7FFE600",
+                "position": 1
+              }
+            ]
+          },
+          "width": 140,
+          "height": 140
+        },
+        {
+          "type": "frame",
+          "id": "x4m46L",
+          "x": 36,
+          "y": 106,
+          "name": "Member card logo box",
+          "width": 112,
+          "height": 34,
+          "fill": "#FFFFFFE8",
+          "cornerRadius": 12,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "sD4uG",
+              "name": "Member card logo text",
+              "fill": "#006A66",
+              "content": "BASYA",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 15,
+              "fontWeight": "800",
+              "letterSpacing": 1.2
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "VQU59",
+          "x": 254,
+          "y": 113,
+          "name": "Member card type",
+          "fill": "#D5F3E9",
+          "content": "KARTU ANGGOTA",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 9,
+          "fontWeight": "700",
+          "letterSpacing": 1.1
+        },
+        {
+          "type": "frame",
+          "id": "njyRP",
+          "x": 36,
+          "y": 158,
+          "name": "Member photo",
+          "clip": true,
+          "width": 78,
+          "height": 78,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "Untitled%20design%20(3).png",
+            "mode": "fill"
+          },
+          "cornerRadius": 24,
+          "stroke": "#FFFFFFA6",
+          "strokeWidth": 2
+        },
+        {
+          "type": "text",
+          "id": "NNUve",
+          "x": 132,
+          "y": 160,
+          "name": "Member name",
+          "fill": "#FFFFFF",
+          "content": "Fakhri",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 24,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "UN4e0",
+          "x": 132,
+          "y": 196,
+          "name": "Member number label",
+          "fill": "#D5F3E9",
+          "content": "Nomor anggota",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "GCPGU",
+          "x": 132,
+          "y": 214,
+          "name": "Member number",
+          "fill": "#FFFFFF",
+          "content": "BI-000178",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 14,
+          "fontWeight": "800",
+          "letterSpacing": 0.6
+        },
+        {
+          "type": "text",
+          "id": "r07wbG",
+          "x": 36,
+          "y": 260,
+          "name": "Member since label",
+          "fill": "#D5F3E9",
+          "content": "Bergabung sejak",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "aSwJT",
+          "x": 36,
+          "y": 278,
+          "name": "Member since",
+          "fill": "#FFFFFF",
+          "content": "14 Januari 2024",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "vW7N6",
+          "x": 196,
+          "y": 264,
+          "name": "Active member badge",
+          "width": 92,
+          "height": 28,
+          "fill": "#FFFFFF24",
+          "cornerRadius": 14,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 12
+          },
+          "gap": 6,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "wUL02",
+              "name": "Active member badge icon",
+              "width": 14,
+              "height": 14,
+              "icon": "badge-check",
+              "library": "lucide",
+              "fill": "#BFFFE5"
+            },
+            {
+              "type": "text",
+              "id": "vcvye",
+              "name": "Active member badge label",
+              "fill": "#FFFFFF",
+              "content": "Aktif",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "I6unhb",
+          "x": 296,
+          "y": 264,
+          "name": "Investor member badge",
+          "width": 58,
+          "height": 28,
+          "fill": "#FFFFFF24",
+          "cornerRadius": 14,
+          "stroke": "#FFFFFF5C",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "background_blur",
+            "radius": 12
+          },
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "kS3pQ",
+              "name": "Investor member badge label",
+              "fill": "#FFFFFF",
+              "content": "Investor",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 9,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "YzH2u",
+          "x": 20,
+          "y": 384,
+          "name": "Account information heading",
+          "fill": "#17324A",
+          "content": "Informasi akun",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 24,
+          "id": "dcYiX",
+          "x": 20,
+          "y": 422,
+          "name": "Account information card",
+          "fill": "#FFFFFF",
+          "width": 350,
+          "height": 230,
+          "stroke": "#E5EEEB",
+          "strokeWidth": 1,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#17324A0D",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 20
+          }
+        },
+        {
+          "type": "frame",
+          "id": "Rf9mC",
+          "x": 36,
+          "y": 438,
+          "name": "Email icon bg",
+          "width": 40,
+          "height": 40,
+          "fill": "#EDF7F5",
+          "cornerRadius": 13,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "CuhA9",
+              "name": "Email icon",
+              "width": 19,
+              "height": 19,
+              "icon": "mail",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "BiZvj",
+          "x": 90,
+          "y": 439,
+          "name": "Email label",
+          "fill": "#5F6B76",
+          "content": "Email",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "Iv3wj",
+          "x": 90,
+          "y": 457,
+          "name": "Email value",
+          "fill": "#17324A",
+          "content": "fakhri@mahirland.id",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "rectangle",
+          "id": "CJ7zW",
+          "x": 90,
+          "y": 487,
+          "name": "Email divider",
+          "fill": "#E7EEEC",
+          "width": 264,
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "HPESZ",
+          "x": 36,
+          "y": 494,
+          "name": "Nomor telepon icon bg",
+          "width": 40,
+          "height": 40,
+          "fill": "#EDF7F5",
+          "cornerRadius": 13,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "LCmVT",
+              "name": "Nomor telepon icon",
+              "width": 19,
+              "height": 19,
+              "icon": "smartphone",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "oViML",
+          "x": 90,
+          "y": 495,
+          "name": "Nomor telepon label",
+          "fill": "#5F6B76",
+          "content": "Nomor telepon",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "HQ45R",
+          "x": 90,
+          "y": 513,
+          "name": "Nomor telepon value",
+          "fill": "#17324A",
+          "content": "0812 •••• 4821",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "rectangle",
+          "id": "sHGls",
+          "x": 90,
+          "y": 543,
+          "name": "Nomor telepon divider",
+          "fill": "#E7EEEC",
+          "width": 264,
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "N4GGw7",
+          "x": 36,
+          "y": 550,
+          "name": "Rekening pencairan icon bg",
+          "width": 40,
+          "height": 40,
+          "fill": "#EDF7F5",
+          "cornerRadius": 13,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "hdSku",
+              "name": "Rekening pencairan icon",
+              "width": 19,
+              "height": 19,
+              "icon": "landmark",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "xDVEh",
+          "x": 90,
+          "y": 551,
+          "name": "Rekening pencairan label",
+          "fill": "#5F6B76",
+          "content": "Rekening pencairan",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "z8nfO",
+          "x": 90,
+          "y": 569,
+          "name": "Rekening pencairan value",
+          "fill": "#17324A",
+          "content": "BCA · •••• 4821",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "rectangle",
+          "id": "OkiaE",
+          "x": 90,
+          "y": 599,
+          "name": "Rekening pencairan divider",
+          "fill": "#E7EEEC",
+          "width": 264,
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "X9krlU",
+          "x": 36,
+          "y": 606,
+          "name": "Status keanggotaan icon bg",
+          "width": 40,
+          "height": 40,
+          "fill": "#EDF7F5",
+          "cornerRadius": 13,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "bNOhQ",
+              "name": "Status keanggotaan icon",
+              "width": 19,
+              "height": 19,
+              "icon": "shield-check",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "lJhgG",
+          "x": 90,
+          "y": 607,
+          "name": "Status keanggotaan label",
+          "fill": "#5F6B76",
+          "content": "Status keanggotaan",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "text",
+          "id": "taSkW",
+          "x": 90,
+          "y": 625,
+          "name": "Status keanggotaan value",
+          "fill": "#00865D",
+          "content": "Aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "c1ykKA",
+          "x": 20,
+          "y": 690,
+          "name": "Account actions heading",
+          "fill": "#17324A",
+          "content": "Pengaturan akun",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 21,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "joNUE",
+          "x": 20,
+          "y": 728,
+          "name": "Edit profile button",
+          "width": 350,
+          "height": 54,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 110,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#004E50",
+                "position": 0
+              },
+              {
+                "color": "#006A66",
+                "position": 0.5
+              },
+              {
+                "color": "#008579",
+                "position": 1
+              }
+            ]
+          },
+          "cornerRadius": 19,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#006A6626",
+            "offset": {
+              "x": 0,
+              "y": 8
+            },
+            "blur": 18
+          },
+          "gap": 9,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "bcaCp",
+              "name": "Edit profile icon",
+              "width": 19,
+              "height": 19,
+              "icon": "user-pen",
+              "library": "lucide",
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "text",
+              "id": "DCjDv",
+              "name": "Edit profile label",
+              "fill": "#FFFFFF",
+              "content": "Edit profil",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "yYKvV",
+          "x": 20,
+          "y": 796,
+          "name": "Change password button",
+          "width": 350,
+          "height": 54,
+          "fill": "#FFFFFF",
+          "cornerRadius": 19,
+          "stroke": "#DCE8E5",
+          "strokeWidth": 1,
+          "gap": 9,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "i2AfX2",
+              "name": "Change password icon",
+              "width": 19,
+              "height": 19,
+              "icon": "key-round",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "zPm5m",
+              "name": "Change password label",
+              "fill": "#006A66",
+              "content": "Ganti password",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "dzKZ7",
+          "x": 20,
+          "y": 882,
+          "name": "Logout button",
+          "width": 350,
+          "height": 52,
+          "fill": "#FFF7F5",
+          "cornerRadius": 18,
+          "stroke": "#F0C8BE",
+          "strokeWidth": 1,
+          "gap": 9,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "ZEaS9",
+              "name": "Logout icon",
+              "width": 18,
+              "height": 18,
+              "icon": "log-out",
+              "library": "lucide",
+              "fill": "#C33F28"
+            },
+            {
+              "type": "text",
+              "id": "UD27s",
+              "name": "Logout label",
+              "fill": "#C33F28",
+              "content": "Keluar dari akun",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "800"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "CCeUj",
+          "x": 135,
+          "y": 950,
+          "name": "App version",
+          "fill": "#8A969C",
+          "content": "Basya Investama · v1.0.0",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 10,
+          "fontWeight": "500"
+        },
+        {
+          "type": "rectangle",
+          "id": "ZWm2R",
+          "x": 0,
+          "y": 948,
+          "name": "Bottom scrim",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#FBFDFC00",
+                "position": 0
+              },
+              {
+                "color": "#FBFDFCCC",
+                "position": 0.55
+              },
+              {
+                "color": "#FBFDFC",
+                "position": 1
+              }
+            ]
+          },
+          "width": 390,
+          "height": 132
+        },
+        {
+          "id": "yFaSJ",
+          "type": "ref",
+          "ref": "TlUY0",
+          "name": "Profile floating navigation",
+          "x": 20,
+          "y": 1000,
+          "descendants": {
+            "J1GpKD": {
+              "width": "fill_container",
+              "fill": "#FFFFFF"
+            },
+            "q1f3mg": {
+              "fill": "#5F6B76"
+            },
+            "efJPr": {
+              "enabled": false
+            },
+            "QLOnX": {
+              "width": 108,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 110,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#004E50",
+                    "position": 0
+                  },
+                  {
+                    "color": "#006A66",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#008579",
+                    "position": 1
+                  }
+                ]
+              }
+            },
+            "NXWOx": {
+              "fill": "#FFFFFF"
+            },
+            "JDNsS": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "YyY4e",
+      "x": -483,
+      "y": 100,
+      "name": "03 / AUTH-01 / Login",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "OuGbB",
+          "x": 0,
+          "y": 0,
+          "name": "Frosted brand background",
+          "clip": true,
+          "width": 390,
+          "height": 844,
+          "layout": "none",
+          "children": [
+            {
+              "type": "ellipse",
+              "id": "EAq2T",
+              "x": -150,
+              "y": -110,
+              "name": "Mint glow",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#5FDEA995",
+                    "position": 0
+                  },
+                  {
+                    "color": "#A4EDD267",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 480,
+              "height": 430,
+              "effect": {
+                "type": "blur",
+                "radius": 24
+              }
+            },
+            {
+              "type": "ellipse",
+              "id": "kEodf",
+              "x": 170,
+              "y": -90,
+              "name": "Teal glow",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#00857978",
+                    "position": 0
+                  },
+                  {
+                    "color": "#67D3C154",
+                    "position": 0.52
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 410,
+              "height": 390,
+              "effect": {
+                "type": "blur",
+                "radius": 28
+              }
+            },
+            {
+              "type": "ellipse",
+              "id": "T3rLI",
+              "x": 175,
+              "y": 555,
+              "name": "Lower mint glow",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#5FDEA938",
+                    "position": 0
+                  },
+                  {
+                    "color": "#B9F3DE24",
+                    "position": 0.55
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 330,
+              "height": 330,
+              "effect": {
+                "type": "blur",
+                "radius": 56
+              }
+            },
+            {
+              "type": "rectangle",
+              "id": "r8LiC",
+              "x": 0,
+              "y": 0,
+              "name": "Frosted white veil",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#FFFFFF24",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FFFFFF68",
+                    "position": 0.42
+                  },
+                  {
+                    "color": "#FFFFFFD4",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 390,
+              "height": 844
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "FvGa7",
+          "x": 0,
+          "y": 0,
+          "name": "System status",
+          "width": 390,
+          "height": 62,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "sYYXd",
+              "name": "Time",
+              "fill": "$basya-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "9:41",
+              "lineHeight": 1.45,
+              "fontFamily": "$basya-font",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "OWck2",
+              "name": "System icons",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "KKGMr",
+                  "name": "Signal",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "wifi",
+                  "library": "lucide",
+                  "fill": "$basya-ink"
+                },
+                {
+                  "type": "icon",
+                  "id": "cgVvN",
+                  "name": "Battery",
+                  "width": 20,
+                  "height": 20,
+                  "icon": "battery-full",
+                  "library": "lucide",
+                  "fill": "$basya-ink"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "X4KGP0",
+          "x": 0,
+          "y": 62,
+          "name": "Balanced content",
+          "width": 390,
+          "height": 782,
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            28,
+            24
+          ],
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "JXayP",
+              "name": "Welcome group",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "LfetR",
+                  "name": "Welcome line",
+                  "fill": "#17324A",
+                  "content": "Selamat datang",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 30,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "XVCRM",
+                  "name": "Inline brand",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "YG0Ze",
+                      "name": "Preposition",
+                      "fill": "#17324A",
+                      "content": "di",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 30,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "V4nljE",
+                      "name": "Basya logo",
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "assets/logo/logo_basya.png",
+                        "mode": "fit"
+                      },
+                      "width": 142,
+                      "height": 28
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "I9GKrv",
+                  "name": "Welcome description",
+                  "fill": "#5F6B76",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Simpanan dan investasi Anda,\ndalam satu genggaman.",
+                  "lineHeight": 1.45,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "vhRYB",
+              "name": "Login form",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 18,
+              "children": [
+                {
+                  "id": "oFLz6",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Username field",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Username atau email",
+                      "enabled": false
+                    },
+                    "j57vq": {
+                      "content": "Masukkan username atau email"
+                    },
+                    "tZ6ZV": {
+                      "icon": "user-round"
+                    }
+                  }
+                },
+                {
+                  "id": "Bzd4V",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Password field",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Kata sandi",
+                      "enabled": false
+                    },
+                    "j57vq": {
+                      "content": "Masukkan kata sandi"
+                    },
+                    "tZ6ZV": {
+                      "icon": "eye-off"
+                    }
+                  }
+                },
+                {
+                  "id": "OVyeR",
+                  "type": "ref",
+                  "ref": "hMfe5",
+                  "name": "Login button",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "utgKq",
+              "name": "Member support",
+              "width": "fill_container",
+              "height": 44,
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "I7Cbd",
+                  "name": "Support icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "headphones",
+                  "library": "lucide",
+                  "fill": "#5F6B76"
+                },
+                {
+                  "type": "text",
+                  "id": "hjdKz",
+                  "name": "Support text",
+                  "fill": "#5F6B76",
+                  "content": "Butuh bantuan? Hubungi koperasi",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VivwE",
+              "name": "Brand promise",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 7,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ToGhA",
+                  "name": "Promise text",
+                  "fill": "#006A66",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Tumbuh bersama, melangkah lebih jauh.",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "puZM3",
+                  "name": "Mint accent",
+                  "width": 48,
+                  "height": 4,
+                  "fill": "#5FDEA9",
+                  "cornerRadius": 2
+                }
+              ]
+            }
+          ]
         }
       ]
     }
