@@ -3,72 +3,142 @@ enum MultigunaLoanStatus { active, overdue }
 class MultigunaLoan {
   const MultigunaLoan({
     required this.contractNumber,
-    required this.remainingBalance,
-    required this.paidProgress,
+    required this.startDate,
+    required this.endDate,
     required this.installmentAmount,
-    required this.scheduleText,
-    required this.status,
+    required this.totalPayment,
+    required this.remainingBalance,
+    required this.dueDay,
+    required this.nextDueDate,
+    required this.paidInstallments,
+    required this.totalInstallments,
+    required this.nextInstallmentNumber,
+    required this.collectibilityValue,
+    required this.collectibilityLabel,
+    required this.collectibilityCategory,
+    required this.paymentStatusCode,
+    required this.paymentStatusLabel,
+    required this.arrearsMonths,
+    required this.arrearsAmount,
   });
 
   final String contractNumber;
-  final int remainingBalance;
-  final double paidProgress;
+  final DateTime startDate;
+  final DateTime endDate;
   final int installmentAmount;
-  final String scheduleText;
-  final MultigunaLoanStatus status;
+  final int totalPayment;
+  final int remainingBalance;
+  final int dueDay;
+  final DateTime nextDueDate;
+  final int paidInstallments;
+  final int totalInstallments;
+  final int nextInstallmentNumber;
+  final int collectibilityValue;
+  final String collectibilityLabel;
+  final String collectibilityCategory;
+  final String paymentStatusCode;
+  final String paymentStatusLabel;
+  final int arrearsMonths;
+  final int arrearsAmount;
+
+  bool get isOverdue => paymentStatusCode.toLowerCase() == 'overdue';
+  MultigunaLoanStatus get status =>
+      isOverdue ? MultigunaLoanStatus.overdue : MultigunaLoanStatus.active;
+  double get paidProgress => totalInstallments <= 0
+      ? 0
+      : (paidInstallments / totalInstallments).clamp(0, 1).toDouble();
+  int get nextAmount => arrearsAmount > 0 ? arrearsAmount : installmentAmount;
 }
 
 class MultigunaOverviewData {
   const MultigunaOverviewData({
+    required this.accessible,
+    required this.currency,
+    required this.hasMultiguna,
+    required this.totalContracts,
+    required this.totalInstallment,
     required this.totalObligation,
-    required this.availableLimit,
-    required this.nextInstallment,
-    required this.nextInstallmentContract,
-    required this.nextInstallmentDueDate,
-    required this.overduePeriods,
-    required this.pendingApplicationAmount,
-    required this.pendingApplicationTenor,
-    required this.pendingApplicationDate,
     required this.loans,
   });
 
+  final bool accessible;
+  final String currency;
+  final bool hasMultiguna;
+  final int totalContracts;
+  final int totalInstallment;
   final int totalObligation;
-  final int availableLimit;
-  final int nextInstallment;
-  final String nextInstallmentContract;
-  final String nextInstallmentDueDate;
-  final int overduePeriods;
-  final int pendingApplicationAmount;
-  final int pendingApplicationTenor;
-  final String pendingApplicationDate;
   final List<MultigunaLoan> loans;
 
-  static const demo = MultigunaOverviewData(
+  bool get hasActiveLoan =>
+      accessible && hasMultiguna && totalContracts > 0 && loans.isNotEmpty;
+
+  MultigunaLoan? get nearestLoan {
+    if (loans.isEmpty) return null;
+    final sorted = [...loans]
+      ..sort((a, b) {
+        if (a.isOverdue != b.isOverdue) return a.isOverdue ? -1 : 1;
+        return a.nextDueDate.compareTo(b.nextDueDate);
+      });
+    return sorted.first;
+  }
+
+  static const unavailable = MultigunaOverviewData(
+    accessible: false,
+    currency: 'IDR',
+    hasMultiguna: false,
+    totalContracts: 0,
+    totalInstallment: 0,
+    totalObligation: 0,
+    loans: [],
+  );
+
+  static final demo = MultigunaOverviewData(
+    accessible: true,
+    currency: 'IDR',
+    hasMultiguna: true,
+    totalContracts: 2,
+    totalInstallment: 1150000,
     totalObligation: 18750000,
-    availableLimit: 7250000,
-    nextInstallment: 625000,
-    nextInstallmentContract: 'MG-2026-001',
-    nextInstallmentDueDate: '10 Sep 2026',
-    overduePeriods: 1,
-    pendingApplicationAmount: 4000000,
-    pendingApplicationTenor: 12,
-    pendingApplicationDate: '15 Sep 2026',
     loans: [
       MultigunaLoan(
         contractNumber: 'MG-2026-002',
-        remainingBalance: 6250000,
-        paidProgress: .45,
+        startDate: DateTime(2026, 1, 25),
+        endDate: DateTime(2028, 1, 25),
         installmentAmount: 525000,
-        scheduleText: 'Berikutnya 25 Sep 2026',
-        status: MultigunaLoanStatus.active,
+        totalPayment: 5750000,
+        remainingBalance: 6250000,
+        dueDay: 25,
+        nextDueDate: DateTime(2026, 9, 25),
+        paidInstallments: 11,
+        totalInstallments: 24,
+        nextInstallmentNumber: 12,
+        collectibilityValue: 0,
+        collectibilityLabel: 'COL 0',
+        collectibilityCategory: 'normal',
+        paymentStatusCode: 'due',
+        paymentStatusLabel: 'Waktu Bayar',
+        arrearsMonths: 0,
+        arrearsAmount: 0,
       ),
       MultigunaLoan(
         contractNumber: 'MG-2025-004',
-        remainingBalance: 12500000,
-        paidProgress: .30,
+        startDate: DateTime(2025, 10, 10),
+        endDate: DateTime(2027, 10, 10),
         installmentAmount: 625000,
-        scheduleText: 'Terlambat 1 periode',
-        status: MultigunaLoanStatus.overdue,
+        totalPayment: 5250000,
+        remainingBalance: 12500000,
+        dueDay: 10,
+        nextDueDate: DateTime(2026, 9, 10),
+        paidInstallments: 8,
+        totalInstallments: 24,
+        nextInstallmentNumber: 9,
+        collectibilityValue: -1,
+        collectibilityLabel: 'COL -1',
+        collectibilityCategory: 'warning',
+        paymentStatusCode: 'overdue',
+        paymentStatusLabel: 'Cicilan Belum Dibayar',
+        arrearsMonths: 1,
+        arrearsAmount: 625000,
       ),
     ],
   );

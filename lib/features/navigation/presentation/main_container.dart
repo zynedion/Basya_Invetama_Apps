@@ -8,6 +8,9 @@ import '../../auth/presentation/login_page.dart';
 import '../../home/domain/home_summary_gateway.dart';
 import '../../home/presentation/investor_home_page.dart';
 import '../../investment/presentation/investment_page.dart';
+import '../../multiguna/data/multiguna_api_client.dart';
+import '../../multiguna/domain/multiguna_gateway.dart';
+import '../../multiguna/domain/multiguna_overview_data.dart';
 import '../../multiguna/presentation/multiguna_page.dart';
 import '../../savings/presentation/savings_page.dart';
 
@@ -18,6 +21,7 @@ class MainContainer extends StatefulWidget {
     this.profile,
     this.session,
     this.summaryGateway,
+    this.multigunaGateway,
     this.audience = HomeAudience.investor,
   });
 
@@ -25,6 +29,7 @@ class MainContainer extends StatefulWidget {
   final AuthProfile? profile;
   final AuthSession? session;
   final HomeSummaryGateway? summaryGateway;
+  final MultigunaGateway? multigunaGateway;
   final HomeAudience audience;
 
   @override
@@ -35,6 +40,48 @@ class _MainContainerState extends State<MainContainer> {
   late HomeAudience _audience = widget.audience;
   int _selectedIndex = 0;
   bool _loggingOut = false;
+  MultigunaGateway? _multigunaGateway;
+  MultigunaOverviewData? _multigunaData;
+  bool _multigunaLoading = false;
+  String? _multigunaError;
+
+  @override
+  void initState() {
+    super.initState();
+    _multigunaGateway =
+        widget.multigunaGateway ??
+        (widget.session == null ? null : MultigunaApiClient());
+    if (_multigunaGateway == null || widget.session == null) {
+      _multigunaData = MultigunaOverviewData.demo;
+    } else {
+      _loadMultiguna();
+    }
+  }
+
+  Future<void> _loadMultiguna() async {
+    final gateway = _multigunaGateway;
+    final session = widget.session;
+    if (gateway == null || session == null) return;
+    setState(() {
+      _multigunaLoading = true;
+      _multigunaError = null;
+    });
+    try {
+      final data = await gateway.getOverview(session);
+      if (!mounted) return;
+      setState(() {
+        _multigunaData = data;
+        _multigunaLoading = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _multigunaData = null;
+        _multigunaLoading = false;
+        _multigunaError = 'Data Multiguna belum dapat dimuat.';
+      });
+    }
+  }
 
   List<_MainDestination> get _destinations => _audience == HomeAudience.investor
       ? const [
@@ -98,10 +145,23 @@ class _MainContainerState extends State<MainContainer> {
             summaryGateway: widget.summaryGateway,
             audience: _audience,
             onAudienceChanged: _changeAudience,
+            multigunaData: _multigunaData,
+            multigunaResolved: !_multigunaLoading,
+            onOpenMultiguna: () {
+              final index = destinations.indexWhere(
+                (item) => item.label == 'Multiguna',
+              );
+              if (index >= 0) setState(() => _selectedIndex = index);
+            },
           ),
           'Simpanan' => const SavingsPage(),
           'Investasi' => const InvestmentPage(),
-          'Multiguna' => const MultigunaPage(),
+          'Multiguna' => MultigunaPage(
+            data: _multigunaData,
+            loading: _multigunaLoading,
+            errorMessage: _multigunaError,
+            onRetry: _loadMultiguna,
+          ),
           _ => _EmptyFeaturePage(
             key: ValueKey('empty-${destination.label.toLowerCase()}'),
             destination: destination,

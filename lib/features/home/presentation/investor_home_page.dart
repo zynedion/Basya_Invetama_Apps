@@ -8,6 +8,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
 import '../../auth/domain/auth_session.dart';
+import '../../multiguna/domain/multiguna_overview_data.dart';
 import '../domain/home_summary.dart';
 import '../domain/home_summary_gateway.dart';
 import '../domain/investor_home_data.dart';
@@ -58,6 +59,9 @@ class InvestorHomePage extends StatefulWidget {
     this.memberData = MemberHomeData.demo,
     this.now,
     this.onAudienceChanged,
+    this.multigunaData,
+    this.multigunaResolved = true,
+    this.onOpenMultiguna,
   });
 
   final AuthGateway? auth;
@@ -69,6 +73,9 @@ class InvestorHomePage extends StatefulWidget {
   final MemberHomeData memberData;
   final DateTime Function()? now;
   final ValueChanged<HomeAudience>? onAudienceChanged;
+  final MultigunaOverviewData? multigunaData;
+  final bool multigunaResolved;
+  final VoidCallback? onOpenMultiguna;
 
   @override
   State<InvestorHomePage> createState() => _InvestorHomePageState();
@@ -90,6 +97,11 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
       _summary?.mergeMember(widget.memberData) ?? widget.memberData;
   bool get _showAudienceSwitcher =>
       widget.session == null || _summary?.isGlobal == true;
+  bool get _showMultigunaCard =>
+      widget.multigunaResolved &&
+      (widget.multigunaData?.hasActiveLoan ?? widget.session == null);
+  MultigunaOverviewData get _multigunaData =>
+      widget.multigunaData ?? MultigunaOverviewData.demo;
 
   String get _greeting {
     final hour = _currentTime.hour;
@@ -169,6 +181,24 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
       return '—';
     }
     return _sensitiveMoney(value);
+  }
+
+  String _shortDate(DateTime value) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'Mei',
+      'Jun',
+      'Jul',
+      'Agu',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Des',
+    ];
+    return '${value.day} ${months[value.month - 1]} ${value.year}';
   }
 
   @override
@@ -305,20 +335,22 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                               ),
                               const SizedBox(height: 30),
                             ],
-                            _MultigunaOverview(
-                              nextInstallment: _isInvestor
-                                  ? _investorData.nextInstallment
-                                  : _memberData.nextInstallment,
-                              installmentDueDate: _isInvestor
-                                  ? _investorData.installmentDueDate
-                                  : _memberData.installmentDueDate,
-                              remainingInstallment: _isInvestor
-                                  ? _investorData.remainingInstallment
-                                  : _memberData.remainingInstallment,
-                              money: _sensitiveMoney,
-                              onOpen: () => _showComingSoon('Multiguna'),
-                            ),
-                            const SizedBox(height: 30),
+                            if (_showMultigunaCard) ...[
+                              _MultigunaOverview(
+                                nextInstallment:
+                                    _multigunaData.nearestLoan!.nextAmount,
+                                installmentDueDate: _shortDate(
+                                  _multigunaData.nearestLoan!.nextDueDate,
+                                ),
+                                remainingInstallment:
+                                    _multigunaData.totalObligation,
+                                money: _sensitiveMoney,
+                                onOpen:
+                                    widget.onOpenMultiguna ??
+                                    () => _showComingSoon('Multiguna'),
+                              ),
+                              const SizedBox(height: 30),
+                            ],
                             _SectionTitle(
                               title: 'Aktivitas terakhir',
                               action: 'Lihat semua',
@@ -802,16 +834,10 @@ class _FrostedBalancePanel extends StatelessWidget {
 }
 
 class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.title,
-    this.action,
-    this.onAction,
-  });
+  const _SectionTitle({required this.title, this.action, this.onAction});
 
   final String title;
   final String? action;
-  final IconData? actionIcon;
-  final String? actionTooltip;
   final VoidCallback? onAction;
 
   @override
@@ -831,12 +857,6 @@ class _SectionTitle extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 4),
           ),
           child: Text(action!, style: const TextStyle(fontSize: 12)),
-        )
-      else if (actionIcon != null)
-        IconButton(
-          tooltip: actionTooltip,
-          onPressed: onAction,
-          icon: Icon(actionIcon, size: 21, color: AppTheme.teal),
         ),
     ],
   );
@@ -1047,11 +1067,7 @@ class _InvestmentOverview extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.north_east_rounded,
-                  color: AppTheme.teal,
-                  size: 22,
-                ),
+                Icon(Icons.north_east_rounded, color: AppTheme.teal, size: 22),
               ],
             ),
             const SizedBox(height: 10),
@@ -1155,6 +1171,7 @@ class _MultigunaOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
+    key: const ValueKey('home-multiguna-card'),
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
       _SectionTitle(
