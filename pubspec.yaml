@@ -1,5 +1,5 @@
 name: basya_investama
-description: "A new Flutter project."
+description: "Aplikasi anggota Basya Investama untuk simpanan, investasi, dan pembiayaan Multiguna."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

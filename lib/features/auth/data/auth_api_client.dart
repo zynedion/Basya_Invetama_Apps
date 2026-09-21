@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -71,11 +70,6 @@ class AuthApiClient {
         AuthFailureType.timeout,
         'Waktu koneksi habis. Periksa koneksi Anda lalu coba lagi.',
       );
-    } on SocketException {
-      throw const AuthException(
-        AuthFailureType.connection,
-        'Tidak dapat terhubung ke server. Periksa koneksi internet Anda.',
-      );
     } on http.ClientException {
       throw const AuthException(
         AuthFailureType.connection,
@@ -124,11 +118,6 @@ class AuthApiClient {
       throw const AuthException(
         AuthFailureType.timeout,
         'Waktu memuat profil habis. Silakan coba lagi.',
-      );
-    } on SocketException {
-      throw const AuthException(
-        AuthFailureType.connection,
-        'Tidak dapat memuat profil. Periksa koneksi internet Anda.',
       );
     } on http.ClientException {
       throw const AuthException(

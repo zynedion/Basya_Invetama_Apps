@@ -805,8 +805,6 @@ class _SectionTitle extends StatelessWidget {
   const _SectionTitle({
     required this.title,
     this.action,
-    this.actionIcon,
-    this.actionTooltip,
     this.onAction,
   });
 
@@ -1023,69 +1021,96 @@ class _InvestmentOverview extends StatelessWidget {
   final VoidCallback onOpen;
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      _SectionTitle(
-        title: 'Investasi Anda',
-        actionIcon: Icons.north_east_rounded,
-        actionTooltip: 'Buka investasi',
-        onAction: onOpen,
-      ),
-      const SizedBox(height: 4),
-      const Text(
-        'Dana diinvestasikan',
-        style: TextStyle(fontSize: 12, color: AppTheme.muted),
-      ),
-      const SizedBox(height: 4),
-      Text(
-        money(data.investedFunds),
-        style: const TextStyle(
-          fontSize: 26,
-          fontWeight: FontWeight.w700,
-          color: AppTheme.ink,
+  Widget build(BuildContext context) => Material(
+    color: const Color(0xFFF7FBFA),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+      side: const BorderSide(color: AppTheme.cardBorder),
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: InkWell(
+      onTap: onOpen,
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Investasi Anda',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.ink,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.north_east_rounded,
+                  color: AppTheme.teal,
+                  size: 22,
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Dana diinvestasikan',
+              style: TextStyle(fontSize: 12, color: AppTheme.muted),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              money(data.investedFunds),
+              style: const TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.ink,
+              ),
+            ),
+            const SizedBox(height: 14),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final stacked =
+                    constraints.maxWidth < 300 ||
+                    MediaQuery.textScalerOf(context).scale(18) > 22;
+                final metrics = [
+                  _ProfitMetric(
+                    label: 'Profit bulan ini',
+                    value: '+${money(data.monthlyProfit)}',
+                  ),
+                  _ProfitMetric(
+                    label: 'Akumulasi profit',
+                    value: '+${money(data.accumulatedProfit)}',
+                  ),
+                ];
+                return stacked
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          metrics.first,
+                          const SizedBox(height: 12),
+                          metrics.last,
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Expanded(child: metrics.first),
+                          const SizedBox(width: 16),
+                          Expanded(child: metrics.last),
+                        ],
+                      );
+              },
+            ),
+            const SizedBox(height: 10),
+            Text(
+              data.profitPeriod,
+              style: const TextStyle(fontSize: 12, color: AppTheme.muted),
+            ),
+          ],
         ),
       ),
-      const SizedBox(height: 14),
-      LayoutBuilder(
-        builder: (context, constraints) {
-          final stacked =
-              constraints.maxWidth < 300 ||
-              MediaQuery.textScalerOf(context).scale(18) > 22;
-          final metrics = [
-            _ProfitMetric(
-              label: 'Profit bulan ini',
-              value: '+${money(data.monthlyProfit)}',
-            ),
-            _ProfitMetric(
-              label: 'Akumulasi profit',
-              value: '+${money(data.accumulatedProfit)}',
-            ),
-          ];
-          return stacked
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    metrics.first,
-                    const SizedBox(height: 12),
-                    metrics.last,
-                  ],
-                )
-              : Row(
-                  children: [
-                    Expanded(child: metrics.first),
-                    const SizedBox(width: 16),
-                    Expanded(child: metrics.last),
-                  ],
-                );
-        },
-      ),
-      const SizedBox(height: 10),
-      Text(
-        data.profitPeriod,
-        style: const TextStyle(fontSize: 12, color: AppTheme.muted),
-      ),
-    ],
+    ),
   );
 }
 

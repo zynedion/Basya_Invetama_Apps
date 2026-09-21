@@ -1,11 +1,11 @@
 {
-    "name": "basya_investama",
-    "short_name": "basya_investama",
+    "name": "Basya Investama",
+    "short_name": "Basya",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FFFFFF",
+    "theme_color": "#006A66",
+    "description": "Aplikasi anggota Basya Investama untuk simpanan, investasi, dan pembiayaan Multiguna.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
