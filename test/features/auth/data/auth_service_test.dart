@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:basya_investama/core/notifications/fcm_token_api.dart';
 import 'package:basya_investama/features/auth/domain/auth_session.dart';
 import 'package:basya_investama/features/auth/data/auth_api_client.dart';
 import 'package:basya_investama/features/auth/data/auth_service.dart';
@@ -42,6 +43,16 @@ void main() {
       final restarted = AuthService(
         api: api,
         sessions: SecureSessionRepository(),
+        fcm: FcmTokenApi(
+          client: MockClient((request) async {
+            expect(request.method, 'PUT');
+            expect(jsonDecode(request.body), {'fcm_token': null});
+            expect(request.headers['Authorization'], 'Bearer token-2');
+            expect(await repository.read(), isNotNull);
+            expect(await repository.readPassword(), 'test-password');
+            return http.Response('', 204);
+          }),
+        ),
       );
       expect((await restarted.restoreSession())!.accessToken, 'token-1');
       expect(requests, 1);
@@ -78,5 +89,33 @@ void main() {
     );
     expect(await repository.readPassword(), isNull);
     expect(await repository.read(), isNull);
+  });
+
+  test('Failed FCM removal preserves session for logout retry', () async {
+    final repository = SecureSessionRepository();
+    await repository.save(
+      AuthSession(
+        accessToken: 'session',
+        tokenType: 'Bearer',
+        expiresAt: DateTime.now().add(const Duration(hours: 1)),
+      ),
+    );
+    await repository.saveCredentials('member', 'password');
+    var attempts = 0;
+    final auth = AuthService(
+      sessions: repository,
+      fcm: FcmTokenApi(
+        client: MockClient((_) async {
+          attempts++;
+          return http.Response('', attempts == 1 ? 500 : 204);
+        }),
+      ),
+    );
+    await expectLater(auth.logout(), throwsStateError);
+    expect(await repository.read(), isNotNull);
+    expect(await repository.readPassword(), 'password');
+    await auth.logout();
+    expect(await repository.read(), isNull);
+    expect(await repository.readPassword(), isNull);
   });
 }

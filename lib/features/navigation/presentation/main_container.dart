@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '../data/last_destination_store.dart';
+import '../../../core/notifications/fcm_registration.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../auth/domain/auth_gateway.dart';
@@ -232,39 +233,43 @@ class _MainContainerState extends State<MainContainer> {
       child: Scaffold(
         extendBody: true,
         backgroundColor: AppTheme.loginCanvas,
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: IndexedStack(index: _selectedIndex, children: pages),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: 126 + MediaQuery.paddingOf(context).bottom,
-              child: const IgnorePointer(child: _BottomGradientScrim()),
-            ),
-            Positioned(
-              left: 20,
-              right: 20,
-              bottom: MediaQuery.paddingOf(context).bottom + 10,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: _audience == HomeAudience.investor
-                        ? double.infinity
-                        : 320,
-                  ),
-                  child: _FloatingNavigation(
-                    destinations: destinations,
-                    selectedIndex: _selectedIndex,
-                    onDestinationSelected: _selectDestination,
+        body: FcmRegistration(
+          session: _loggingOut ? null : widget.session,
+          key: ValueKey(_loggingOut),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: IndexedStack(index: _selectedIndex, children: pages),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 126 + MediaQuery.paddingOf(context).bottom,
+                child: const IgnorePointer(child: _BottomGradientScrim()),
+              ),
+              Positioned(
+                left: 20,
+                right: 20,
+                bottom: MediaQuery.paddingOf(context).bottom + 10,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: _audience == HomeAudience.investor
+                          ? double.infinity
+                          : 320,
+                    ),
+                    child: _FloatingNavigation(
+                      destinations: destinations,
+                      selectedIndex: _selectedIndex,
+                      onDestinationSelected: _selectDestination,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

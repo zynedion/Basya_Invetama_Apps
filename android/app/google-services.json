@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "544279218915",
+    "project_id": "basya-investama",
+    "storage_bucket": "basya-investama.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544279218915:android:3b19f3201d98c78b71d3d6",
+        "android_client_info": {
+          "package_name": "id.basyainvestama.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvASrvNkXnMqe-2mz9pGO3t7EEmqM9DE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

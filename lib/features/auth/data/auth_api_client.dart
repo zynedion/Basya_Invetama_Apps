@@ -180,6 +180,12 @@ class AuthApiClient {
       active: field('aktif').toUpperCase() == 'Y',
       hasNasabahProfile: body['nasabah'] is Map,
       hasInvestorProfile: body['investor'] is Map,
+      nasabah: body['nasabah'] is Map
+          ? NasabahProfile.fromJson(body['nasabah'] as Map)
+          : null,
+      investor: body['investor'] is Map
+          ? InvestorProfile.fromJson(body['investor'] as Map)
+          : null,
     );
   }
 

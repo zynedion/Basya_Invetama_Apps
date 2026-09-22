@@ -1,4 +1,4 @@
-package com.example.basya_investama
+package id.basyainvestama.app
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine

@@ -122,16 +122,33 @@ class _MemberCard extends StatelessWidget {
   String get _name => profile?.displayName ?? 'Anggota Basya';
 
   String get _memberNumber {
-    final id = profile?.id.trim() ?? '';
-    if (id.isEmpty) return 'Belum tersedia';
-    final number = int.tryParse(id);
-    return 'BI-${number == null ? id : number.toString().padLeft(6, '0')}';
+    return _available(profile?.nasabah?.memberNumber);
+  }
+
+  String get _joinedAt {
+    final date = profile?.nasabah?.joinedAt;
+    if (date == null) return 'Belum tersedia';
+    const months = [
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
+    ];
+    return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 
   @override
   Widget build(BuildContext context) {
-    final investor = profile?.usesInvestorHome == true;
-    final active = profile?.active ?? false;
+    final investor = profile?.hasInvestorProfile == true;
+    final active = profile?.nasabah?.active;
     return Container(
       key: const ValueKey('profile-member-card'),
       width: double.infinity,
@@ -177,13 +194,17 @@ class _MemberCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _BrandMark(),
-                  Text(
-                    'KARTU ANGGOTA',
-                    style: TextStyle(
-                      color: Color(0xFFD5F3E9),
-                      fontSize: 9,
-                      letterSpacing: 1.1,
-                      fontWeight: FontWeight.w700,
+                  SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      'KARTU ANGGOTA',
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: Color(0xFFD5F3E9),
+                        fontSize: 9,
+                        letterSpacing: 1.1,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ],
@@ -233,14 +254,17 @@ class _MemberCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 22),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                crossAxisAlignment: WrapCrossAlignment.end,
                 children: [
-                  const Expanded(
+                  SizedBox(
+                    width: 150,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Bergabung sejak',
                           style: TextStyle(
                             color: Color(0xFFD5F3E9),
@@ -248,10 +272,10 @@ class _MemberCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 3),
+                        const SizedBox(height: 3),
                         Text(
-                          'Belum tersedia',
-                          style: TextStyle(
+                          _joinedAt,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -260,16 +284,14 @@ class _MemberCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  _GlassBadge(
-                    icon: active
-                        ? Icons.verified_outlined
-                        : Icons.error_outline_rounded,
-                    label: active ? 'Aktif' : 'Tidak aktif',
-                  ),
-                  if (investor) ...[
-                    const SizedBox(width: 7),
-                    const _GlassBadge(label: 'Investor'),
-                  ],
+                  if (active != null)
+                    _GlassBadge(
+                      icon: active
+                          ? Icons.verified_outlined
+                          : Icons.error_outline_rounded,
+                      label: active ? 'Aktif' : 'Tidak aktif',
+                    ),
+                  if (investor) const _GlassBadge(label: 'Investor'),
                 ],
               ),
             ],
@@ -386,6 +408,12 @@ class _AccountInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final email = profile?.email.trim() ?? '';
+    final member = profile?.nasabah;
+    final investor = profile?.investor;
+    final bankDetails = [
+      member?.bankName,
+      member?.accountNumber,
+    ].whereType<String>().where((value) => value.isNotEmpty).join(' · ');
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -408,30 +436,62 @@ class _AccountInformation extends StatelessWidget {
             label: 'Email',
             value: email.isEmpty ? 'Belum tersedia' : email,
           ),
-          const _InformationRow(
+          _InformationRow(
             icon: Icons.smartphone_rounded,
             label: 'Nomor telepon',
-            value: 'Belum tersedia',
+            value: _available(member?.contact),
           ),
-          const _InformationRow(
+          _InformationRow(
             icon: Icons.account_balance_outlined,
             label: 'Rekening pencairan',
-            value: 'Belum tersedia',
+            value: _available(bankDetails),
+          ),
+          _InformationRow(
+            icon: Icons.person_outline_rounded,
+            label: 'Nama pemilik rekening',
+            value: _available(member?.accountName),
           ),
           _InformationRow(
             icon: Icons.shield_outlined,
             label: 'Status keanggotaan',
-            value: profile?.active == true ? 'Aktif' : 'Tidak aktif',
-            valueColor: profile?.active == true
-                ? const Color(0xFF00865D)
-                : AppTheme.negative,
-            showDivider: false,
+            value: _status(member?.active),
+            valueColor: _statusColor(member?.active),
+            showDivider: investor != null,
           ),
+          if (investor != null) ...[
+            _InformationRow(
+              icon: Icons.badge_outlined,
+              label: 'Nomor investor',
+              value: _available(investor.registrationNumber),
+            ),
+            _InformationRow(
+              icon: Icons.verified_user_outlined,
+              label: 'Status investor',
+              value: _status(investor.active),
+              valueColor: _statusColor(investor.active),
+              showDivider: false,
+            ),
+          ],
         ],
       ),
     );
   }
 }
+
+String _available(String? value) =>
+    value == null || value.trim().isEmpty ? 'Belum tersedia' : value.trim();
+
+String _status(bool? value) => switch (value) {
+  true => 'Aktif',
+  false => 'Tidak aktif',
+  null => 'Belum tersedia',
+};
+
+Color _statusColor(bool? value) => switch (value) {
+  true => const Color(0xFF00865D),
+  false => AppTheme.negative,
+  null => AppTheme.muted,
+};
 
 class _InformationRow extends StatelessWidget {
   const _InformationRow({

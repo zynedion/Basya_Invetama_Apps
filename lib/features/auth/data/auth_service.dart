@@ -1,3 +1,4 @@
+import '../../../core/notifications/fcm_token_api.dart';
 import '../domain/auth_gateway.dart';
 import '../domain/auth_profile.dart';
 import '../domain/auth_session.dart';
@@ -6,11 +7,16 @@ import 'auth_exception.dart';
 import 'secure_session_repository.dart';
 
 class AuthService implements AuthGateway {
-  AuthService({AuthApiClient? api, SecureSessionRepository? sessions})
-    : _api = api ?? AuthApiClient(),
-      _sessions = sessions ?? SecureSessionRepository();
+  AuthService({
+    AuthApiClient? api,
+    SecureSessionRepository? sessions,
+    FcmTokenApi? fcm,
+  }) : _api = api ?? AuthApiClient(),
+       _fcm = fcm ?? FcmTokenApi.shared,
+       _sessions = sessions ?? SecureSessionRepository();
 
   final AuthApiClient _api;
+  final FcmTokenApi _fcm;
   final SecureSessionRepository _sessions;
 
   @override
@@ -48,7 +54,8 @@ class AuthService implements AuthGateway {
         return await login(username: username, password: password);
       } on AuthException catch (error) {
         if (error.type == AuthFailureType.invalidCredentials) {
-          await logout();
+          await _sessions.clearPassword();
+          await _sessions.clear();
         }
         rethrow;
       }
@@ -67,6 +74,8 @@ class AuthService implements AuthGateway {
 
   @override
   Future<void> logout() async {
+    final session = await _sessions.read();
+    if (session != null) await _fcm.clear(session);
     await _sessions.clearPassword();
     await _sessions.clear();
   }
