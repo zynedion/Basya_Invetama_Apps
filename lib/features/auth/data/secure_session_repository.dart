@@ -10,6 +10,20 @@ class SecureSessionRepository {
   static const _tokenTypeKey = 'auth_token_type';
   static const _expiresAtKey = 'auth_expires_at';
   final FlutterSecureStorage _storage;
+  static const _usernameKey = 'auth_username';
+  static const _passwordKey = 'auth_password';
+
+  Future<String?> readUsername() => _storage.read(key: _usernameKey);
+
+  Future<String?> readPassword() => _storage.read(key: _passwordKey);
+
+  Future<void> saveCredentials(String username, String password) async {
+    await _storage.delete(key: _passwordKey);
+    await _storage.write(key: _usernameKey, value: username);
+    await _storage.write(key: _passwordKey, value: password);
+  }
+
+  Future<void> clearPassword() => _storage.delete(key: _passwordKey);
 
   Future<void> save(AuthSession session) async {
     await Future.wait([

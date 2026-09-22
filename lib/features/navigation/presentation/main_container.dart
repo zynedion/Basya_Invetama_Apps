@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import '../data/last_destination_store.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../auth/domain/auth_gateway.dart';
@@ -12,6 +15,7 @@ import '../../multiguna/data/multiguna_api_client.dart';
 import '../../multiguna/domain/multiguna_gateway.dart';
 import '../../multiguna/domain/multiguna_overview_data.dart';
 import '../../multiguna/presentation/multiguna_page.dart';
+import '../../profile/presentation/profile_page.dart';
 import '../../savings/presentation/savings_page.dart';
 
 class MainContainer extends StatefulWidget {
@@ -39,6 +43,12 @@ class MainContainer extends StatefulWidget {
 class _MainContainerState extends State<MainContainer> {
   late HomeAudience _audience = widget.audience;
   int _selectedIndex = 0;
+  final _lastDestination = LastDestinationStore();
+  bool _destinationChanged = false;
+  bool _backgrounding = false;
+  static const _lifecycle = MethodChannel('basya/app_lifecycle');
+  bool get _isAndroid =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
   bool _loggingOut = false;
   MultigunaGateway? _multigunaGateway;
   MultigunaOverviewData? _multigunaData;
@@ -48,6 +58,7 @@ class _MainContainerState extends State<MainContainer> {
   @override
   void initState() {
     super.initState();
+    _restoreDestination();
     _multigunaGateway =
         widget.multigunaGateway ??
         (widget.session == null ? null : MultigunaApiClient());
@@ -83,6 +94,45 @@ class _MainContainerState extends State<MainContainer> {
     }
   }
 
+  Future<void> _restoreDestination() async {
+    final userId = widget.profile?.id;
+    if (userId == null) return;
+    final destination = await _lastDestination.read(userId);
+    if (!mounted || _destinationChanged) return;
+    final index = _destinations.indexWhere((item) => item.label == destination);
+    if (index >= 0) setState(() => _selectedIndex = index);
+  }
+
+  void _selectDestination(int index) {
+    _destinationChanged = true;
+    setState(() => _selectedIndex = index);
+    final userId = widget.profile?.id;
+    if (userId != null) {
+      _lastDestination.save(userId, _destinations[index].label);
+    }
+  }
+
+  Future<void> _moveToBackground() async {
+    if (_backgrounding) return;
+    _backgrounding = true;
+    try {
+      final moved = await _lifecycle.invokeMethod<bool>('moveToBackground');
+      if (moved != true) throw PlatformException(code: 'background_failed');
+    } on PlatformException {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Belum dapat meminimalkan aplikasi. Silakan coba lagi.',
+            ),
+          ),
+        );
+      }
+    } finally {
+      _backgrounding = false;
+    }
+  }
+
   List<_MainDestination> get _destinations => _audience == HomeAudience.investor
       ? const [
           _MainDestination('Beranda', Icons.home_rounded),
@@ -99,6 +149,7 @@ class _MainContainerState extends State<MainContainer> {
         ];
 
   void _changeAudience(HomeAudience audience) {
+    _destinationChanged = true;
     setState(() {
       _audience = audience;
       _selectedIndex = 0;
@@ -111,6 +162,7 @@ class _MainContainerState extends State<MainContainer> {
     setState(() => _loggingOut = true);
     try {
       await auth.logout();
+      await _lastDestination.clear();
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute<void>(
@@ -151,7 +203,7 @@ class _MainContainerState extends State<MainContainer> {
               final index = destinations.indexWhere(
                 (item) => item.label == 'Multiguna',
               );
-              if (index >= 0) setState(() => _selectedIndex = index);
+              if (index >= 0) _selectDestination(index);
             },
           ),
           'Simpanan' => const SavingsPage(),
@@ -162,53 +214,70 @@ class _MainContainerState extends State<MainContainer> {
             errorMessage: _multigunaError,
             onRetry: _loadMultiguna,
           ),
-          _ => _EmptyFeaturePage(
-            key: ValueKey('empty-${destination.label.toLowerCase()}'),
-            destination: destination,
-            onLogout: destination.label == 'Profil' ? _logout : null,
+          'Profil' => ProfilePage(
+            profile: widget.profile,
+            onLogout: _logout,
             loggingOut: _loggingOut,
+            onEditProfile: () => _showComingSoon('Edit profil'),
+            onChangePassword: () => _showComingSoon('Ganti password'),
           ),
+          _ => const SizedBox.shrink(),
         },
     ];
-    return Scaffold(
-      extendBody: true,
-      backgroundColor: AppTheme.loginCanvas,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: IndexedStack(index: _selectedIndex, children: pages),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 126 + MediaQuery.paddingOf(context).bottom,
-            child: const IgnorePointer(child: _BottomGradientScrim()),
-          ),
-          Positioned(
-            left: 20,
-            right: 20,
-            bottom: MediaQuery.paddingOf(context).bottom + 10,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: _audience == HomeAudience.investor
-                      ? double.infinity
-                      : 320,
-                ),
-                child: _FloatingNavigation(
-                  destinations: destinations,
-                  selectedIndex: _selectedIndex,
-                  onDestinationSelected: (index) =>
-                      setState(() => _selectedIndex = index),
+    return PopScope<Object?>(
+      canPop: !_isAndroid,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isAndroid) _moveToBackground();
+      },
+      child: Scaffold(
+        extendBody: true,
+        backgroundColor: AppTheme.loginCanvas,
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: IndexedStack(index: _selectedIndex, children: pages),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 126 + MediaQuery.paddingOf(context).bottom,
+              child: const IgnorePointer(child: _BottomGradientScrim()),
+            ),
+            Positioned(
+              left: 20,
+              right: 20,
+              bottom: MediaQuery.paddingOf(context).bottom + 10,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: _audience == HomeAudience.investor
+                        ? double.infinity
+                        : 320,
+                  ),
+                  child: _FloatingNavigation(
+                    destinations: destinations,
+                    selectedIndex: _selectedIndex,
+                    onDestinationSelected: _selectDestination,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  void _showComingSoon(String feature) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text('$feature akan tersedia pada tahap berikutnya.'),
+        ),
+      );
   }
 }
 
@@ -217,77 +286,6 @@ class _MainDestination {
 
   final String label;
   final IconData icon;
-}
-
-class _EmptyFeaturePage extends StatelessWidget {
-  const _EmptyFeaturePage({
-    super.key,
-    required this.destination,
-    this.onLogout,
-    this.loggingOut = false,
-  });
-
-  final _MainDestination destination;
-  final VoidCallback? onLogout;
-  final bool loggingOut;
-
-  @override
-  Widget build(BuildContext context) => SafeArea(
-    child: Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 112),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            DecoratedBox(
-              decoration: const BoxDecoration(
-                color: Color(0xFFEDF7F5),
-                shape: BoxShape.circle,
-              ),
-              child: SizedBox.square(
-                dimension: 72,
-                child: Icon(destination.icon, color: AppTheme.teal, size: 30),
-              ),
-            ),
-            const SizedBox(height: 18),
-            Text(
-              destination.label,
-              key: ValueKey('page-title-${destination.label.toLowerCase()}'),
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: AppTheme.ink,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Halaman ini siap dikembangkan.',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: AppTheme.muted),
-            ),
-            if (onLogout != null) ...[
-              const SizedBox(height: 28),
-              OutlinedButton.icon(
-                key: const ValueKey('temporary-logout-button'),
-                onPressed: loggingOut ? null : onLogout,
-                icon: loggingOut
-                    ? const SizedBox.square(
-                        dimension: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Icon(Icons.logout_rounded),
-                label: Text(loggingOut ? 'Keluar...' : 'Keluar'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: const Color(0xFFB42318),
-                  side: const BorderSide(color: Color(0xFFE8B4AE)),
-                  minimumSize: const Size(180, 48),
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    ),
-  );
 }
 
 class _BottomGradientScrim extends StatelessWidget {

@@ -36,6 +36,7 @@ class _SplashPageState extends State<SplashPage>
   late final Future<({AuthSession session, AuthProfile profile})?> _session;
   Timer? _fallback;
   bool _leaving = false;
+  bool _showSplash = false;
   @override
   void initState() {
     super.initState();
@@ -44,18 +45,28 @@ class _SplashPageState extends State<SplashPage>
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) _openLogin();
       });
-    // Never trap the user at startup if the asset fails to load.
+    _session.then((restored) {
+      if (mounted && !_showSplash) _openLogin();
+    });
+  }
+
+  void _startSplash() {
+    if (!mounted || _showSplash) return;
+    setState(() => _showSplash = true);
     _fallback = Timer(const Duration(seconds: 8), _openLogin);
   }
 
   Future<({AuthSession session, AuthProfile profile})?>
   _restoreSessionWithProfile() async {
     try {
-      final session = await _auth.restoreSession();
+      final activeSession = await _auth.readActiveSession();
+      if (activeSession == null) _startSplash();
+      final session = activeSession ?? await _auth.restoreSession();
       if (session == null) return null;
       final profile = await _auth.getProfile(session);
       return (session: session, profile: profile);
     } catch (_) {
+      _startSplash();
       return null;
     }
   }
@@ -96,24 +107,26 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: Center(
-      child: Semantics(
-        label: 'Basya Investama',
-        image: true,
-        child: Lottie.asset(
-          'assets/animation/Scene-3-no-watermark.json',
-          controller: _animation,
-          fit: BoxFit.contain,
-          repeat: false,
-          onLoaded: (composition) {
-            if (!mounted || _leaving) return;
-            _animation.duration = composition.duration;
-            _animation.forward();
-          },
-          errorBuilder: (_, error, stackTrace) =>
-              Image.asset('assets/logo/basya-favicon.png', width: 96),
-        ),
-      ),
-    ),
+    body: !_showSplash
+        ? const SizedBox.expand()
+        : Center(
+            child: Semantics(
+              label: 'Basya Investama',
+              image: true,
+              child: Lottie.asset(
+                'assets/animation/Scene-3-no-watermark.json',
+                controller: _animation,
+                fit: BoxFit.contain,
+                repeat: false,
+                onLoaded: (composition) {
+                  if (!mounted || _leaving) return;
+                  _animation.duration = composition.duration;
+                  _animation.forward();
+                },
+                errorBuilder: (_, error, stackTrace) =>
+                    Image.asset('assets/logo/basya-favicon.png', width: 96),
+              ),
+            ),
+          ),
   );
 }

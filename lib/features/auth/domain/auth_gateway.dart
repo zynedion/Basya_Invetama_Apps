@@ -8,5 +8,7 @@ abstract interface class AuthGateway {
   });
   Future<AuthProfile> getProfile(AuthSession session);
   Future<AuthSession?> restoreSession();
+  Future<AuthSession?> readActiveSession();
+  Future<String?> readSavedUsername();
   Future<void> logout();
 }

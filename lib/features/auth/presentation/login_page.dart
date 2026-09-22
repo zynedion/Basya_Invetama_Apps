@@ -36,6 +36,26 @@ class _LoginPageState extends State<LoginPage> {
   bool _submitting = false;
   String? _loginError;
   @override
+  void initState() {
+    super.initState();
+    _fillSavedUsername();
+  }
+
+  Future<void> _fillSavedUsername() async {
+    try {
+      final username = await _auth.readSavedUsername();
+      if (mounted &&
+          !_submitting &&
+          _memberId.text.isEmpty &&
+          username != null) {
+        _memberId.text = username;
+      }
+    } catch (_) {
+      // Keep manual login available if local storage cannot be read.
+    }
+  }
+
+  @override
   void dispose() {
     _memberId.dispose();
     _password.dispose();

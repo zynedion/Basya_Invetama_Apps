@@ -2,6 +2,7 @@ import '../domain/auth_gateway.dart';
 import '../domain/auth_profile.dart';
 import '../domain/auth_session.dart';
 import 'auth_api_client.dart';
+import 'auth_exception.dart';
 import 'secure_session_repository.dart';
 
 class AuthService implements AuthGateway {
@@ -26,11 +27,32 @@ class AuthService implements AuthGateway {
       password: password,
     );
     await _sessions.save(session);
+    await _sessions.saveCredentials(username.trim(), password);
     return session;
   }
 
   @override
+  Future<AuthSession?> readActiveSession() async {
+    final session = await _sessions.read();
+    return session != null && !session.isExpired ? session : null;
+  }
+
+  @override
   Future<AuthSession?> restoreSession() async {
+    final activeSession = await readActiveSession();
+    if (activeSession != null) return activeSession;
+    final username = await _sessions.readUsername();
+    final password = await _sessions.readPassword();
+    if (username != null && password != null) {
+      try {
+        return await login(username: username, password: password);
+      } on AuthException catch (error) {
+        if (error.type == AuthFailureType.invalidCredentials) {
+          await logout();
+        }
+        rethrow;
+      }
+    }
     final session = await _sessions.read();
     if (session == null) return null;
     if (session.isExpired) {
@@ -41,5 +63,11 @@ class AuthService implements AuthGateway {
   }
 
   @override
-  Future<void> logout() => _sessions.clear();
+  Future<String?> readSavedUsername() => _sessions.readUsername();
+
+  @override
+  Future<void> logout() async {
+    await _sessions.clearPassword();
+    await _sessions.clear();
+  }
 }
