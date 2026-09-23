@@ -95,7 +95,9 @@ class AuthApiClient {
           )
           .timeout(const Duration(seconds: 20));
       final body = _decodeBody(response.body);
-      if (response.statusCode == 200) return _parseProfile(body);
+      if (response.statusCode == 200) {
+        return _parseProfile(body);
+      }
       if (response.statusCode == 401) {
         throw const AuthException(
           AuthFailureType.invalidCredentials,

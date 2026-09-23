@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../notifications/presentation/notifications_page.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
 import '../../auth/domain/auth_session.dart';
@@ -291,8 +292,11 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                     money: _summaryMoney,
                     onToggleBalance: () =>
                         setState(() => _balanceVisible = !_balanceVisible),
-                    onNotifications: () =>
-                        _showComingSoon('Halaman notifikasi'),
+                    onNotifications: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const NotificationsPage(),
+                      ),
+                    ),
                   );
                   final content = Center(
                     child: ConstrainedBox(
@@ -689,20 +693,9 @@ class _MemberHeader extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           _GlassIconButton(
-            tooltip: 'Notifikasi, satu belum dibaca',
+            tooltip: 'Notifikasi',
             icon: Icons.notifications_none_rounded,
             onPressed: onNotifications,
-          ),
-          const Positioned(
-            right: 4,
-            top: 3,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppTheme.mint,
-                shape: BoxShape.circle,
-              ),
-              child: SizedBox.square(dimension: 8),
-            ),
           ),
         ],
       ),

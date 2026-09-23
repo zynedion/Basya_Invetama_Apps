@@ -33,8 +33,17 @@ Expired sessions do not send requests. Tokens and credentials are not logged.
 
 ## Remaining scope
 
-Live device delivery and backend acceptance require manual validation. Foreground
-notification banners and notification-tap navigation are not implemented.
+Foreground notification payloads use system notifications only, without an
+in-app banner or pill. The Home bell still opens the Notifikasi page.
+Android uses a monochrome Basya logo for the foreground notification icon and
+the default FCM background icon. Android posts a native notification to the system tray
+on the high-importance basya_messages channel; PWA uses the active service worker's
+showNotification API, subject to browser permission/support. Data-only messages remain silent.
+The Notifikasi page is an empty shell awaiting the backend GET API contract.
+FCM payloads are not stored as notification history. The backend initiates FCM
+delivery to alert users; page content will be retrieved separately from the API.
+Native system-notification taps reopen the app; detailed destination routing is
+not implemented. Live device appearance/delivery still requires manual validation.
 Logout sends `{"fcm_token":null}` to the same endpoint with the current session's
 Authorization header before clearing local credentials/session. Registration and
 removal share a queue: removal follows an in-flight registration and blocks late
