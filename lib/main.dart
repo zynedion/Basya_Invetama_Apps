@@ -9,15 +9,18 @@ import 'features/auth/presentation/splash_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print('[FCM][main] Initializing app; kIsWeb=$kIsWeb, platform=$defaultTargetPlatform');
   if (kIsWeb || defaultTargetPlatform == TargetPlatform.android) {
     try {
-      await Firebase.initializeApp(
+      final app = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-    } catch (_) {
-      // Notification setup must not prevent access to the app.
+      print('[FCM][main] Firebase initialized successfully: ${app.name}');
+    } catch (e, stack) {
+      print('[FCM][main] Firebase.initializeApp error: $e\n$stack');
     }
   }
+  print('[FCM][main] Firebase.apps count: ${Firebase.apps.length}');
   runApp(const BasyaApp());
 }
 

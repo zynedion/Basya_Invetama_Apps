@@ -159,17 +159,15 @@ class _MainContainerState extends State<MainContainer> {
 
   Future<void> _logout() async {
     final auth = widget.auth;
-    if (kDebugMode) {
-      debugPrint(
-        '[AUTH][logout] Button pressed; authAvailable=${auth != null}; busy=$_loggingOut',
-      );
-    }
+    print(
+      '[AUTH][logout] Button pressed; authAvailable=${auth != null}; busy=$_loggingOut',
+    );
     if (auth == null || _loggingOut) return;
     setState(() => _loggingOut = true);
     try {
       await auth.logout();
       await _lastDestination.clear();
-      if (kDebugMode) debugPrint('[AUTH][logout] Opening login');
+      print('[AUTH][logout] Opening login');
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute<void>(
@@ -179,7 +177,7 @@ class _MainContainerState extends State<MainContainer> {
         (_) => false,
       );
     } catch (error) {
-      if (kDebugMode) debugPrint('[AUTH][logout] Failed: ${error.runtimeType}');
+      print('[AUTH][logout] Failed: ${error.runtimeType}');
       if (!mounted) return;
       setState(() => _loggingOut = false);
       ScaffoldMessenger.of(context)

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../../features/auth/domain/auth_session.dart';
 
@@ -23,24 +22,20 @@ class FcmTokenApi {
   }
 
   Future<void> clear(AuthSession session) async {
-    if (kDebugMode) {
-      debugPrint(
-        '[FCM][logout] Queued removal; sessionExpired=${session.isExpired}; '
-        'expiresAt=${session.expiresAt.toUtc().toIso8601String()}',
-      );
-    }
+    print(
+      '[FCM][logout] Queued removal; sessionExpired=${session.isExpired}; '
+      'expiresAt=${session.expiresAt.toUtc().toIso8601String()}',
+    );
     // Block queued/late registration and send an empty string after any in-flight PUT.
     _revokedSessions.add(session.accessToken);
     try {
       await _enqueue(() => _send(session, ''));
-      if (kDebugMode) debugPrint('[FCM][logout] Removal succeeded');
+      print('[FCM][logout] Removal succeeded');
     } catch (error) {
-      if (kDebugMode) {
-        debugPrint(
-          '[FCM][logout] Removal failed: ${error.runtimeType}; '
-          'local session retained for retry',
-        );
-      }
+      print(
+        '[FCM][logout] Removal failed: ${error.runtimeType}; '
+        'local session retained for retry',
+      );
       _revokedSessions.remove(session.accessToken);
       rethrow;
     }
@@ -53,18 +48,17 @@ class FcmTokenApi {
   }
 
   Future<void> _send(AuthSession session, String token) async {
-    if (kDebugMode && token.isEmpty) {
-      debugPrint(
-        '[FCM][logout] Sending PUT https://api.basyainvestama.id/app/profile/fcm-token',
-      );
-      debugPrint(
-        '[FCM][logout] Headers: Content-Type=application/json; '
-        'Accept=application/json; Authorization=[REDACTED]',
-      );
-      debugPrint(
-        '[FCM][logout] Request body: ${jsonEncode({'fcm_token': token})}',
-      );
-    }
+    final isLogout = token.isEmpty;
+    final action = isLogout ? '[FCM][logout]' : '[FCM][update]';
+    print(
+      '$action Sending PUT https://api.basyainvestama.id/app/profile/fcm-token',
+    );
+    print(
+      '$action Headers: Content-Type=application/json; Accept=application/json; Authorization=[REDACTED]',
+    );
+    print(
+      '$action Request body: ${jsonEncode({'fcm_token': token})}',
+    );
     final response = await _client
         .put(
           Uri.parse('https://api.basyainvestama.id/app/profile/fcm-token'),
@@ -76,23 +70,25 @@ class FcmTokenApi {
           body: jsonEncode({'fcm_token': token}),
         )
         .timeout(const Duration(seconds: 15));
-    if (kDebugMode && token.isEmpty) {
-      debugPrint(
-        '[FCM][logout] HTTP ${response.statusCode}; '
-        'content-type=${response.headers['content-type'] ?? '(missing)'}',
-      );
-      debugPrint(
-        '[FCM][logout] Response: ${_safeResponse(response.body, session)}',
-      );
-    }
+    print(
+      '$action HTTP ${response.statusCode}; content-type=${response.headers['content-type'] ?? '(missing)'}',
+    );
+    print(
+      '$action Response: ${_safeResponse(response.body, session)}',
+    );
     if (response.statusCode < 200 || response.statusCode >= 300) {
+      print('$action Failed with status code: ${response.statusCode}');
       throw StateError('FCM registration failed (${response.statusCode}).');
     }
     if (response.body.trim().isNotEmpty) {
       final body = jsonDecode(response.body);
       if (body is Map && body['status'] == false) {
+        print('$action Backend rejected FCM registration: ${response.body}');
         throw StateError('FCM registration was rejected.');
       }
+    }
+    if (!isLogout) {
+      print('$action FCM token successfully registered to backend!');
     }
   }
 

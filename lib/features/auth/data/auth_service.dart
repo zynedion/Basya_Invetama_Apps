@@ -1,5 +1,4 @@
 import '../../../core/notifications/fcm_token_api.dart';
-import 'package:flutter/foundation.dart';
 import '../domain/auth_gateway.dart';
 import '../domain/auth_profile.dart';
 import '../domain/auth_session.dart';
@@ -75,17 +74,13 @@ class AuthService implements AuthGateway {
 
   @override
   Future<void> logout() async {
-    if (kDebugMode) debugPrint('[AUTH][logout] Reading saved session');
+    print('[AUTH][logout] Reading saved session');
     final session = await _sessions.read();
-    if (kDebugMode) {
-      debugPrint('[AUTH][logout] Saved session present: ${session != null}');
-    }
+    print('[AUTH][logout] Saved session present: ${session != null}');
     if (session != null) await _fcm.clear(session);
-    if (kDebugMode) {
-      debugPrint('[AUTH][logout] Clearing saved password and session');
-    }
+    print('[AUTH][logout] Clearing saved password and session');
     await _sessions.clearPassword();
     await _sessions.clear();
-    if (kDebugMode) debugPrint('[AUTH][logout] Completed; username retained');
+    print('[AUTH][logout] Completed; username retained');
   }
 }

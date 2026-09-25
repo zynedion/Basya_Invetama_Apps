@@ -39,6 +39,8 @@ dependencies:
   lottie: ^3.3.3
   firebase_core: ^4.15.0
   firebase_messaging: ^16.7.0
+  firebase_core_web: ^3.12.0
+  firebase_messaging_web: ^4.2.5
 
 dev_dependencies:
   flutter_test:

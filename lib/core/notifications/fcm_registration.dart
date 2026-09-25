@@ -41,32 +41,61 @@ class _FcmRegistrationState extends State<FcmRegistration>
   }
 
   Future<void> _start() async {
-    if (widget.session == null ||
-        Firebase.apps.isEmpty ||
-        (!kIsWeb && defaultTargetPlatform != TargetPlatform.android)) {
+    print('[FCM][_start] Invoked; session=${widget.session != null}, appsCount=${Firebase.apps.length}, kIsWeb=$kIsWeb');
+    if (widget.session == null) {
+      print('[FCM][_start] Aborted: widget.session is null');
+      return;
+    }
+    if (Firebase.apps.isEmpty) {
+      print('[FCM][_start] Aborted: Firebase.apps is empty! Firebase.initializeApp was not completed.');
+      return;
+    }
+    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android) {
+      print('[FCM][_start] Aborted: platform is not Web or Android ($defaultTargetPlatform)');
       return;
     }
     try {
-      if (!await FirebaseMessaging.instance.isSupported() || !mounted) return;
+      final supported = await FirebaseMessaging.instance.isSupported();
+      print('[FCM][_start] FirebaseMessaging.isSupported() = $supported');
+      if (!supported || !mounted) return;
       _messaging = FirebaseMessaging.instance;
       _refresh = _messaging!.onTokenRefresh.listen(
-        (_) => unawaited(_sync()),
-        onError: (Object _) => _scheduleRetry(),
+        (newToken) {
+          print('[FCM] onTokenRefresh triggered: $newToken');
+          unawaited(_sync());
+        },
+        onError: (Object err) {
+          print('[FCM] onTokenRefresh error: $err');
+          _scheduleRetry();
+        },
       );
-      if (!kIsWeb) await _messaging!.requestPermission();
+      if (!kIsWeb) {
+        print('[FCM][_start] Requesting native permission...');
+        await _messaging!.requestPermission();
+      }
+      print('[FCM][_start] Triggering initial _sync()...');
       await _sync();
-    } catch (_) {
+    } catch (e, stack) {
+      print('[FCM][_start] Exception in _start: $e\n$stack');
       _scheduleRetry();
     }
   }
 
   void _scheduleRetry() {
-    if (!mounted || widget.session == null || widget.session!.isExpired) return;
-    // Bounded retries; resuming the app also retries registration.
-    if (_failures >= 3) return;
+    if (!mounted || widget.session == null || widget.session!.isExpired) {
+      print('[FCM][_scheduleRetry] Skip retry: mounted=$mounted, session=${widget.session != null}');
+      return;
+    }
+    if (_failures >= 3) {
+      print('[FCM][_scheduleRetry] Max failures reached ($_failures)');
+      return;
+    }
     _failures++;
+    final delay = Duration(seconds: 10 * _failures);
+    print('[FCM][_scheduleRetry] Retrying in ${delay.inSeconds} seconds (attempt $_failures)...');
     _retry?.cancel();
-    _retry = Timer(Duration(seconds: 10 * _failures), () {
+    _retry = Timer(delay, () {
+      print('[FCM][_scheduleRetry] Retry timer fired');
       unawaited(_messaging == null ? _start() : _sync());
     });
   }
@@ -74,17 +103,22 @@ class _FcmRegistrationState extends State<FcmRegistration>
   Future<void> _sync() async {
     final messaging = _messaging;
     final session = widget.session;
+    print('[FCM][_sync] Invoked: mounted=$mounted, busy=$_busy, messaging=${messaging != null}, session=${session != null}');
     if (!mounted ||
         _busy ||
         messaging == null ||
         session == null ||
         session.isExpired) {
+      print('[FCM][_sync] Exited early (guard condition).');
       return;
     }
     _busy = true;
     try {
       final settings = await messaging.getNotificationSettings();
       if (!mounted) return;
+      print(
+        '[FCM] Notification authorizationStatus: ${settings.authorizationStatus}',
+      );
       final allowed =
           settings.authorizationStatus == AuthorizationStatus.authorized ||
           settings.authorizationStatus == AuthorizationStatus.provisional;
@@ -93,21 +127,33 @@ class _FcmRegistrationState extends State<FcmRegistration>
             kIsWeb &&
             settings.authorizationStatus == AuthorizationStatus.notDetermined,
       );
-      if (!allowed) return;
+      print('[FCM][_sync] allowed=$allowed, offerPermission=$_offerPermission');
+      if (!allowed) {
+        print('[FCM] Notification permission not granted (${settings.authorizationStatus}). Skipping token sync.');
+        return;
+      }
+      print('[FCM][_sync] Calling messaging.getToken()...');
       final token = await messaging.getToken(
         vapidKey: kIsWeb ? _vapidKey : null,
       );
       if (!mounted) return;
       if (token == null || token.isEmpty) {
+        print('[FCM] Failed to get FCM token (null or empty). Scheduling retry...');
         _scheduleRetry();
         return;
       }
-      if (token == _sentToken) return;
+      print('[FCM] Got FCM token: $token');
+      if (token == _sentToken) {
+        print('[FCM] Token unchanged from previous sync. Skipping send.');
+        return;
+      }
+      print('[FCM] Triggering token update to backend...');
       await _api.update(session, token);
       _sentToken = token;
       _failures = 0;
       _retry?.cancel();
-    } catch (_) {
+    } catch (e, stack) {
+      print('[FCM] Error in token sync: $e\n$stack');
       _scheduleRetry();
     } finally {
       _busy = false;
@@ -115,11 +161,14 @@ class _FcmRegistrationState extends State<FcmRegistration>
   }
 
   Future<void> _enable() async {
+    print('[FCM][_enable] User clicked enable notification button');
     try {
       // Call directly from the click to preserve browser user activation.
-      await _messaging?.requestPermission();
+      final result = await _messaging?.requestPermission();
+      print('[FCM][_enable] requestPermission result: ${result?.authorizationStatus}');
       await _sync();
-    } catch (_) {
+    } catch (e, stack) {
+      print('[FCM][_enable] requestPermission error: $e\n$stack');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
