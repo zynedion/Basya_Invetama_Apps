@@ -13,3 +13,7 @@ firebase.initializeApp({
 
 // Notification payloads are displayed by the SDK while in the background.
 firebase.messaging();
+
+// Required fetch listener for Android Chrome PWA installability
+self.addEventListener('fetch', () => {});
+

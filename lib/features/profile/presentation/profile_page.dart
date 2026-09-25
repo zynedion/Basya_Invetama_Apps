@@ -313,6 +313,15 @@ class _BrandMark extends StatelessWidget {
       'assets/logo/logo_basya.png',
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,
+      errorBuilder: (context, error, stackTrace) => const Text(
+        'BASYA',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w800,
+          color: AppTheme.teal,
+          letterSpacing: 1.2,
+        ),
+      ),
     ),
   );
 }

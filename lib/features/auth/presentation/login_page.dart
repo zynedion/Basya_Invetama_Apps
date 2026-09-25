@@ -176,6 +176,15 @@ class _LoginPageState extends State<LoginPage> {
                               height: 28,
                               fit: BoxFit.contain,
                               semanticLabel: 'Basya',
+                              errorBuilder: (context, error, stackTrace) => const Text(
+                                'BASYA',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppTheme.teal,
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
                             ),
                           ],
                         ),
