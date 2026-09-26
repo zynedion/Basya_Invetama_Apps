@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../forms/presentation/form_routes.dart';
 import '../../../core/widgets/basya_components.dart';
 import '../../../core/widgets/module_page_header.dart';
 import '../domain/multiguna_overview_data.dart';
@@ -100,7 +101,7 @@ class _MultigunaPageState extends State<MultigunaPage> {
         message:
             'Anda sedang tidak memiliki cicilan Multiguna. Pengajuan baru dapat dibuat selama limit tersedia.',
         actionLabel: 'Ajukan Multiguna',
-        onAction: () => _placeholder('Pengajuan Multiguna'),
+        onAction: () => openBasyaForm(context, BasyaFormKind.financing),
       );
     }
     final nearest = data.nearestLoan!;
@@ -125,7 +126,7 @@ class _MultigunaPageState extends State<MultigunaPage> {
                 visible: _obligationVisible,
                 onToggleVisibility: () =>
                     setState(() => _obligationVisible = !_obligationVisible),
-                onApply: () => _placeholder('Pengajuan Multiguna'),
+                onApply: () => openBasyaForm(context, BasyaFormKind.financing),
               ),
             ),
             SliverPadding(
@@ -145,7 +146,11 @@ class _MultigunaPageState extends State<MultigunaPage> {
                     overduePeriods: nearest.arrearsMonths,
                     nextInstallmentNumber: nearest.nextInstallmentNumber,
                     overdue: nearest.isOverdue,
-                    onPay: () => _placeholder('Bayar cicilan'),
+                    onPay: () => openBasyaForm(
+                      context,
+                      BasyaFormKind.installment,
+                      loan: data.nearestLoan,
+                    ),
                   ),
                   const SizedBox(height: 30),
                   _SectionHeader(

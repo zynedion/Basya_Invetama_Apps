@@ -13,6 +13,8 @@ class BasyaActionButton extends StatefulWidget {
     this.style = BasyaActionStyle.primary,
     this.expand = false,
     this.compact = false,
+    this.loading = false,
+    this.labelSize,
   });
 
   final String label;
@@ -21,6 +23,8 @@ class BasyaActionButton extends StatefulWidget {
   final BasyaActionStyle style;
   final bool expand;
   final bool compact;
+  final bool loading;
+  final double? labelSize;
 
   @override
   State<BasyaActionButton> createState() => _BasyaActionButtonState();
@@ -28,6 +32,7 @@ class BasyaActionButton extends StatefulWidget {
 
 class _BasyaActionButtonState extends State<BasyaActionButton> {
   var _pressed = false;
+  var _focused = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,89 +57,108 @@ class _BasyaActionButtonState extends State<BasyaActionButton> {
       BasyaActionStyle.tonal => const Color(0xFFD7E9E5),
       BasyaActionStyle.danger => const Color(0xFFFFB7AA),
     };
-    final enabled = widget.onPressed != null;
+    final enabled = widget.onPressed != null && !widget.loading;
+    final reducedMotion = MediaQuery.disableAnimationsOf(context);
     final button = Semantics(
       button: true,
       enabled: enabled,
       label: widget.label,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: widget.onPressed,
-        onTapDown: enabled ? (_) => setState(() => _pressed = true) : null,
-        onTapUp: enabled ? (_) => setState(() => _pressed = false) : null,
-        onTapCancel: enabled ? () => setState(() => _pressed = false) : null,
-        child: AnimatedScale(
-          scale: _pressed ? .98 : 1,
-          duration: const Duration(milliseconds: 110),
-          curve: Curves.easeOut,
-          child: AnimatedOpacity(
-            opacity: enabled ? 1 : .48,
-            duration: const Duration(milliseconds: 160),
-            child: Container(
-              constraints: BoxConstraints(
-                minHeight: widget.compact ? 44 : 48,
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: widget.compact ? 12 : 16,
-                vertical: widget.compact ? 10 : 12,
-              ),
-              decoration: BoxDecoration(
-                color: background,
-                gradient: widget.style == BasyaActionStyle.primary
-                    ? const LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Color(0xFF004E50),
-                          Color(0xFF006A66),
-                          Color(0xFF008579),
-                        ],
-                        stops: [0, .5, 1],
-                      )
-                    : null,
-                borderRadius: BorderRadius.circular(AppTheme.controlRadius),
-                border: Border.all(color: border),
-                boxShadow:
-                    widget.style == BasyaActionStyle.primary ||
-                        widget.style == BasyaActionStyle.emphasis
-                    ? const [
-                        BoxShadow(
-                          color: Color(0x1F004E50),
-                          blurRadius: 10,
-                          offset: Offset(0, 4),
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Row(
-                mainAxisSize: widget.expand
-                    ? MainAxisSize.max
-                    : MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (widget.icon != null) ...[
-                    Icon(
-                      widget.icon,
-                      color: foreground,
-                      size: widget.compact ? 17 : 19,
-                    ),
-                    const SizedBox(width: 8),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(AppTheme.controlRadius),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppTheme.controlRadius),
+          onTap: enabled ? widget.onPressed : null,
+          onFocusChange: (value) => setState(() => _focused = value),
+          onHighlightChanged: (value) => setState(() => _pressed = value),
+          child: AnimatedScale(
+            scale: _pressed && !reducedMotion ? .96 : 1,
+            duration: reducedMotion
+                ? Duration.zero
+                : const Duration(milliseconds: 110),
+            curve: Curves.easeOut,
+            child: AnimatedOpacity(
+              opacity: enabled ? 1 : .48,
+              duration: reducedMotion
+                  ? Duration.zero
+                  : const Duration(milliseconds: 150),
+              child: Container(
+                constraints: BoxConstraints(
+                  minHeight: widget.compact ? 44 : 48,
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.compact ? 12 : 16,
+                  vertical: widget.compact ? 10 : 12,
+                ),
+                decoration: BoxDecoration(
+                  color: background,
+                  gradient: widget.style == BasyaActionStyle.primary
+                      ? const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xFF004E50),
+                            Color(0xFF006A66),
+                            Color(0xFF008579),
+                          ],
+                          stops: [0, .5, 1],
+                        )
+                      : null,
+                  borderRadius: BorderRadius.circular(AppTheme.controlRadius),
+                  border: Border.all(color: border),
+                  boxShadow: [
+                    if (_focused)
+                      const BoxShadow(color: AppTheme.ink, spreadRadius: 3),
+                    if (widget.style == BasyaActionStyle.primary ||
+                        widget.style == BasyaActionStyle.emphasis)
+                      const BoxShadow(
+                        color: Color(0x1F004E50),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
                   ],
-                  Flexible(
-                    child: ExcludeSemantics(
-                      child: Text(
-                        widget.label,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                ),
+                child: Row(
+                  mainAxisSize: widget.expand
+                      ? MainAxisSize.max
+                      : MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (widget.loading) ...[
+                      SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
                           color: foreground,
-                          fontSize: widget.compact ? 11 : 12,
-                          height: 1.25,
-                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                    ] else if (widget.icon != null) ...[
+                      Icon(
+                        widget.icon,
+                        color: foreground,
+                        size: widget.compact ? 17 : 19,
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    Flexible(
+                      child: ExcludeSemantics(
+                        child: Text(
+                          widget.label,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: foreground,
+                            fontSize:
+                                widget.labelSize ?? (widget.compact ? 11 : 12),
+                            height: 1.25,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../forms/presentation/form_routes.dart';
 import '../../../core/widgets/basya_components.dart';
 import '../../../core/widgets/module_page_header.dart';
 import '../domain/savings_overview_data.dart';
@@ -76,10 +77,10 @@ class _SavingsPageState extends State<SavingsPage> {
                   setState(() => _balanceVisible = !_balanceVisible),
               onTopUp:
                   widget.onTopUp ??
-                  () => _showPlaceholder('Top Up Simpanan Sukarela'),
+                  () => openBasyaForm(context, BasyaFormKind.topUpSavings),
               onWithdraw:
                   widget.onWithdraw ??
-                  () => _showPlaceholder('Withdraw Simpanan Sukarela'),
+                  () => openBasyaForm(context, BasyaFormKind.withdraw),
             ),
           ),
           SliverPadding(
@@ -120,7 +121,10 @@ class _SavingsPageState extends State<SavingsPage> {
                   actionLabel: 'Bayar',
                   onAction:
                       widget.onPayMandatory ??
-                      () => _showPlaceholder('Bayar Simpanan Wajib'),
+                      () => openBasyaForm(
+                        context,
+                        BasyaFormKind.mandatorySavings,
+                      ),
                 ),
                 const SizedBox(height: 10),
                 _MembershipCard(

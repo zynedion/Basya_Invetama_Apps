@@ -53,7 +53,7 @@ void main() {
     await expectLater(api.update(session, ''), throwsStateError);
   });
   test(
-    'Clear sends JSON null after in-flight registration and blocks late updates',
+    'Clear sends an empty string after in-flight registration and blocks late updates',
     () async {
       final started = Completer<void>();
       final release = Completer<void>();
@@ -78,7 +78,7 @@ void main() {
       await Future.wait([registration, removal, lateRegistration]);
       expect(bodies, [
         {'fcm_token': 'device-token'},
-        {'fcm_token': null},
+        {'fcm_token': ''},
       ]);
     },
   );

@@ -52,4 +52,6 @@ Font Plus Jakarta Sans. Implementasi Flutter saat ini menggunakan Material Icons
 
 Komponen Flutter bersama berada di `lib/core/widgets/basya_components.dart`: `BasyaActionButton`, `BasyaSegmentedControl`, `BasyaStatusBadge`, dan `BasyaFilterChip`. Token warna, radius, border, dan bayangan berada di `AppTheme`; layar modul tidak membuat ulang spesifikasi kontrol yang sama.
 
+Form 16–24 menggunakan komponen bersama di `lib/features/forms/presentation/form_widgets.dart`: `BasyaChoiceField`, `BasyaDateField`, `BasyaAttachmentField`, `FormValue`, `FormSection`, `FormNotice`, dan `FormReviewSheet`. `BasyaActionButton` mendukung keyboard, indikator fokus, loading, pengurangan animasi, dan ukuran label form. Cakupan frontend lokal, route, fixture, serta batas verifikasi tercatat di [forms-frontend.md](forms-frontend.md).
+
 Rincian simpanan, investasi terbuka dan pengingat cicilan mengikuti layar Home aktif; master kartu V1 untuk bagian tersebut sudah dihapus. Komponen lain yang diperlukan nantinya ditambahkan setelah modul dibahas, bukan menggunakan kembali desain lama.

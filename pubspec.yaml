@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_secure_storage: ^11.1.1
   http: ^1.6.0
+  file_selector: ^1.1.0
   lottie: ^3.3.3
   firebase_core: ^4.15.0
   firebase_messaging: ^16.7.0

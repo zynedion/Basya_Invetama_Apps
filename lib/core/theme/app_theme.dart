@@ -13,6 +13,8 @@ abstract final class AppTheme {
   static const dangerSurface = Color(0xFFFFDED7);
   static const neutralSurface = Color(0xFFEDF8F5);
   static const cardBorder = Color(0xFFE0EBE8);
+  static const inputBorder = Color(0xFF6D7A78);
+  static const readOnlySurface = Color(0xFFEEF3F1);
   static const softShadow = Color(0x1017324A);
   static const double heroRadius = 28;
   static const double cardRadius = 20;
@@ -42,7 +44,7 @@ abstract final class AppTheme {
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFF6D7A78)),
+        borderSide: const BorderSide(color: inputBorder),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),

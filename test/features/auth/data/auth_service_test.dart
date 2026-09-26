@@ -46,7 +46,7 @@ void main() {
         fcm: FcmTokenApi(
           client: MockClient((request) async {
             expect(request.method, 'PUT');
-            expect(jsonDecode(request.body), {'fcm_token': null});
+            expect(jsonDecode(request.body), {'fcm_token': ''});
             expect(request.headers['Authorization'], 'Bearer token-2');
             expect(await repository.read(), isNotNull);
             expect(await repository.readPassword(), 'test-password');

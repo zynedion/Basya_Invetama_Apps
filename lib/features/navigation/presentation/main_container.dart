@@ -5,6 +5,7 @@ import '../data/last_destination_store.dart';
 import '../../../core/notifications/fcm_registration.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../forms/presentation/form_routes.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
 import '../../auth/domain/auth_session.dart';
@@ -212,7 +213,13 @@ class _MainContainerState extends State<MainContainer> {
               if (index >= 0) _selectDestination(index);
             },
           ),
-          'Simpanan' => const SavingsPage(),
+          'Simpanan' => SavingsPage(
+            onWithdraw: () => openBasyaForm(
+              context,
+              BasyaFormKind.withdraw,
+              profile: widget.profile,
+            ),
+          ),
           'Investasi' => const InvestmentPage(),
           'Multiguna' => MultigunaPage(
             data: _multigunaData,
@@ -224,8 +231,13 @@ class _MainContainerState extends State<MainContainer> {
             profile: widget.profile,
             onLogout: _logout,
             loggingOut: _loggingOut,
-            onEditProfile: () => _showComingSoon('Edit profil'),
-            onChangePassword: () => _showComingSoon('Ganti password'),
+            onEditProfile: () => openBasyaForm(
+              context,
+              BasyaFormKind.editProfile,
+              profile: widget.profile,
+            ),
+            onChangePassword: () =>
+                openBasyaForm(context, BasyaFormKind.password),
           ),
           _ => const SizedBox.shrink(),
         },
@@ -278,16 +290,6 @@ class _MainContainerState extends State<MainContainer> {
         ),
       ),
     );
-  }
-
-  void _showComingSoon(String feature) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text('$feature akan tersedia pada tahap berikutnya.'),
-        ),
-      );
   }
 }
 

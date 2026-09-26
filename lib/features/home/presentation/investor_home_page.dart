@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../forms/presentation/form_routes.dart';
 import '../../notifications/presentation/notifications_page.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
@@ -268,6 +269,19 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
       ..showSnackBar(SnackBar(content: Text('$feature sedang disiapkan.')));
   }
 
+  void _openQuickAction(String action) {
+    switch (action) {
+      case 'Top Up':
+        openTopUpDestination(context, investor: _isInvestor);
+      case 'Withdraw':
+        openBasyaForm(context, BasyaFormKind.withdraw, profile: widget.profile);
+      case 'Pinjam':
+        openBasyaForm(context, BasyaFormKind.financing);
+      case 'Mutasi':
+        openBasyaForm(context, BasyaFormKind.mutation);
+    }
+  }
+
   @override
   Widget build(BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
     value: SystemUiOverlayStyle.light,
@@ -328,7 +342,7 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                             const SizedBox(height: 12),
                             _QuickActions(
                               actions: _quickActions,
-                              onTap: _showComingSoon,
+                              onTap: _openQuickAction,
                             ),
                             const SizedBox(height: 24),
                             if (_isInvestor) ...[

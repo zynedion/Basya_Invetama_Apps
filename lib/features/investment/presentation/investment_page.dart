@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../forms/presentation/form_routes.dart';
 import '../../../core/widgets/basya_components.dart';
 import '../../../core/widgets/module_page_header.dart';
 import '../domain/investment_overview_data.dart';
@@ -71,8 +72,10 @@ class _InvestmentPageState extends State<InvestmentPage> {
               children: [
                 _BuyPowerCard(
                   amount: _sensitiveMoney(widget.data.buyPower),
-                  onTopUp: () => _placeholder('Top Up Buy Power'),
-                  onMutation: () => _placeholder('Mutasi ke Simpanan Sukarela'),
+                  onTopUp: () =>
+                      openBasyaForm(context, BasyaFormKind.topUpBuyPower),
+                  onMutation: () =>
+                      openBasyaForm(context, BasyaFormKind.mutation),
                 ),
                 const SizedBox(height: 32),
                 const _SectionHeading(title: 'Pengajuan aktif'),
@@ -625,9 +628,8 @@ class _InvestmentTabs extends StatelessWidget {
   Widget build(BuildContext context) => BasyaSegmentedControl<_InvestmentTab>(
     values: _InvestmentTab.values,
     selected: selected,
-    labelBuilder: (tab) => tab == _InvestmentTab.opportunities
-        ? 'Peluang'
-        : 'Portofolio',
+    labelBuilder: (tab) =>
+        tab == _InvestmentTab.opportunities ? 'Peluang' : 'Portofolio',
     onChanged: onChanged,
   );
 }
