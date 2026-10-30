@@ -7,8 +7,16 @@ class SavingsTransaction {
     required this.status,
     required this.amount,
     required this.direction,
+    this.id,
+    this.savingsType,
+    this.referenceId,
+    this.statusCode,
   });
 
+  final String? id;
+  final String? savingsType;
+  final String? referenceId;
+  final String? statusCode;
   final String title;
   final String date;
   final String status;
@@ -19,18 +27,20 @@ class SavingsTransaction {
 class SavingsOverviewData {
   const SavingsOverviewData({
     required this.voluntarySavings,
-    required this.annualShu,
+    this.annualShu,
     required this.mandatorySavings,
     required this.principalSavings,
-    required this.shuYear,
+    this.shuYear,
+    this.total,
     required this.transactions,
   });
 
   final int voluntarySavings;
-  final int annualShu;
+  final int? annualShu;
+  final int? total;
   final int mandatorySavings;
   final int principalSavings;
-  final int shuYear;
+  final int? shuYear;
   final List<SavingsTransaction> transactions;
 
   static const demo = SavingsOverviewData(

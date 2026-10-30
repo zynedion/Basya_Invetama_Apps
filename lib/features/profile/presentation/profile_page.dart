@@ -190,109 +190,96 @@ class _MemberCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _BrandMark(),
-                  SizedBox(width: 12),
-                  Flexible(
-                    child: Text(
-                      'KARTU ANGGOTA',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        color: Color(0xFFD5F3E9),
-                        fontSize: 9,
-                        letterSpacing: 1.1,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  const _BrandMark(),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Wrap(
+                      alignment: WrapAlignment.end,
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: [
+                        if (active != null)
+                          _GlassBadge(
+                            icon: active
+                                ? Icons.verified_outlined
+                                : Icons.error_outline_rounded,
+                            label: active ? 'Aktif' : 'Tidak aktif',
+                          ),
+                        if (investor) const _GlassBadge(label: 'Investor'),
+                      ],
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 18),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _ProfileAvatar(profile: profile),
-                  const SizedBox(width: 16),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            height: 1.15,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 9),
-                        const Text(
-                          'Nomor anggota',
-                          style: TextStyle(
-                            color: Color(0xFFD5F3E9),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          _memberNumber,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            letterSpacing: .5,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      _name,
+                      softWrap: true,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        height: 1.25,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
+                  const SizedBox(width: 16),
+                  _ProfileAvatar(profile: profile),
                 ],
               ),
-              const SizedBox(height: 22),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                crossAxisAlignment: WrapCrossAlignment.end,
-                children: [
-                  SizedBox(
-                    width: 150,
-                    child: Column(
+              const SizedBox(height: 20),
+              const Divider(height: 1, color: Color(0x33FFFFFF)),
+              const SizedBox(height: 14),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  Widget detail(String label, String value) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: const TextStyle(
+                          color: Color(0xFFD5F3E9),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        value,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          height: 1.4,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  );
+                  final number = detail('Nomor anggota', _memberNumber);
+                  final joined = detail('Bergabung sejak', _joinedAt);
+                  if (constraints.maxWidth < 270 ||
+                      MediaQuery.textScalerOf(context).scale(12) > 18) {
+                    return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Bergabung sejak',
-                          style: TextStyle(
-                            color: Color(0xFFD5F3E9),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          _joinedAt,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (active != null)
-                    _GlassBadge(
-                      icon: active
-                          ? Icons.verified_outlined
-                          : Icons.error_outline_rounded,
-                      label: active ? 'Aktif' : 'Tidak aktif',
-                    ),
-                  if (investor) const _GlassBadge(label: 'Investor'),
-                ],
+                      children: [number, const SizedBox(height: 12), joined],
+                    );
+                  }
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(flex: 3, child: number),
+                      const SizedBox(width: 16),
+                      Expanded(flex: 2, child: joined),
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -337,8 +324,8 @@ class _ProfileAvatar extends StatelessWidget {
     final name = profile?.displayName.trim() ?? '';
     final initial = name.isEmpty ? 'B' : name.characters.first.toUpperCase();
     return Container(
-      width: 78,
-      height: 78,
+      width: 64,
+      height: 64,
       decoration: BoxDecoration(
         color: const Color(0xFFDDF8EA),
         borderRadius: BorderRadius.circular(24),
@@ -396,12 +383,14 @@ class _GlassBadge extends StatelessWidget {
           Icon(icon, size: 13, color: const Color(0xFFBFFFE5)),
           const SizedBox(width: 5),
         ],
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 9,
-            fontWeight: FontWeight.w700,
+        Flexible(
+          child: Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 9,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ],

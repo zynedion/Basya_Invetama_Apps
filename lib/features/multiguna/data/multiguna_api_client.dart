@@ -1,3 +1,4 @@
+import '../../auth/data/authorized_request.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -20,15 +21,15 @@ class MultigunaApiClient implements MultigunaGateway {
   @override
   Future<MultigunaOverviewData> getOverview(AuthSession session) async {
     try {
-      final response = await _client
-          .get(
-            multigunaUri,
-            headers: {
-              'Accept': 'application/json',
-              'Authorization': session.authorizationHeader,
-            },
-          )
-          .timeout(const Duration(seconds: 20));
+      final response = await authorizedGet(
+        _client,
+        multigunaUri,
+        session,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': session.authorizationHeader,
+        },
+      );
       if (response.statusCode == 403) return MultigunaOverviewData.unavailable;
       final body = _decodeBody(response.body);
       if (response.statusCode == 200) return _parseOverview(body);

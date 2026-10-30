@@ -49,6 +49,9 @@ class FcmTokenApi {
 
   Future<void> _send(AuthSession session, String token) async {
     final isLogout = token.isEmpty;
+    if (!isLogout && session.recovery != null) {
+      session = await session.recovery!.resolve();
+    }
     final action = isLogout ? '[FCM][logout]' : '[FCM][update]';
     print(
       '$action Sending PUT https://api.basyainvestama.id/app/profile/fcm-token',
@@ -56,9 +59,7 @@ class FcmTokenApi {
     print(
       '$action Headers: Content-Type=application/json; Accept=application/json; Authorization=[REDACTED]',
     );
-    print(
-      '$action Request body: ${jsonEncode({'fcm_token': token})}',
-    );
+    print('$action Request body: ${jsonEncode({'fcm_token': token})}');
     final response = await _client
         .put(
           Uri.parse('https://api.basyainvestama.id/app/profile/fcm-token'),
@@ -73,9 +74,8 @@ class FcmTokenApi {
     print(
       '$action HTTP ${response.statusCode}; content-type=${response.headers['content-type'] ?? '(missing)'}',
     );
-    print(
-      '$action Response: ${_safeResponse(response.body, session)}',
-    );
+    print('$action Response: ${_safeResponse(response.body, session)}');
+    if (isLogout && response.statusCode == 401) return;
     if (response.statusCode < 200 || response.statusCode >= 300) {
       print('$action Failed with status code: ${response.statusCode}');
       throw StateError('FCM registration failed (${response.statusCode}).');

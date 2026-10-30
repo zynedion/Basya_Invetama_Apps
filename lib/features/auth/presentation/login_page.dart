@@ -13,11 +13,13 @@ class LoginPage extends StatefulWidget {
   const LoginPage({
     super.key,
     this.auth,
+    this.initialMessage,
     this.summaryGateway,
     this.animateBackground = true,
   });
 
   final AuthGateway? auth;
+  final String? initialMessage;
   final HomeSummaryGateway? summaryGateway;
   final bool animateBackground;
   @override
@@ -38,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _loginError = widget.initialMessage;
     _fillSavedUsername();
   }
 
@@ -176,15 +179,16 @@ class _LoginPageState extends State<LoginPage> {
                               height: 28,
                               fit: BoxFit.contain,
                               semanticLabel: 'Basya',
-                              errorBuilder: (context, error, stackTrace) => const Text(
-                                'BASYA',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w800,
-                                  color: AppTheme.teal,
-                                  letterSpacing: 1.5,
-                                ),
-                              ),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Text(
+                                    'BASYA',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppTheme.teal,
+                                      letterSpacing: 1.5,
+                                    ),
+                                  ),
                             ),
                           ],
                         ),

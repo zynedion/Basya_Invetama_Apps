@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -52,6 +53,30 @@ class _MainContainerState extends State<MainContainer> {
   bool get _isAndroid =>
       !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
   bool _loggingOut = false;
+  StreamSubscription<void>? _expirySubscription;
+  bool _openingLogin = false;
+
+  void _sessionExpired() {
+    if (!mounted || _loggingOut || _openingLogin) return;
+    _openingLogin = true;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(
+        builder: (_) => LoginPage(
+          auth: widget.auth,
+          summaryGateway: widget.summaryGateway,
+          initialMessage: 'Sesi Anda berakhir. Silakan masuk kembali.',
+        ),
+      ),
+      (_) => false,
+    );
+  }
+
+  @override
+  void dispose() {
+    _expirySubscription?.cancel();
+    super.dispose();
+  }
+
   MultigunaGateway? _multigunaGateway;
   MultigunaOverviewData? _multigunaData;
   bool _multigunaLoading = false;
@@ -60,6 +85,9 @@ class _MainContainerState extends State<MainContainer> {
   @override
   void initState() {
     super.initState();
+    _expirySubscription = widget.session?.recovery?.sessionExpired.listen(
+      (_) => _sessionExpired(),
+    );
     _restoreDestination();
     _multigunaGateway =
         widget.multigunaGateway ??
@@ -214,6 +242,7 @@ class _MainContainerState extends State<MainContainer> {
             },
           ),
           'Simpanan' => SavingsPage(
+            session: widget.session,
             onWithdraw: () => openBasyaForm(
               context,
               BasyaFormKind.withdraw,

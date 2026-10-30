@@ -6,8 +6,14 @@ class InvestorHomeActivity {
     required this.date,
     required this.amount,
     required this.direction,
+    this.referenceId,
+    this.statusLabel,
+    this.statusCode,
   });
 
+  final String? referenceId;
+  final String? statusLabel;
+  final String? statusCode;
   final String title;
   final String date;
   final int amount;

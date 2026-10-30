@@ -1,3 +1,4 @@
+import '../../auth/data/authorized_request.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -21,15 +22,15 @@ class HomeSummaryApiClient implements HomeSummaryGateway {
   @override
   Future<HomeSummary> getSummary(AuthSession session) async {
     try {
-      final response = await _client
-          .get(
-            summaryUri,
-            headers: {
-              'Accept': 'application/json',
-              'Authorization': session.authorizationHeader,
-            },
-          )
-          .timeout(const Duration(seconds: 20));
+      final response = await authorizedGet(
+        _client,
+        summaryUri,
+        session,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': session.authorizationHeader,
+        },
+      );
       final body = _decodeBody(response.body);
       if (response.statusCode == 200) return _parseSummary(body);
       if (response.statusCode == 401) {

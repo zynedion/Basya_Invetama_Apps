@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../auth/domain/auth_session.dart';
+import '../../auth/data/auth_exception.dart';
+import '../data/savings_api_client.dart';
+import '../domain/savings_gateway.dart';
+import 'savings_history_page.dart';
+import 'savings_transaction_row.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../forms/presentation/form_routes.dart';
@@ -15,6 +21,8 @@ class SavingsPage extends StatefulWidget {
   const SavingsPage({
     super.key,
     this.data = SavingsOverviewData.demo,
+    this.session,
+    this.gateway,
     this.onTopUp,
     this.onWithdraw,
     this.onPayMandatory,
@@ -22,6 +30,8 @@ class SavingsPage extends StatefulWidget {
   });
 
   final SavingsOverviewData data;
+  final AuthSession? session;
+  final SavingsGateway? gateway;
   final VoidCallback? onTopUp;
   final VoidCallback? onWithdraw;
   final VoidCallback? onPayMandatory;
@@ -33,6 +43,88 @@ class SavingsPage extends StatefulWidget {
 
 class _SavingsPageState extends State<SavingsPage> {
   bool _balanceVisible = true;
+  late final SavingsApiClient _client = SavingsApiClient();
+  SavingsGateway get _gateway => widget.gateway ?? _client;
+  SavingsOverviewData? _remote;
+  bool _loading = false;
+  String? _error;
+  int _request = 0;
+  SavingsOverviewData get _data => widget.session == null
+      ? widget.data
+      : (_remote ??
+            const SavingsOverviewData(
+              voluntarySavings: 0,
+              mandatorySavings: 0,
+              principalSavings: 0,
+              transactions: [],
+            ));
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  @override
+  void didUpdateWidget(covariant SavingsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.session != widget.session ||
+        oldWidget.gateway != widget.gateway) {
+      _remote = null;
+      _load();
+    }
+  }
+
+  @override
+  void dispose() {
+    _client.close();
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    final request = ++_request;
+    final session = widget.session;
+    if (session == null) {
+      setState(() {
+        _loading = false;
+        _error = null;
+      });
+      return;
+    }
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final data = await _gateway.getSavings(session, limit: 5);
+      if (!mounted || request != _request) return;
+      setState(() {
+        _remote = data;
+        _loading = false;
+      });
+    } catch (error) {
+      if (!mounted || request != _request) return;
+      setState(() {
+        _loading = false;
+        _error = error is AuthException
+            ? error.message
+            : 'Simpanan belum dapat dimuat.';
+      });
+    }
+  }
+
+  void _openHistory() => Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => SavingsHistoryPage(
+        session: widget.session,
+        gateway: _gateway,
+        preview: widget.data.transactions,
+        money: _balanceVisible
+            ? _money
+            : (_) => 'Rp \u2022\u2022\u2022\u2022\u2022\u2022',
+      ),
+    ),
+  );
 
   String _money(int value) {
     final digits = value.toString();
@@ -46,16 +138,11 @@ class _SavingsPageState extends State<SavingsPage> {
     return 'Rp $formatted';
   }
 
-  String _sensitiveMoney(int value) =>
-      _balanceVisible ? _money(value) : 'Rp •••••••';
-
-  void _showPlaceholder(String action) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(content: Text('$action akan tersedia pada tahap berikutnya.')),
-      );
-  }
+  String _sensitiveMoney(int value) => widget.session != null && _remote == null
+      ? '\u2014'
+      : _balanceVisible
+      ? _money(value)
+      : 'Rp •••••••';
 
   @override
   Widget build(BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
@@ -65,99 +152,120 @@ class _SavingsPageState extends State<SavingsPage> {
     ),
     child: ScrollConfiguration(
       behavior: const _SavingsScrollBehavior(),
-      child: CustomScrollView(
-        key: const ValueKey('savings-page-scroll'),
-        physics: _savingsScrollPhysics,
-        slivers: [
-          SliverToBoxAdapter(
-            child: _SavingsHero(
-              balance: _sensitiveMoney(widget.data.voluntarySavings),
-              balanceVisible: _balanceVisible,
-              onToggleBalance: () =>
-                  setState(() => _balanceVisible = !_balanceVisible),
-              onTopUp:
-                  widget.onTopUp ??
-                  () => openBasyaForm(context, BasyaFormKind.topUpSavings),
-              onWithdraw:
-                  widget.onWithdraw ??
-                  () => openBasyaForm(context, BasyaFormKind.withdraw),
+      child: RefreshIndicator(
+        onRefresh: _load,
+        child: CustomScrollView(
+          key: const ValueKey('savings-page-scroll'),
+          physics: _savingsScrollPhysics,
+          slivers: [
+            SliverToBoxAdapter(
+              child: _SavingsHero(
+                balance: _sensitiveMoney(_data.voluntarySavings),
+                balanceVisible: _balanceVisible,
+                onToggleBalance: () =>
+                    setState(() => _balanceVisible = !_balanceVisible),
+                onTopUp:
+                    widget.onTopUp ??
+                    () => openBasyaForm(context, BasyaFormKind.topUpSavings),
+                onWithdraw:
+                    widget.onWithdraw ??
+                    () => openBasyaForm(context, BasyaFormKind.withdraw),
+              ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 34, 20, 150),
-            sliver: SliverList.list(
-              children: [
-                const Text(
-                  'Simpanan keanggotaan',
-                  style: TextStyle(
-                    color: AppTheme.ink,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(20, 34, 20, 150),
+              sliver: SliverList.list(
+                children: [
+                  if (_loading) const LinearProgressIndicator(),
+                  if (_error != null) ...[
+                    Text(_error!, textAlign: TextAlign.center),
+                    TextButton(
+                      onPressed: _load,
+                      child: const Text('Coba lagi'),
+                    ),
+                  ],
+                  const Text(
+                    'Simpanan keanggotaan',
+                    style: TextStyle(
+                      color: AppTheme.ink,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  'Simpanan pokok dan wajib dapat ditarik setelah keanggotaan berakhir.',
-                  style: TextStyle(
-                    color: AppTheme.muted,
-                    fontSize: 12,
-                    height: 1.45,
+                  const SizedBox(height: 5),
+                  const Text(
+                    'Simpanan pokok dan wajib dapat ditarik setelah keanggotaan berakhir.',
+                    style: TextStyle(
+                      color: AppTheme.muted,
+                      fontSize: 12,
+                      height: 1.45,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 14),
-                _MembershipCard(
-                  icon: Icons.payments_outlined,
-                  label: 'Estimasi SHU ${widget.data.shuYear}',
-                  amount: _sensitiveMoney(widget.data.annualShu),
-                  caption:
-                      'Nilai sementara. Jumlah final mengikuti tutup buku koperasi.',
-                ),
-                const SizedBox(height: 10),
-                _MembershipCard(
-                  icon: Icons.calendar_month_outlined,
-                  label: 'Simpanan Wajib',
-                  amount: _sensitiveMoney(widget.data.mandatorySavings),
-                  sideLabel: 'Iuran bulanan',
-                  actionLabel: 'Bayar',
-                  onAction:
-                      widget.onPayMandatory ??
-                      () => openBasyaForm(
-                        context,
-                        BasyaFormKind.mandatorySavings,
+                  const SizedBox(height: 14),
+                  _MembershipCard(
+                    icon: Icons.payments_outlined,
+                    label: _data.shuYear == null
+                        ? 'Estimasi SHU'
+                        : 'Estimasi SHU ${_data.shuYear}',
+                    amount: _data.annualShu == null
+                        ? 'Belum tersedia'
+                        : _sensitiveMoney(_data.annualShu!),
+                    caption:
+                        'Nilai sementara. Jumlah final mengikuti tutup buku koperasi.',
+                  ),
+                  const SizedBox(height: 10),
+                  _MembershipCard(
+                    icon: Icons.calendar_month_outlined,
+                    label: 'Simpanan Wajib',
+                    amount: _sensitiveMoney(_data.mandatorySavings),
+                    sideLabel: 'Iuran bulanan',
+                    actionLabel: 'Bayar',
+                    onAction:
+                        widget.onPayMandatory ??
+                        () => openBasyaForm(
+                          context,
+                          BasyaFormKind.mandatorySavings,
+                        ),
+                  ),
+                  const SizedBox(height: 10),
+                  _MembershipCard(
+                    icon: Icons.verified_outlined,
+                    label: 'Simpanan Pokok',
+                    amount: _sensitiveMoney(_data.principalSavings),
+                    sideLabel: 'Dibayar saat\ndaftar',
+                  ),
+                  const SizedBox(height: 42),
+                  _SectionHeader(
+                    title: 'Transaksi simpanan',
+                    action: 'Lihat semua',
+                    onAction: widget.onSeeAllTransactions ?? _openHistory,
+                  ),
+                  const SizedBox(height: 8),
+                  if (!_loading && _error == null && _data.transactions.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        'Belum ada transaksi simpanan.',
+                        textAlign: TextAlign.center,
                       ),
-                ),
-                const SizedBox(height: 10),
-                _MembershipCard(
-                  icon: Icons.verified_outlined,
-                  label: 'Simpanan Pokok',
-                  amount: _sensitiveMoney(widget.data.principalSavings),
-                  sideLabel: 'Dibayar saat\ndaftar',
-                ),
-                const SizedBox(height: 42),
-                _SectionHeader(
-                  title: 'Transaksi simpanan',
-                  action: 'Lihat semua',
-                  onAction:
-                      widget.onSeeAllTransactions ??
-                      () => _showPlaceholder('Riwayat transaksi'),
-                ),
-                const SizedBox(height: 8),
-                for (
-                  var index = 0;
-                  index < widget.data.transactions.length;
-                  index++
-                ) ...[
-                  _TransactionRow(
-                    transaction: widget.data.transactions[index],
-                    money: _money,
-                  ),
-                  if (index != widget.data.transactions.length - 1)
-                    const Divider(height: 1, indent: 52),
+                    ),
+                  for (
+                    var index = 0;
+                    index < _data.transactions.take(5).length;
+                    index++
+                  ) ...[
+                    SavingsTransactionRow(
+                      transaction: _data.transactions[index],
+                      money: _sensitiveMoney,
+                    ),
+                    if (index != _data.transactions.take(5).length - 1)
+                      const Divider(height: 1, indent: 52),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );
@@ -470,82 +578,5 @@ class _SectionHeader extends StatelessWidget {
         ),
       ),
     ],
-  );
-}
-
-class _TransactionRow extends StatelessWidget {
-  const _TransactionRow({required this.transaction, required this.money});
-
-  final SavingsTransaction transaction;
-  final String Function(int) money;
-
-  Color get _amountColor => switch (transaction.direction) {
-    SavingsTransactionDirection.incoming => AppTheme.positive,
-    SavingsTransactionDirection.outgoing => AppTheme.negative,
-    SavingsTransactionDirection.neutral => AppTheme.ink,
-  };
-
-  String get _prefix => switch (transaction.direction) {
-    SavingsTransactionDirection.incoming => '+',
-    SavingsTransactionDirection.outgoing => '-',
-    SavingsTransactionDirection.neutral => '',
-  };
-
-  IconData get _icon => switch (transaction.direction) {
-    SavingsTransactionDirection.incoming => Icons.south_west_rounded,
-    SavingsTransactionDirection.outgoing => Icons.north_east_rounded,
-    SavingsTransactionDirection.neutral => Icons.verified_outlined,
-  };
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 10),
-    child: Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: const Color(0xFFEDF8F5),
-            borderRadius: BorderRadius.circular(AppTheme.controlRadius),
-          ),
-          child: Icon(_icon, color: AppTheme.teal, size: 20),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                transaction.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: AppTheme.ink,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                '${transaction.date} · ${transaction.status}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: AppTheme.muted, fontSize: 11),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          '$_prefix${money(transaction.amount)}',
-          style: TextStyle(
-            color: _amountColor,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    ),
   );
 }

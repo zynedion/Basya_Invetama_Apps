@@ -1,5 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
+import '../data/activities_api_client.dart';
+import '../domain/activities_gateway.dart';
+import 'activities_feed.dart';
+import 'activities_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,6 +60,7 @@ class InvestorHomePage extends StatefulWidget {
     this.profile,
     this.session,
     this.summaryGateway,
+    this.activitiesGateway,
     this.audience = HomeAudience.investor,
     this.data = InvestorHomeData.demo,
     this.memberData = MemberHomeData.demo,
@@ -70,6 +75,7 @@ class InvestorHomePage extends StatefulWidget {
   final AuthProfile? profile;
   final AuthSession? session;
   final HomeSummaryGateway? summaryGateway;
+  final ActivitiesGateway? activitiesGateway;
   final HomeAudience audience;
   final InvestorHomeData data;
   final MemberHomeData memberData;
@@ -86,6 +92,16 @@ class InvestorHomePage extends StatefulWidget {
 class _InvestorHomePageState extends State<InvestorHomePage> {
   late HomeAudience _previewAudience = widget.audience;
   bool _balanceVisible = true;
+  final _activitiesKey = GlobalKey<ActivitiesFeedState>();
+  Future<void> _refreshHome() async {
+    await Future.wait([
+      _loadSummary(),
+      if (_activitiesKey.currentState != null)
+        _activitiesKey.currentState!.refresh(),
+    ]);
+  }
+
+  late final ActivitiesApiClient _activitiesClient = ActivitiesApiClient();
   Timer? _greetingTimer;
   late DateTime _currentTime;
   HomeSummary? _summary;
@@ -260,6 +276,7 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
   @override
   void dispose() {
     _greetingTimer?.cancel();
+    _activitiesClient.close();
     super.dispose();
   }
 
@@ -372,12 +389,32 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                             _SectionTitle(
                               title: 'Aktivitas terakhir',
                               action: 'Lihat semua',
-                              onAction: () =>
-                                  _showComingSoon('Riwayat transaksi'),
+                              onAction: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => ActivitiesPage(
+                                    session: widget.session,
+                                    gateway:
+                                        widget.activitiesGateway ??
+                                        _activitiesClient,
+                                    money: _balanceVisible
+                                        ? _money
+                                        : (_) =>
+                                              'Rp \u2022\u2022\u2022\u2022\u2022\u2022',
+                                    preview: _isInvestor
+                                        ? _investorData.activities
+                                        : _memberData.activities,
+                                  ),
+                                ),
+                              ),
                             ),
                             const SizedBox(height: 4),
-                            _ActivityList(
-                              activities: _isInvestor
+                            ActivitiesFeed(
+                              key: _activitiesKey,
+                              session: widget.session,
+                              gateway:
+                                  widget.activitiesGateway ?? _activitiesClient,
+                              maxRows: 5,
+                              preview: _isInvestor
                                   ? _investorData.activities
                                   : _memberData.activities,
                               money: _sensitiveMoney,
@@ -392,18 +429,24 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
                   final pinHero =
                       constraints.maxHeight >= 650 && textScale <= 1.3;
                   if (!pinHero) {
-                    return SingleChildScrollView(
-                      physics: _homeScrollPhysics,
-                      child: Column(children: [hero, content]),
+                    return RefreshIndicator(
+                      onRefresh: _refreshHome,
+                      child: SingleChildScrollView(
+                        physics: _homeScrollPhysics,
+                        child: Column(children: [hero, content]),
+                      ),
                     );
                   }
                   return Column(
                     children: [
                       hero,
                       Expanded(
-                        child: SingleChildScrollView(
-                          physics: _homeScrollPhysics,
-                          child: content,
+                        child: RefreshIndicator(
+                          onRefresh: _refreshHome,
+                          child: SingleChildScrollView(
+                            physics: _homeScrollPhysics,
+                            child: content,
+                          ),
                         ),
                       ),
                     ],
@@ -1247,117 +1290,5 @@ class _MultigunaOverview extends StatelessWidget {
         ),
       ),
     ],
-  );
-}
-
-class _ActivityList extends StatelessWidget {
-  const _ActivityList({required this.activities, required this.money});
-
-  final List<InvestorHomeActivity> activities;
-  final String Function(int) money;
-
-  @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      for (var index = 0; index < activities.length; index++) ...[
-        _ActivityRow(activity: activities[index], money: money),
-        if (index != activities.length - 1)
-          const Divider(height: 1, indent: 52),
-      ],
-    ],
-  );
-}
-
-class _ActivityRow extends StatelessWidget {
-  const _ActivityRow({required this.activity, required this.money});
-
-  final InvestorHomeActivity activity;
-  final String Function(int) money;
-
-  String get _prefix => switch (activity.direction) {
-    HomeActivityDirection.incoming => '+',
-    HomeActivityDirection.outgoing => '-',
-    HomeActivityDirection.transfer => '',
-  };
-
-  IconData get _icon => switch (activity.direction) {
-    HomeActivityDirection.incoming => Icons.south_west_rounded,
-    HomeActivityDirection.outgoing => Icons.north_east_rounded,
-    HomeActivityDirection.transfer => Icons.swap_horiz_rounded,
-  };
-
-  Color get _amountColor => switch (activity.direction) {
-    HomeActivityDirection.incoming => AppTheme.positive,
-    HomeActivityDirection.outgoing => AppTheme.negative,
-    HomeActivityDirection.transfer => AppTheme.ink,
-  };
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 12),
-    child: LayoutBuilder(
-      builder: (context, constraints) {
-        final amount = Text(
-          '$_prefix${money(activity.amount)}',
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-            color: _amountColor,
-          ),
-        );
-        final details = Row(
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: const Color(0xFFEDF7F5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SizedBox.square(
-                dimension: 40,
-                child: Icon(_icon, size: 21, color: AppTheme.teal),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    activity.title,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    activity.date,
-                    style: const TextStyle(fontSize: 11, color: AppTheme.muted),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-        final compact =
-            constraints.maxWidth < 300 ||
-            MediaQuery.textScalerOf(context).scale(13) > 16;
-        return compact
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  details,
-                  const SizedBox(height: 8),
-                  Align(alignment: Alignment.centerRight, child: amount),
-                ],
-              )
-            : Row(
-                children: [
-                  Expanded(child: details),
-                  const SizedBox(width: 8),
-                  amount,
-                ],
-              );
-      },
-    ),
   );
 }

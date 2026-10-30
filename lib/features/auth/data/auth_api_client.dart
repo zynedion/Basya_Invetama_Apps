@@ -1,3 +1,4 @@
+import 'authorized_request.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -85,15 +86,15 @@ class AuthApiClient {
 
   Future<AuthProfile> getProfile(AuthSession session) async {
     try {
-      final response = await _client
-          .get(
-            profileUri,
-            headers: {
-              'Accept': 'application/json',
-              'Authorization': session.authorizationHeader,
-            },
-          )
-          .timeout(const Duration(seconds: 20));
+      final response = await authorizedGet(
+        _client,
+        profileUri,
+        session,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': session.authorizationHeader,
+        },
+      );
       final body = _decodeBody(response.body);
       if (response.statusCode == 200) {
         return _parseProfile(body);
