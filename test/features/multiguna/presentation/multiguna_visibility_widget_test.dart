@@ -42,6 +42,7 @@ void main() {
 
     await tester.tap(find.byTooltip('Multiguna'));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text('Belum ada pinjaman aktif'), 200);
     expect(find.text('Belum ada pinjaman aktif'), findsOneWidget);
   });
 
@@ -65,7 +66,18 @@ void main() {
 
     await tester.tap(find.byTooltip('Multiguna'));
     await tester.pumpAndSettle();
-    expect(find.text('Multiguna tidak tersedia'), findsOneWidget);
+    expect(find.byKey(const ValueKey('multiguna-page-scroll')), findsOneWidget);
+    expect(find.text('Multiguna tidak tersedia'), findsNothing);
+    expect(find.text('Rp 18.750.000'), findsNothing);
+    await tester.scrollUntilVisible(
+      find.text('Data pinjaman belum tersedia untuk akun ini.'),
+      200,
+    );
+    expect(
+      find.text('Data pinjaman belum tersedia untuk akun ini.'),
+      findsOneWidget,
+    );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('Home shows Multiguna card when an active contract exists', (

@@ -249,7 +249,10 @@ class _MainContainerState extends State<MainContainer> {
               profile: widget.profile,
             ),
           ),
-          'Investasi' => const InvestmentPage(),
+          'Investasi' => InvestmentPage(
+            session: widget.session,
+            summaryGateway: widget.summaryGateway,
+          ),
           'Multiguna' => MultigunaPage(
             data: _multigunaData,
             loading: _multigunaLoading,
@@ -285,7 +288,16 @@ class _MainContainerState extends State<MainContainer> {
           child: Stack(
             children: [
               Positioned.fill(
-                child: IndexedStack(index: _selectedIndex, children: pages),
+                child: IndexedStack(
+                  index: _selectedIndex,
+                  children: [
+                    for (var index = 0; index < pages.length; index++)
+                      TickerMode(
+                        enabled: index == _selectedIndex,
+                        child: pages[index],
+                      ),
+                  ],
+                ),
               ),
               Positioned(
                 left: 0,

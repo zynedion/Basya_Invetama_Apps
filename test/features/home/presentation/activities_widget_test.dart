@@ -13,6 +13,8 @@ class FakeActivities implements ActivitiesGateway {
   Future<List<InvestorHomeActivity>> getActivities(
     AuthSession session, {
     int? limit,
+    int? page,
+    int? perPage,
   }) async {
     requestedLimits.add(limit);
     if (fail) throw Exception();
@@ -63,13 +65,13 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text('Activity 6'), 150);
     expect(find.text('Activity 6'), findsOneWidget);
+    await tester.drag(find.byType(ListView), const Offset(0, 2000));
+    await tester.pumpAndSettle();
     expect(gateway.requestedLimits, [5, null]);
     expect(find.text('Perbarui'), findsNothing);
-    await tester.drag(
-      find.byType(SingleChildScrollView).first,
-      const Offset(0, 400),
-    );
+    await tester.drag(find.byType(ListView).first, const Offset(0, 400));
     await tester.pumpAndSettle();
     expect(gateway.requestedLimits, [5, null, null]);
 
@@ -96,5 +98,35 @@ void main() {
     await tester.tap(find.text('Coba lagi'));
     await tester.pumpAndSettle();
     expect(find.text('Activity 0'), findsOneWidget);
+  });
+  testWidgets('large history builds visible rows lazily', (tester) async {
+    final rows = List.generate(
+      1000,
+      (i) => InvestorHomeActivity(
+        title: 'History $i',
+        date: '21 Okt',
+        amount: i,
+        direction: HomeActivityDirection.incoming,
+      ),
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ActivitiesPage(
+          session: null,
+          gateway: FakeActivities(),
+          preview: rows,
+          money: (value) => 'Rp $value',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('History 0'), findsOneWidget);
+    expect(find.text('History 999'), findsNothing);
+    final list = tester.widget<ListView>(find.byType(ListView));
+    expect(list.childrenDelegate, isA<SliverChildBuilderDelegate>());
+    await tester.scrollUntilVisible(find.text('History 30'), 400);
+    expect(find.text('History 30'), findsOneWidget);
+    expect(find.text('History 0'), findsNothing);
+    expect(tester.takeException(), isNull);
   });
 }

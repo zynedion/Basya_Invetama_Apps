@@ -49,6 +49,17 @@ class _SavingsPageState extends State<SavingsPage> {
   bool _loading = false;
   String? _error;
   int _request = 0;
+  static const _cacheKey = 'savings:all:5';
+  void _clearCache() {
+    if (!mounted) return;
+    setState(() {
+      _request++;
+      _remote = null;
+      _loading = false;
+      _error = 'Data sesi telah dibersihkan.';
+    });
+  }
+
   SavingsOverviewData get _data => widget.session == null
       ? widget.data
       : (_remote ??
@@ -62,6 +73,7 @@ class _SavingsPageState extends State<SavingsPage> {
   @override
   void initState() {
     super.initState();
+    widget.session?.cache?.addListener(_clearCache);
     _load();
   }
 
@@ -70,6 +82,8 @@ class _SavingsPageState extends State<SavingsPage> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.session != widget.session ||
         oldWidget.gateway != widget.gateway) {
+      oldWidget.session?.cache?.removeListener(_clearCache);
+      widget.session?.cache?.addListener(_clearCache);
       _remote = null;
       _load();
     }
@@ -77,6 +91,7 @@ class _SavingsPageState extends State<SavingsPage> {
 
   @override
   void dispose() {
+    widget.session?.cache?.removeListener(_clearCache);
     _client.close();
     super.dispose();
   }
@@ -91,22 +106,33 @@ class _SavingsPageState extends State<SavingsPage> {
       });
       return;
     }
+    final cache = session.cache;
+    final ticket = cache?.begin(_cacheKey);
     setState(() {
+      _remote = cache?.read<SavingsOverviewData>(_cacheKey) ?? _remote;
       _loading = true;
       _error = null;
     });
     try {
       final data = await _gateway.getSavings(session, limit: 5);
       if (!mounted || request != _request) return;
+      if (cache != null && ticket != null) cache.write(_cacheKey, data, ticket);
       setState(() {
         _remote = data;
         _loading = false;
       });
     } catch (error) {
       if (!mounted || request != _request) return;
+      if (error is AuthException &&
+          error.type == AuthFailureType.invalidCredentials) {
+        cache?.clear();
+        _remote = null;
+      }
       setState(() {
         _loading = false;
-        _error = error is AuthException
+        _error = _remote != null
+            ? 'Menampilkan data terakhir; pembaruan gagal.'
+            : error is AuthException
             ? error.message
             : 'Simpanan belum dapat dimuat.';
       });

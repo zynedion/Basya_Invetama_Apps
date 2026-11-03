@@ -3,6 +3,7 @@ import '../../../core/notifications/fcm_token_api.dart';
 import '../domain/auth_gateway.dart';
 import '../domain/auth_profile.dart';
 import '../domain/auth_session.dart';
+import '../domain/session_memory_cache.dart';
 import 'auth_api_client.dart';
 import 'auth_exception.dart';
 import 'secure_session_repository.dart';
@@ -24,6 +25,7 @@ class AuthService implements AuthGateway, SessionRecovery {
   @override
   Stream<void> get sessionExpired => _expired.stream;
   AuthSession? _current;
+  final _cache = SessionMemoryCache();
   Future<AuthSession>? _renewing;
   bool _blocked = false;
   int _generation = 0;
@@ -33,6 +35,7 @@ class AuthService implements AuthGateway, SessionRecovery {
     tokenType: session.tokenType,
     expiresAt: session.expiresAt,
     recovery: this,
+    cache: _cache,
   );
 
   static const _ended = AuthException(
@@ -89,6 +92,7 @@ class AuthService implements AuthGateway, SessionRecovery {
   @override
   Future<void> invalidate() async {
     if (_blocked) return;
+    _cache.clear();
     _blocked = true;
     _generation++;
     _current = null;
@@ -109,6 +113,7 @@ class AuthService implements AuthGateway, SessionRecovery {
     required String username,
     required String password,
   }) async {
+    _cache.clear();
     _blocked = false;
     final generation = ++_generation;
     final session = await _api.login(
@@ -147,6 +152,7 @@ class AuthService implements AuthGateway, SessionRecovery {
 
   @override
   Future<void> logout() async {
+    _cache.clear();
     _blocked = true;
     _generation++;
     final pending = _renewing;

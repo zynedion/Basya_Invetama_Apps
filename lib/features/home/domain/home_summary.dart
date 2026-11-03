@@ -16,6 +16,10 @@ class HomeSummary {
     required this.investedFunds,
     required this.monthlyProfit,
     required this.accumulatedProfit,
+    this.totalInvestmentValue,
+    this.performanceMonths,
+    this.performanceType,
+    this.performance = const [],
   });
 
   final HomeSummaryScope scope;
@@ -30,6 +34,10 @@ class HomeSummary {
   final int investedFunds;
   final int monthlyProfit;
   final int accumulatedProfit;
+  final int? totalInvestmentValue;
+  final int? performanceMonths;
+  final String? performanceType;
+  final List<InvestmentPerformancePoint> performance;
 
   bool get isGlobal => scope == HomeSummaryScope.global;
   int get totalSavings =>
@@ -82,4 +90,17 @@ class HomeSummary {
     remainingInstallment: fallback.remainingInstallment,
     activities: fallback.activities,
   );
+}
+
+class InvestmentPerformancePoint {
+  const InvestmentPerformancePoint({
+    required this.year,
+    required this.month,
+    required this.label,
+    required this.profit,
+  });
+  final int year;
+  final int month;
+  final String label;
+  final int profit;
 }

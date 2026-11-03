@@ -20,7 +20,15 @@ void main() {
             'scope': 'global',
             'currency': 'IDR',
             'period': {'year': 2026, 'month': 9},
+            'performa_investasi': {
+              'periode_bulan': 6,
+              'tipe': 'profit_bruto',
+              'data': [
+                {'year': 2026, 'month': 11, 'label': 'Nov', 'profit': 10815869},
+              ],
+            },
             'totals': {
+              'total_nilai_investasi': 23276653802,
               'total_saldo': 655132334,
               'buy_power': 59484137,
               'simpanan_sukarela': 542148197,
@@ -49,6 +57,11 @@ void main() {
     expect(captured.url, HomeSummaryApiClient.summaryUri);
     expect(captured.headers['Authorization'], 'Bearer test-token');
     expect(result.scope, HomeSummaryScope.global);
+    expect(result.totalInvestmentValue, 23276653802);
+    expect(result.performanceMonths, 6);
+    expect(result.performanceType, 'profit_bruto');
+    expect(result.performance.single.label, 'Nov');
+    expect(result.performance.single.profit, 10815869);
     expect(result.totalBalance, 655132334);
     expect(result.totalSavings, 595648197);
     expect(result.profitPeriod, 'September 2026');

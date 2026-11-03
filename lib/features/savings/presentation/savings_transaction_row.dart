@@ -1,3 +1,5 @@
+import '../../home/presentation/activity_detail_sheet.dart';
+import '../../home/domain/investor_home_data.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../domain/savings_overview_data.dart';
@@ -31,54 +33,89 @@ class SavingsTransactionRow extends StatelessWidget {
   };
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 10),
-    child: Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: const Color(0xFFEDF8F5),
-            borderRadius: BorderRadius.circular(AppTheme.controlRadius),
-          ),
-          child: Icon(_icon, color: AppTheme.teal, size: 20),
+  Widget build(BuildContext context) => Material(
+    color: Colors.transparent,
+    child: InkWell(
+      onTap: () => showActivityDetail(
+        context,
+        sheetTitle: 'Detail transaksi simpanan',
+        money: money,
+        extraDetails: {
+          if (transaction.savingsType != null)
+            'Jenis simpanan': switch (transaction.savingsType) {
+              'pokok' => 'Simpanan Pokok',
+              'wajib' => 'Simpanan Wajib',
+              'sukarela' => 'Simpanan Sukarela',
+              _ => transaction.savingsType!,
+            },
+        },
+        activity: InvestorHomeActivity(
+          title: transaction.title,
+          date: transaction.date,
+          amount: transaction.amount,
+          referenceId: transaction.referenceId,
+          statusLabel: transaction.status,
+          statusCode: transaction.statusCode,
+          direction: switch (transaction.direction) {
+            SavingsTransactionDirection.incoming =>
+              HomeActivityDirection.incoming,
+            SavingsTransactionDirection.outgoing =>
+              HomeActivityDirection.outgoing,
+            SavingsTransactionDirection.neutral =>
+              HomeActivityDirection.transfer,
+          },
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                transaction.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: AppTheme.ink,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: _amountColor.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(AppTheme.controlRadius),
               ),
-              const SizedBox(height: 2),
-              Text(
-                '${transaction.date} · ${transaction.status}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: AppTheme.muted, fontSize: 11),
+              child: Icon(_icon, color: _amountColor, size: 20),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    transaction.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: AppTheme.ink,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '${transaction.date} · ${transaction.status}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: AppTheme.muted, fontSize: 11),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              '$_prefix${money(transaction.amount)}',
+              style: TextStyle(
+                color: _amountColor,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 8),
-        Text(
-          '$_prefix${money(transaction.amount)}',
-          style: TextStyle(
-            color: _amountColor,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
+      ),
     ),
   );
 }

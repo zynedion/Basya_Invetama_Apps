@@ -27,16 +27,51 @@ class _SavingsHistoryPageState extends State<SavingsHistoryPage> {
   List<SavingsTransaction>? _items;
   String? _error;
   int _request = 0;
+  bool _loading = false;
+  String get _cacheKey => 'savings:${_type?.name ?? "all"}:all';
+  void _clearCache() {
+    if (!mounted) return;
+    setState(() {
+      _request++;
+      _items = null;
+      _loading = false;
+      _error = 'Data sesi telah dibersihkan.';
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.session?.cache?.removeListener(_clearCache);
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant SavingsHistoryPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.session != widget.session ||
+        oldWidget.gateway != widget.gateway) {
+      oldWidget.session?.cache?.removeListener(_clearCache);
+      widget.session?.cache?.addListener(_clearCache);
+      _items = null;
+      _load();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    widget.session?.cache?.addListener(_clearCache);
     _load();
   }
 
   Future<void> _load() async {
     final request = ++_request;
+    final cache = widget.session?.cache;
+    final key = _cacheKey;
+    final ticket = cache?.begin(key);
     setState(() {
-      _items = null;
+      _items = cache?.read<SavingsOverviewData>(key)?.transactions ?? _items;
+      _loading = widget.session != null;
       _error = null;
     });
     final session = widget.session;
@@ -51,15 +86,25 @@ class _SavingsHistoryPageState extends State<SavingsHistoryPage> {
     try {
       final data = await widget.gateway.getSavings(session, type: _type);
       if (mounted && request == _request) {
-        setState(() => _items = data.transactions);
+        if (cache != null && ticket != null) cache.write(key, data, ticket);
+        setState(() {
+          _items = data.transactions;
+          _loading = false;
+        });
       }
     } catch (error) {
       if (mounted && request == _request) {
-        setState(
-          () => _error = error is AuthException
+        if (error is AuthException &&
+            error.type == AuthFailureType.invalidCredentials) {
+          cache?.clear();
+          _items = null;
+        }
+        setState(() {
+          _loading = false;
+          _error = error is AuthException
               ? error.message
-              : 'Riwayat simpanan belum dapat dimuat.',
-        );
+              : 'Riwayat simpanan belum dapat dimuat.';
+        });
       }
     }
   }
@@ -95,7 +140,10 @@ class _SavingsHistoryPageState extends State<SavingsHistoryPage> {
                           label: Text(entry.value),
                           selected: _type == entry.key,
                           onSelected: (_) {
-                            setState(() => _type = entry.key);
+                            setState(() {
+                              _type = entry.key;
+                              _items = null;
+                            });
                             _load();
                           },
                         ),
@@ -103,6 +151,26 @@ class _SavingsHistoryPageState extends State<SavingsHistoryPage> {
                   ],
                 ),
               ),
+              if (_items != null && _loading) const LinearProgressIndicator(),
+              if (_items != null && _error != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Menampilkan data terakhir; pembaruan gagal.',
+                        textAlign: TextAlign.center,
+                      ),
+                      TextButton(
+                        onPressed: _load,
+                        child: const Text('Coba lagi'),
+                      ),
+                    ],
+                  ),
+                ),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: _load,
@@ -113,7 +181,7 @@ class _SavingsHistoryPageState extends State<SavingsHistoryPage> {
                         ? 1
                         : _items!.length,
                     itemBuilder: (context, index) {
-                      if (_error != null) {
+                      if (_error != null && _items == null) {
                         return Column(
                           children: [
                             Text(_error!, textAlign: TextAlign.center),

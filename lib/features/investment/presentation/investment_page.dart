@@ -1,3 +1,8 @@
+import '../../auth/domain/auth_session.dart';
+import '../../auth/data/auth_exception.dart';
+import '../../home/domain/home_summary.dart';
+import '../../home/domain/home_summary_gateway.dart';
+import '../../home/data/home_summary_api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,9 +15,16 @@ import '../domain/investment_overview_data.dart';
 enum _InvestmentTab { opportunities, portfolio }
 
 class InvestmentPage extends StatefulWidget {
-  const InvestmentPage({super.key, this.data = InvestmentOverviewData.demo});
+  const InvestmentPage({
+    super.key,
+    this.data = InvestmentOverviewData.demo,
+    this.session,
+    this.summaryGateway,
+  });
 
   final InvestmentOverviewData data;
+  final AuthSession? session;
+  final HomeSummaryGateway? summaryGateway;
 
   @override
   State<InvestmentPage> createState() => _InvestmentPageState();
@@ -21,6 +33,85 @@ class InvestmentPage extends StatefulWidget {
 class _InvestmentPageState extends State<InvestmentPage> {
   var _selectedTab = _InvestmentTab.opportunities;
   var _balanceVisible = true;
+  late final HomeSummaryApiClient _client = HomeSummaryApiClient();
+  HomeSummary? _summary;
+  bool _loading = false;
+  String? _error;
+  int _request = 0;
+  InvestmentOverviewData get _data {
+    if (widget.session == null) return widget.data;
+    final summary = _summary;
+    return InvestmentOverviewData(
+      totalValue: summary?.totalInvestmentValue ?? 0,
+      monthlyProfit: summary?.monthlyProfit ?? 0,
+      activeCapital: summary?.investedFunds ?? 0,
+      accumulatedProfit: summary?.accumulatedProfit ?? 0,
+      buyPower: summary?.buyPower ?? 0,
+      monthlyPerformance:
+          summary?.performance.map((p) => p.profit).toList() ?? [],
+      performanceLabels:
+          summary?.performance.map((p) => '${p.label} ${p.year}').toList() ??
+          [],
+      performanceCaption: summary?.performanceType == 'profit_bruto'
+          ? 'Profit bruto bulanan'
+          : 'Performa investasi',
+      pendingProduct: '',
+      pendingLots: 0,
+      pendingValue: 0,
+      opportunities: const [],
+      holdings: const [],
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  @override
+  void didUpdateWidget(covariant InvestmentPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.session != widget.session ||
+        oldWidget.summaryGateway != widget.summaryGateway) {
+      _summary = null;
+      _load();
+    }
+  }
+
+  @override
+  void dispose() {
+    _client.close();
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    final request = ++_request;
+    final session = widget.session;
+    if (session == null) return;
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final summary = await (widget.summaryGateway ?? _client).getSummary(
+        session,
+      );
+      if (!mounted || request != _request) return;
+      setState(() {
+        _summary = summary;
+        _loading = false;
+      });
+    } catch (error) {
+      if (!mounted || request != _request) return;
+      setState(() {
+        _loading = false;
+        _error = error is AuthException
+            ? error.message
+            : 'Ringkasan investasi belum dapat dimuat.';
+      });
+    }
+  }
 
   String _money(int value) {
     final absolute = value.abs().toString();
@@ -29,11 +120,15 @@ class _InvestmentPageState extends State<InvestmentPage> {
       if (index > 0 && (absolute.length - index) % 3 == 0) result.write('.');
       result.write(absolute[index]);
     }
-    return 'Rp $result';
+    return '${value < 0 ? '-' : ''}Rp $result';
   }
 
   String _sensitiveMoney(int value) =>
-      _balanceVisible ? _money(value) : 'Rp •••••••';
+      widget.session != null && _summary == null
+      ? '\u2014'
+      : _balanceVisible
+      ? _money(value)
+      : 'Rp •••••••';
 
   void _placeholder(String action) {
     ScaffoldMessenger.of(context)
@@ -51,84 +146,119 @@ class _InvestmentPageState extends State<InvestmentPage> {
     ),
     child: ScrollConfiguration(
       behavior: const _InvestmentScrollBehavior(),
-      child: CustomScrollView(
-        key: const ValueKey('investment-page-scroll'),
-        physics: const BouncingScrollPhysics(
-          parent: AlwaysScrollableScrollPhysics(),
-        ),
-        slivers: [
-          SliverToBoxAdapter(
-            child: _InvestmentHero(
-              data: widget.data,
-              money: _sensitiveMoney,
-              visible: _balanceVisible,
-              onToggleVisibility: () =>
-                  setState(() => _balanceVisible = !_balanceVisible),
-            ),
+      child: RefreshIndicator(
+        onRefresh: _load,
+        child: CustomScrollView(
+          key: const ValueKey('investment-page-scroll'),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 28, 20, 150),
-            sliver: SliverList.list(
-              children: [
-                _BuyPowerCard(
-                  amount: _sensitiveMoney(widget.data.buyPower),
-                  onTopUp: () =>
-                      openBasyaForm(context, BasyaFormKind.topUpBuyPower),
-                  onMutation: () =>
-                      openBasyaForm(context, BasyaFormKind.mutation),
-                ),
-                const SizedBox(height: 32),
-                const _SectionHeading(title: 'Pengajuan aktif'),
-                const SizedBox(height: 10),
-                _PendingSubmissionCard(
-                  product: widget.data.pendingProduct,
-                  lots: widget.data.pendingLots,
-                  amount: _money(widget.data.pendingValue),
-                  onTap: () => _placeholder('Detail pengajuan'),
-                ),
-                const SizedBox(height: 34),
-                _SectionHeading(
-                  title: _selectedTab == _InvestmentTab.opportunities
-                      ? 'Jelajahi investasi'
-                      : 'Portofolio Anda',
-                  action: _selectedTab == _InvestmentTab.opportunities
-                      ? 'Lihat semua'
-                      : '${widget.data.holdings.length + 1} produk',
-                  onAction: () => _placeholder('Daftar investasi'),
-                ),
-                const SizedBox(height: 10),
-                _InvestmentTabs(
-                  selected: _selectedTab,
-                  onChanged: (tab) => setState(() => _selectedTab = tab),
-                ),
-                const SizedBox(height: 18),
-                if (_selectedTab == _InvestmentTab.opportunities) ...[
-                  for (final opportunity in widget.data.opportunities)
-                    _OpportunityCard(
-                      opportunity: opportunity,
-                      money: _money,
-                      onTap: () => _placeholder('Detail investasi'),
+          slivers: [
+            SliverToBoxAdapter(
+              child: _InvestmentHero(
+                data: _data,
+                totalAvailable:
+                    widget.session == null ||
+                    _summary?.totalInvestmentValue != null,
+                money: _sensitiveMoney,
+                visible: _balanceVisible,
+                onToggleVisibility: () =>
+                    setState(() => _balanceVisible = !_balanceVisible),
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(20, 28, 20, 150),
+              sliver: SliverList.list(
+                children: [
+                  if (_loading) const LinearProgressIndicator(),
+                  if (_summary?.isGlobal == true)
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        'Ringkasan seluruh investor',
+                        style: TextStyle(color: AppTheme.muted, fontSize: 12),
+                      ),
                     ),
+                  if (_error != null) ...[
+                    Text(_error!, textAlign: TextAlign.center),
+                    TextButton(
+                      onPressed: _load,
+                      child: const Text('Coba lagi'),
+                    ),
+                  ],
+                  _BuyPowerCard(
+                    amount: _sensitiveMoney(_data.buyPower),
+                    onTopUp: () =>
+                        openBasyaForm(context, BasyaFormKind.topUpBuyPower),
+                    onMutation: () =>
+                        openBasyaForm(context, BasyaFormKind.mutation),
+                  ),
+                  const SizedBox(height: 32),
+                  const _SectionHeading(title: 'Pengajuan aktif'),
+                  const SizedBox(height: 10),
+                  if (widget.session != null)
+                    const Text(
+                      'Data pengajuan belum tersedia.',
+                      style: TextStyle(color: AppTheme.muted),
+                    )
+                  else
+                    _PendingSubmissionCard(
+                      product: _data.pendingProduct,
+                      lots: _data.pendingLots,
+                      amount: _money(_data.pendingValue),
+                      onTap: () => _placeholder('Detail pengajuan'),
+                    ),
+                  const SizedBox(height: 34),
+                  _SectionHeading(
+                    title: _selectedTab == _InvestmentTab.opportunities
+                        ? 'Jelajahi investasi'
+                        : 'Portofolio Anda',
+                    action: _selectedTab == _InvestmentTab.opportunities
+                        ? 'Lihat semua'
+                        : widget.session == null
+                        ? '${_data.holdings.length} produk'
+                        : null,
+                    onAction: () => _placeholder('Daftar investasi'),
+                  ),
+                  const SizedBox(height: 10),
+                  _InvestmentTabs(
+                    selected: _selectedTab,
+                    onChanged: (tab) => setState(() => _selectedTab = tab),
+                  ),
                   const SizedBox(height: 18),
-                  const Text(
-                    'Pembelian dan penjualan investasi memerlukan persetujuan admin.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppTheme.muted,
-                      fontSize: 11,
-                      height: 1.45,
+                  if (widget.session != null)
+                    const Text(
+                      'Data produk dan portofolio belum tersedia.',
+                      style: TextStyle(color: AppTheme.muted),
+                    )
+                  else if (_selectedTab == _InvestmentTab.opportunities) ...[
+                    for (final opportunity in _data.opportunities)
+                      _OpportunityCard(
+                        opportunity: opportunity,
+                        money: _money,
+                        onTap: () => _placeholder('Detail investasi'),
+                      ),
+                    const SizedBox(height: 18),
+                    const Text(
+                      'Pembelian dan penjualan investasi memerlukan persetujuan admin.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppTheme.muted,
+                        fontSize: 11,
+                        height: 1.45,
+                      ),
                     ),
-                  ),
-                ] else
-                  _PortfolioContent(
-                    holdings: widget.data.holdings,
-                    money: _money,
-                    onOpen: () => _placeholder('Detail portofolio'),
-                  ),
-              ],
+                  ] else
+                    _PortfolioContent(
+                      holdings: _data.holdings,
+                      money: _money,
+                      onOpen: () => _placeholder('Detail portofolio'),
+                    ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );
@@ -155,17 +285,17 @@ class _InvestmentHero extends StatelessWidget {
     required this.money,
     required this.visible,
     required this.onToggleVisibility,
+    this.totalAvailable = true,
   });
 
   final InvestmentOverviewData data;
   final String Function(int) money;
   final bool visible;
+  final bool totalAvailable;
   final VoidCallback onToggleVisibility;
 
   @override
   Widget build(BuildContext context) {
-    const months = ['Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'];
-    final maxValue = data.monthlyPerformance.reduce((a, b) => a > b ? a : b);
     return Column(
       children: [
         const ModulePageHeader(
@@ -197,17 +327,20 @@ class _InvestmentHero extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(
-                          money(data.totalValue),
-                          key: const ValueKey('investment-total-value'),
-                          maxLines: 1,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -1,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            totalAvailable ? money(data.totalValue) : '\u2014',
+                            key: const ValueKey('investment-total-value'),
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: -1,
+                            ),
                           ),
                         ),
                       ),
@@ -228,7 +361,7 @@ class _InvestmentHero extends StatelessWidget {
                   ),
                   Text(
                     visible
-                        ? '+${money(data.monthlyProfit)} bulan ini'
+                        ? '${money(data.monthlyProfit)} bulan ini'
                         : '••••••••',
                     style: const TextStyle(
                       color: Colors.white,
@@ -237,8 +370,8 @@ class _InvestmentHero extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 19),
-                  const Text(
-                    'Performa portofolio',
+                  Text(
+                    data.performanceCaption,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -246,67 +379,16 @@ class _InvestmentHero extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  SizedBox(
-                    height: 118,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        for (
-                          var index = 0;
-                          index < data.monthlyPerformance.length;
-                          index++
-                        )
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 7,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Flexible(
-                                    child: FractionallySizedBox(
-                                      heightFactor:
-                                          data.monthlyPerformance[index] /
-                                          maxValue,
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              index ==
-                                                  data
-                                                          .monthlyPerformance
-                                                          .length -
-                                                      1
-                                              ? const Color(0xFFBFFFE8)
-                                              : Colors.white.withValues(
-                                                  alpha: .38,
-                                                ),
-                                          borderRadius:
-                                              const BorderRadius.vertical(
-                                                top: Radius.circular(8),
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    months[index],
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
+                  if (data.monthlyPerformance.isEmpty)
+                    const Text(
+                      'Data performa belum tersedia.',
+                      style: TextStyle(color: Colors.white70),
+                    )
+                  else
+                    _PerformanceChart(data: data, money: money),
                   const SizedBox(height: 15),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: _HeroMetric(
@@ -314,7 +396,7 @@ class _InvestmentHero extends StatelessWidget {
                           value: money(data.activeCapital),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: _HeroMetric(
                           label: 'Akumulasi profit',
@@ -341,7 +423,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     constraints: const BoxConstraints(minHeight: 64),
-    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
     decoration: BoxDecoration(
       color: Colors.white.withValues(alpha: .11),
       borderRadius: BorderRadius.circular(AppTheme.cardRadius),
@@ -355,15 +437,18 @@ class _HeroMetric extends StatelessWidget {
           style: const TextStyle(color: Color(0xFFD8F3ED), fontSize: 11),
         ),
         const SizedBox(height: 4),
-        Text(
-          value,
-          maxLines: 1,
-          overflow: TextOverflow.fade,
-          softWrap: false,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            maxLines: 1,
+            softWrap: false,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ],
@@ -995,4 +1080,293 @@ class _HoldingCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class _PerformanceChart extends StatefulWidget {
+  const _PerformanceChart({required this.data, required this.money});
+  final InvestmentOverviewData data;
+  final String Function(int) money;
+
+  @override
+  State<_PerformanceChart> createState() => _PerformanceChartState();
+}
+
+class _PerformanceChartState extends State<_PerformanceChart>
+    with TickerProviderStateMixin {
+  static const double _chartHeight = 160;
+  bool _entranceStarted = false;
+  late final AnimationController _entrance = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 600),
+  )..addListener(_onEntranceTick);
+
+  void _onEntranceTick() => setState(() {});
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!TickerMode.of(context)) {
+      _entrance.stop();
+      return;
+    }
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _entranceStarted = true;
+      _entrance.value = 1;
+    } else if (!_entranceStarted || _entrance.value < 1) {
+      _entranceStarted = true;
+      _entrance.forward();
+    }
+  }
+
+  int? _selected;
+  late final AnimationController _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 240),
+  );
+  late final Animation<double> _scale = TweenSequence<double>([
+    TweenSequenceItem(
+      tween: Tween(
+        begin: 1.0,
+        end: 1.06,
+      ).chain(CurveTween(curve: Curves.easeOut)),
+      weight: 50,
+    ),
+    TweenSequenceItem(
+      tween: Tween(
+        begin: 1.06,
+        end: 1.0,
+      ).chain(CurveTween(curve: Curves.easeInOut)),
+      weight: 50,
+    ),
+  ]).animate(_pulse);
+
+  @override
+  void didUpdateWidget(covariant _PerformanceChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.data.performanceLabels.join('|') !=
+        widget.data.performanceLabels.join('|')) {
+      _selected = null;
+      _pulse.reset();
+    }
+  }
+
+  void _select(int index) {
+    setState(() => _selected = index);
+    if (!MediaQuery.disableAnimationsOf(context)) {
+      _pulse.forward(from: 0);
+    } else {
+      _pulse.reset();
+    }
+  }
+
+  @override
+  void dispose() {
+    _entrance.dispose();
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final values = widget.data.monthlyPerformance;
+    final labels = widget.data.performanceLabels;
+    final maximum = values.fold<int>(0, (a, b) => a > b.abs() ? a : b.abs());
+    final selected = _selected != null && _selected! < values.length
+        ? _selected
+        : null;
+    String label(int i) => i < labels.length ? labels[i] : '-';
+    return TapRegion(
+      onTapOutside: (_) {
+        if (_selected != null) setState(() => _selected = null);
+      },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final bubbleWidth = constraints.maxWidth < 190
+              ? constraints.maxWidth
+              : 190.0;
+          final center = selected == null
+              ? 0.0
+              : (selected + .5) * constraints.maxWidth / values.length;
+          final left = (center - bubbleWidth / 2).clamp(
+            0.0,
+            constraints.maxWidth - bubbleWidth,
+          );
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              SizedBox(
+                key: const ValueKey('investment-chart-plot'),
+                height: _chartHeight,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = 0; i < values.length; i++)
+                      Expanded(
+                        child: Semantics(
+                          button: true,
+                          selected: selected == i,
+                          label: '${label(i)}, ${widget.money(values[i])}',
+                          child: TextButton(
+                            key: ValueKey('investment-bar-$i'),
+                            onPressed: () => _select(i),
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 4,
+                              ),
+                              minimumSize: Size.zero,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: ExcludeSemantics(
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: FractionallySizedBox(
+                                        key: ValueKey(
+                                          'investment-bar-height-$i',
+                                        ),
+                                        heightFactor: maximum == 0
+                                            ? 0
+                                            : values[i].abs() /
+                                                  maximum *
+                                                  Curves.easeOutCubic.transform(
+                                                    _entrance.value,
+                                                  ),
+                                        widthFactor: 1,
+                                        child: AnimatedBuilder(
+                                          animation: _scale,
+                                          builder: (context, child) =>
+                                              Transform.scale(
+                                                scale: selected == i
+                                                    ? _scale.value
+                                                    : 1,
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: child,
+                                              ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  selected == i ||
+                                                      (selected == null &&
+                                                          i ==
+                                                              values.length - 1)
+                                                  ? const Color(0xFFBFFFE8)
+                                                  : Colors.white.withValues(
+                                                      alpha: .38,
+                                                    ),
+                                              borderRadius:
+                                                  const BorderRadius.vertical(
+                                                    top: Radius.circular(8),
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    label(i),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: selected == i
+                                          ? FontWeight.w800
+                                          : FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              if (selected != null)
+                Positioned(
+                  left: left,
+                  bottom: _chartHeight + 4,
+                  width: bubbleWidth,
+                  child: IgnorePointer(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 9,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                label(selected),
+                                style: const TextStyle(
+                                  color: AppTheme.muted,
+                                  fontSize: 11,
+                                ),
+                              ),
+                              Text(
+                                widget.money(values[selected]),
+                                key: const ValueKey('investment-chart-detail'),
+                                style: const TextStyle(
+                                  color: AppTheme.ink,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment(
+                            ((center - left) / bubbleWidth * 2 - 1).clamp(
+                              -.9,
+                              .9,
+                            ),
+                            0,
+                          ),
+                          child: CustomPaint(
+                            size: const Size(12, 6),
+                            painter: _TooltipPointer(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _TooltipPointer extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawPath(
+      Path()
+        ..lineTo(size.width, 0)
+        ..lineTo(size.width / 2, size.height)
+        ..close(),
+      Paint()..color = Colors.white,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _TooltipPointer oldDelegate) => false;
 }

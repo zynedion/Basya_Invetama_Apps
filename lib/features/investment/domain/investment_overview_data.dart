@@ -46,6 +46,8 @@ class InvestmentOverviewData {
     required this.accumulatedProfit,
     required this.buyPower,
     required this.monthlyPerformance,
+    this.performanceLabels = const [],
+    this.performanceCaption = 'Performa portofolio',
     required this.pendingProduct,
     required this.pendingLots,
     required this.pendingValue,
@@ -59,6 +61,8 @@ class InvestmentOverviewData {
   final int accumulatedProfit;
   final int buyPower;
   final List<int> monthlyPerformance;
+  final List<String> performanceLabels;
+  final String performanceCaption;
   final String pendingProduct;
   final int pendingLots;
   final int pendingValue;
@@ -72,6 +76,7 @@ class InvestmentOverviewData {
     accumulatedProfit: 156967439,
     buyPower: 320234999,
     monthlyPerformance: [44, 62, 54, 76, 88, 106],
+    performanceLabels: ['Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'],
     pendingProduct: 'Sarasaland Residence',
     pendingLots: 3,
     pendingValue: 1500000,

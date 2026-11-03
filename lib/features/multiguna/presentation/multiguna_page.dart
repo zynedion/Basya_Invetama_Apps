@@ -86,25 +86,8 @@ class _MultigunaPageState extends State<MultigunaPage> {
         onAction: widget.onRetry,
       );
     }
-    final data = widget.data ?? MultigunaOverviewData.demo;
-    if (!data.accessible) {
-      return const _MultigunaStatePage(
-        icon: Icons.lock_outline_rounded,
-        title: 'Multiguna tidak tersedia',
-        message: 'Akun ini tidak memiliki akses ke data Multiguna.',
-      );
-    }
-    if (!data.hasActiveLoan) {
-      return _MultigunaStatePage(
-        icon: Icons.account_balance_outlined,
-        title: 'Belum ada pinjaman aktif',
-        message:
-            'Anda sedang tidak memiliki cicilan Multiguna. Pengajuan baru dapat dibuat selama limit tersedia.',
-        actionLabel: 'Ajukan Multiguna',
-        onAction: () => openBasyaForm(context, BasyaFormKind.financing),
-      );
-    }
-    final nearest = data.nearestLoan!;
+    final data = widget.data ?? MultigunaOverviewData.unavailable;
+    final nearest = data.accessible ? data.nearestLoan : null;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,
@@ -120,13 +103,19 @@ class _MultigunaPageState extends State<MultigunaPage> {
           slivers: [
             SliverToBoxAdapter(
               child: _MultigunaHero(
-                totalObligation: _sensitiveMoney(data.totalObligation),
-                totalInstallment: _sensitiveMoney(data.totalInstallment),
-                activeLoans: data.totalContracts,
+                totalObligation: data.accessible
+                    ? _sensitiveMoney(data.totalObligation)
+                    : '\u2014',
+                totalInstallment: data.accessible
+                    ? _sensitiveMoney(data.totalInstallment)
+                    : '\u2014',
+                activeLoans: data.accessible ? data.totalContracts : null,
                 visible: _obligationVisible,
                 onToggleVisibility: () =>
                     setState(() => _obligationVisible = !_obligationVisible),
-                onApply: () => openBasyaForm(context, BasyaFormKind.financing),
+                onApply: data.accessible
+                    ? () => openBasyaForm(context, BasyaFormKind.financing)
+                    : null,
               ),
             ),
             SliverPadding(
@@ -135,38 +124,56 @@ class _MultigunaPageState extends State<MultigunaPage> {
                 children: [
                   _SectionHeader(
                     title: 'Tagihan terdekat',
-                    action: 'Lihat jadwal',
-                    onAction: () => _placeholder('Jadwal cicilan'),
+                    action: nearest == null ? null : 'Lihat jadwal',
+                    onAction: nearest == null
+                        ? null
+                        : () => _placeholder('Jadwal cicilan'),
                   ),
                   const SizedBox(height: 10),
-                  _NextInstallmentCard(
-                    amount: _money(nearest.nextAmount),
-                    contract: nearest.contractNumber,
-                    dueDate: _multigunaDate(nearest.nextDueDate),
-                    overduePeriods: nearest.arrearsMonths,
-                    nextInstallmentNumber: nearest.nextInstallmentNumber,
-                    overdue: nearest.isOverdue,
-                    onPay: () => openBasyaForm(
-                      context,
-                      BasyaFormKind.installment,
-                      loan: data.nearestLoan,
+                  if (nearest != null)
+                    _NextInstallmentCard(
+                      amount: _money(nearest.nextAmount),
+                      contract: nearest.contractNumber,
+                      dueDate: _multigunaDate(nearest.nextDueDate),
+                      overduePeriods: nearest.arrearsMonths,
+                      nextInstallmentNumber: nearest.nextInstallmentNumber,
+                      overdue: nearest.isOverdue,
+                      onPay: () => openBasyaForm(
+                        context,
+                        BasyaFormKind.installment,
+                        loan: data.nearestLoan,
+                      ),
                     ),
-                  ),
+                  if (nearest == null)
+                    _EmptyMultigunaSection(
+                      message: data.accessible
+                          ? 'Tidak ada tagihan saat ini.'
+                          : 'Data tagihan belum tersedia untuk akun ini.',
+                    ),
                   const SizedBox(height: 30),
                   _SectionHeader(
                     title: 'Pinjaman aktif',
-                    action: '${data.totalContracts} kontrak',
+                    action: data.accessible
+                        ? '${data.totalContracts} kontrak'
+                        : null,
                   ),
                   const SizedBox(height: 10),
-                  for (var index = 0; index < data.loans.length; index++) ...[
-                    _ActiveLoanCard(
-                      loan: data.loans[index],
-                      money: _money,
-                      onTap: () => _placeholder('Detail pinjaman'),
+                  if (nearest == null)
+                    _EmptyMultigunaSection(
+                      message: data.accessible
+                          ? 'Belum ada pinjaman aktif'
+                          : 'Data pinjaman belum tersedia untuk akun ini.',
                     ),
-                    if (index != data.loans.length - 1)
-                      const SizedBox(height: 14),
-                  ],
+                  if (data.accessible)
+                    for (var index = 0; index < data.loans.length; index++) ...[
+                      _ActiveLoanCard(
+                        loan: data.loans[index],
+                        money: _money,
+                        onTap: () => _placeholder('Detail pinjaman'),
+                      ),
+                      if (index != data.loans.length - 1)
+                        const SizedBox(height: 14),
+                    ],
                 ],
               ),
             ),
@@ -175,6 +182,26 @@ class _MultigunaPageState extends State<MultigunaPage> {
       ),
     );
   }
+}
+
+class _EmptyMultigunaSection extends StatelessWidget {
+  const _EmptyMultigunaSection({required this.message});
+  final String message;
+  @override
+  Widget build(BuildContext context) => Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(24),
+    decoration: BoxDecoration(
+      color: const Color(0xFFF7FBFA),
+      borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+      border: Border.all(color: AppTheme.cardBorder),
+    ),
+    child: Text(
+      message,
+      textAlign: TextAlign.center,
+      style: const TextStyle(color: AppTheme.muted, fontSize: 13, height: 1.5),
+    ),
+  );
 }
 
 class _MultigunaScrollBehavior extends MaterialScrollBehavior {
@@ -311,10 +338,10 @@ class _MultigunaHero extends StatelessWidget {
 
   final String totalObligation;
   final String totalInstallment;
-  final int activeLoans;
+  final int? activeLoans;
   final bool visible;
   final VoidCallback onToggleVisibility;
-  final VoidCallback onApply;
+  final VoidCallback? onApply;
 
   @override
   Widget build(BuildContext context) {
@@ -395,7 +422,9 @@ class _MultigunaHero extends StatelessWidget {
                       Expanded(
                         child: _HeroMetric(
                           label: 'Pinjaman aktif',
-                          value: '$activeLoans kontrak',
+                          value: activeLoans == null
+                              ? '\u2014'
+                              : '$activeLoans kontrak',
                         ),
                       ),
                     ],

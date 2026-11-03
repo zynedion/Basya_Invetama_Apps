@@ -18,6 +18,7 @@ class HomeSummaryApiClient implements HomeSummaryGateway {
   );
 
   final http.Client _client;
+  void close() => _client.close();
 
   @override
   Future<HomeSummary> getSummary(AuthSession session) async {
@@ -107,7 +108,41 @@ class HomeSummaryApiClient implements HomeSummaryGateway {
       _ => throw const FormatException(),
     };
 
+    final performance = data['performa_investasi'];
+    final points = <InvestmentPerformancePoint>[];
+    int? performanceMonths;
+    String? performanceType;
+    if (performance != null) {
+      if (performance is! Map ||
+          performance['data'] is! List ||
+          performance['tipe'] is! String) {
+        throw const FormatException();
+      }
+      performanceMonths = number(performance, 'periode_bulan');
+      performanceType = performance['tipe'] as String;
+      for (final point in performance['data'] as List) {
+        if (point is! Map || point['label'] is! String) {
+          throw const FormatException();
+        }
+        final month = number(point, 'month');
+        if (month < 1 || month > 12) throw const FormatException();
+        points.add(
+          InvestmentPerformancePoint(
+            year: number(point, 'year'),
+            month: month,
+            label: point['label'] as String,
+            profit: number(point, 'profit'),
+          ),
+        );
+      }
+    }
     return HomeSummary(
+      totalInvestmentValue: totals['total_nilai_investasi'] == null
+          ? null
+          : number(totals, 'total_nilai_investasi'),
+      performanceMonths: performanceMonths,
+      performanceType: performanceType,
+      performance: List.unmodifiable(points),
       scope: scope,
       currency: currency,
       year: number(period, 'year'),

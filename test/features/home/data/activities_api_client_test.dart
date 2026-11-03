@@ -22,6 +22,14 @@ void main() {
     'amount': 1200000,
     'occurred_at': '2026-10-21 09:53:06',
     'status': {'code': 'success', 'label': 'Berhasil'},
+    'details': {
+      'stock_id': 12,
+      'stock_name': 'Investasi A',
+      'lots': 120,
+      'price': 10000,
+    },
+    'gross_amount': 100000,
+    'tax_amount': 10000,
   };
   test(
     'authorized GET maps amounts, direction, reference and status',
@@ -52,6 +60,12 @@ void main() {
       expect(result.first.date, '21 Okt 2026, 09:53');
       expect(result.first.referenceId, 'SE123');
       expect(result.first.statusLabel, 'Berhasil');
+      expect(result.first.stockName, 'Investasi A');
+      expect(result.first.lots, 120);
+      expect(result.first.price, 10000);
+      expect(result.first.grossAmount, 100000);
+      expect(result.first.taxAmount, 10000);
+      expect(result.first.occurredAt, '2026-10-21 09:53:06');
     },
   );
   test('empty response remains empty', () async {
@@ -133,4 +147,75 @@ void main() {
       ),
     );
   });
+  test('history requests explicit page and per_page without limit', () async {
+    final client = ActivitiesApiClient(
+      client: MockClient((request) async {
+        expect(request.url.queryParameters, {'page': '2', 'per_page': '20'});
+        return http.Response(
+          jsonEncode({
+            'status': true,
+            'data': {'currency': 'IDR', 'activities': []},
+          }),
+          200,
+        );
+      }),
+    );
+    addTearDown(client.close);
+    expect(await client.getActivities(session, page: 2, perPage: 20), isEmpty);
+  });
+  test('parses explicit pagination even when short page has next', () async {
+    final api = ActivitiesApiClient(
+      client: MockClient(
+        (_) async => http.Response(
+          jsonEncode({
+            'status': true,
+            'data': {
+              'scope': 'global',
+              'currency': 'IDR',
+              'pagination': {
+                'page': 1,
+                'per_page': 20,
+                'total_items': 5438,
+                'total_pages': 272,
+                'has_previous': false,
+                'has_next': true,
+              },
+              'activities': [item('incoming')],
+            },
+          }),
+          200,
+        ),
+      ),
+    );
+    addTearDown(api.close);
+    final result = await api.getActivitiesPage(session, page: 1, perPage: 20);
+    expect(result.items.length, 1);
+    expect(result.hasNext, isTrue);
+    expect(result.totalItems, 5438);
+    expect(result.totalPages, 272);
+    expect(result.page, 1);
+    expect(result.perPage, 20);
+    expect(result.hasPrevious, isFalse);
+  });
+  test(
+    'paginated requests reject missing metadata rather than guess',
+    () async {
+      final api = ActivitiesApiClient(
+        client: MockClient(
+          (_) async => http.Response(
+            jsonEncode({
+              'status': true,
+              'data': {'currency': 'IDR', 'activities': []},
+            }),
+            200,
+          ),
+        ),
+      );
+      addTearDown(api.close);
+      await expectLater(
+        api.getActivitiesPage(session, page: 1, perPage: 20),
+        throwsA(isA<AuthException>()),
+      );
+    },
+  );
 }

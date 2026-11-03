@@ -9,8 +9,26 @@ class InvestorHomeActivity {
     this.referenceId,
     this.statusLabel,
     this.statusCode,
+    this.id,
+    this.type,
+    this.occurredAt,
+    this.stockId,
+    this.stockName,
+    this.lots,
+    this.price,
+    this.grossAmount,
+    this.taxAmount,
   });
 
+  final String? id;
+  final String? type;
+  final String? occurredAt;
+  final int? stockId;
+  final String? stockName;
+  final int? lots;
+  final int? price;
+  final int? grossAmount;
+  final int? taxAmount;
   final String? referenceId;
   final String? statusLabel;
   final String? statusCode;

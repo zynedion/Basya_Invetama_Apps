@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:basya_investama/features/auth/domain/session_memory_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:basya_investama/features/auth/domain/auth_session.dart';
@@ -33,6 +35,16 @@ class FakeSavings implements SavingsGateway {
       ),
     );
   }
+}
+
+class PendingSavings implements SavingsGateway {
+  final pending = <SavingsType?, Completer<SavingsOverviewData>>{};
+  @override
+  Future<SavingsOverviewData> getSavings(
+    AuthSession session, {
+    SavingsType? type,
+    int? limit,
+  }) => (pending[type] = Completer<SavingsOverviewData>()).future;
 }
 
 void main() {
@@ -110,6 +122,85 @@ void main() {
       await tester.pumpAndSettle();
       expect(gateway.calls.length, 2);
       expect(tester.takeException(), isNull);
+    },
+  );
+  testWidgets(
+    'cached history opens details, preserves stale data and isolates filters',
+    (tester) async {
+      final cache = SessionMemoryCache();
+      const transaction = SavingsTransaction(
+        title: 'Setoran tersimpan',
+        date: '3 Nov 2026',
+        status: 'Berhasil',
+        amount: 50000,
+        direction: SavingsTransactionDirection.incoming,
+        referenceId: 'REF123',
+        savingsType: 'wajib',
+      );
+      const data = SavingsOverviewData(
+        voluntarySavings: 0,
+        mandatorySavings: 50000,
+        principalSavings: 0,
+        transactions: [transaction],
+      );
+      cache.write('savings:all:all', data, cache.begin('savings:all:all'));
+      final session = AuthSession(
+        accessToken: 'test',
+        tokenType: 'Bearer',
+        expiresAt: DateTime(2030),
+        cache: cache,
+      );
+      final gateway = PendingSavings();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: SavingsHistoryPage(
+            session: session,
+            gateway: gateway,
+            money: (_) => 'Rp ******',
+          ),
+        ),
+      );
+      expect(find.text('Setoran tersimpan'), findsOneWidget);
+      gateway.pending[null]!.completeError(Exception('offline'));
+      await tester.pumpAndSettle();
+      expect(find.text('Setoran tersimpan'), findsOneWidget);
+      expect(
+        find.text('Menampilkan data terakhir; pembaruan gagal.'),
+        findsOneWidget,
+      );
+      await tester.tap(find.text('Setoran tersimpan'));
+      await tester.pumpAndSettle();
+      expect(find.text('Detail transaksi simpanan'), findsOneWidget);
+      expect(find.text('REF123'), findsOneWidget);
+      expect(find.text('Simpanan Wajib'), findsOneWidget);
+      expect(find.textContaining('50.000'), findsNothing);
+      await tester.tap(find.byTooltip('Tutup'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Pokok'));
+      await tester.pump();
+      expect(find.text('Setoran tersimpan'), findsNothing);
+      gateway.pending[SavingsType.pokok]!.complete(
+        const SavingsOverviewData(
+          voluntarySavings: 0,
+          mandatorySavings: 0,
+          principalSavings: 0,
+          transactions: [],
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Belum ada transaksi simpanan.'), findsOneWidget);
+      expect(
+        cache.read<SavingsOverviewData>('savings:pokok:all')!.transactions,
+        isEmpty,
+      );
+      await tester.tap(find.text('Semua'));
+      await tester.pump();
+      expect(find.text('Setoran tersimpan'), findsOneWidget);
+      cache.clear();
+      gateway.pending[null]!.complete(data);
+      await tester.pumpAndSettle();
+      expect(find.text('Setoran tersimpan'), findsNothing);
+      expect(cache.read<SavingsOverviewData>('savings:all:all'), isNull);
     },
   );
 }
