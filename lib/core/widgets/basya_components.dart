@@ -15,6 +15,7 @@ class BasyaActionButton extends StatefulWidget {
     this.compact = false,
     this.loading = false,
     this.labelSize,
+    this.disabledOpacity = .48,
   });
 
   final String label;
@@ -25,6 +26,7 @@ class BasyaActionButton extends StatefulWidget {
   final bool compact;
   final bool loading;
   final double? labelSize;
+  final double disabledOpacity;
 
   @override
   State<BasyaActionButton> createState() => _BasyaActionButtonState();
@@ -78,7 +80,7 @@ class _BasyaActionButtonState extends State<BasyaActionButton> {
                 : const Duration(milliseconds: 110),
             curve: Curves.easeOut,
             child: AnimatedOpacity(
-              opacity: enabled ? 1 : .48,
+              opacity: enabled ? 1 : widget.disabledOpacity,
               duration: reducedMotion
                   ? Duration.zero
                   : const Duration(milliseconds: 150),

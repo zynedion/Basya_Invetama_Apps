@@ -1,3 +1,9 @@
+import 'applications_view.dart';
+import '../data/portfolio_api_client.dart';
+import '../domain/portfolio_data.dart';
+import 'portfolio_views.dart';
+import '../data/opportunities_api_client.dart';
+import 'opportunity_detail_sheet.dart';
 import '../../auth/domain/auth_session.dart';
 import '../../auth/data/auth_exception.dart';
 import '../../home/domain/home_summary.dart';
@@ -20,20 +26,35 @@ class InvestmentPage extends StatefulWidget {
     this.data = InvestmentOverviewData.demo,
     this.session,
     this.summaryGateway,
+    this.opportunitiesGateway,
+    this.portfolioGateway,
   });
 
   final InvestmentOverviewData data;
   final AuthSession? session;
   final HomeSummaryGateway? summaryGateway;
+  final OpportunitiesGateway? opportunitiesGateway;
+  final PortfolioGateway? portfolioGateway;
 
   @override
   State<InvestmentPage> createState() => _InvestmentPageState();
 }
 
 class _InvestmentPageState extends State<InvestmentPage> {
+  final _applicationsKey = GlobalKey<ApplicationsViewState>();
   var _selectedTab = _InvestmentTab.opportunities;
   var _balanceVisible = true;
   late final HomeSummaryApiClient _client = HomeSummaryApiClient();
+  final _opportunitiesClient = OpportunitiesApiClient();
+  List<InvestmentOpportunity> _opportunities = const [];
+  bool _opportunitiesLoading = false;
+  String? _opportunitiesError;
+  int _opportunitiesRequest = 0;
+  final _portfolioClient = PortfolioApiClient();
+  PortfolioData? _portfolio;
+  bool _portfolioLoading = false;
+  String? _portfolioError;
+  int _portfolioRequest = 0;
   HomeSummary? _summary;
   bool _loading = false;
   String? _error;
@@ -58,7 +79,7 @@ class _InvestmentPageState extends State<InvestmentPage> {
       pendingProduct: '',
       pendingLots: 0,
       pendingValue: 0,
-      opportunities: const [],
+      opportunities: _opportunities,
       holdings: const [],
     );
   }
@@ -67,6 +88,8 @@ class _InvestmentPageState extends State<InvestmentPage> {
   void initState() {
     super.initState();
     _load();
+    _loadOpportunities();
+    _loadPortfolio();
   }
 
   @override
@@ -77,10 +100,86 @@ class _InvestmentPageState extends State<InvestmentPage> {
       _summary = null;
       _load();
     }
+    if (oldWidget.session != widget.session ||
+        oldWidget.opportunitiesGateway != widget.opportunitiesGateway) {
+      _opportunities = const [];
+      _loadOpportunities();
+    }
+    if (oldWidget.session != widget.session ||
+        oldWidget.portfolioGateway != widget.portfolioGateway) {
+      _portfolio = null;
+      _loadPortfolio();
+    }
+  }
+
+  Future<void> _refresh() async {
+    await Future.wait([
+      _load(),
+      _loadOpportunities(),
+      _loadPortfolio(),
+      if (_applicationsKey.currentState != null)
+        _applicationsKey.currentState!.reload(),
+    ]);
+  }
+
+  Future<void> _loadPortfolio() async {
+    final request = ++_portfolioRequest;
+    final session = widget.session;
+    if (session == null) return;
+    setState(() {
+      _portfolioLoading = true;
+      _portfolioError = null;
+    });
+    try {
+      final result = await (widget.portfolioGateway ?? _portfolioClient)
+          .getPortfolio(session);
+      if (!mounted || request != _portfolioRequest) return;
+      setState(() {
+        _portfolio = result;
+        _portfolioLoading = false;
+      });
+    } catch (error) {
+      if (!mounted || request != _portfolioRequest) return;
+      setState(() {
+        _portfolioLoading = false;
+        _portfolioError = error is AuthException
+            ? error.message
+            : 'Portofolio belum dapat dimuat.';
+      });
+    }
+  }
+
+  Future<void> _loadOpportunities() async {
+    final request = ++_opportunitiesRequest;
+    final session = widget.session;
+    if (session == null) return;
+    setState(() {
+      _opportunitiesLoading = true;
+      _opportunitiesError = null;
+    });
+    try {
+      final result = await (widget.opportunitiesGateway ?? _opportunitiesClient)
+          .getOpportunities(session);
+      if (!mounted || request != _opportunitiesRequest) return;
+      setState(() {
+        _opportunities = result;
+        _opportunitiesLoading = false;
+      });
+    } catch (error) {
+      if (!mounted || request != _opportunitiesRequest) return;
+      setState(() {
+        _opportunitiesLoading = false;
+        _opportunitiesError = error is AuthException
+            ? error.message
+            : 'Peluang investasi belum dapat dimuat.';
+      });
+    }
   }
 
   @override
   void dispose() {
+    _portfolioClient.close();
+    _opportunitiesClient.close();
     _client.close();
     super.dispose();
   }
@@ -147,7 +246,7 @@ class _InvestmentPageState extends State<InvestmentPage> {
     child: ScrollConfiguration(
       behavior: const _InvestmentScrollBehavior(),
       child: RefreshIndicator(
-        onRefresh: _load,
+        onRefresh: _refresh,
         child: CustomScrollView(
           key: const ValueKey('investment-page-scroll'),
           physics: const BouncingScrollPhysics(
@@ -194,31 +293,28 @@ class _InvestmentPageState extends State<InvestmentPage> {
                         openBasyaForm(context, BasyaFormKind.mutation),
                   ),
                   const SizedBox(height: 32),
-                  const _SectionHeading(title: 'Pengajuan aktif'),
-                  const SizedBox(height: 10),
                   if (widget.session != null)
-                    const Text(
-                      'Data pengajuan belum tersedia.',
-                      style: TextStyle(color: AppTheme.muted),
+                    ApplicationsView(
+                      key: _applicationsKey,
+                      session: widget.session!,
+                      money: _money,
                     )
-                  else
+                  else ...[
+                    const _SectionHeading(title: 'Pengajuan aktif'),
                     _PendingSubmissionCard(
                       product: _data.pendingProduct,
                       lots: _data.pendingLots,
                       amount: _money(_data.pendingValue),
                       onTap: () => _placeholder('Detail pengajuan'),
                     ),
+                  ],
                   const SizedBox(height: 34),
                   _SectionHeading(
                     title: _selectedTab == _InvestmentTab.opportunities
                         ? 'Jelajahi investasi'
                         : 'Portofolio Anda',
-                    action: _selectedTab == _InvestmentTab.opportunities
-                        ? 'Lihat semua'
-                        : widget.session == null
-                        ? '${_data.holdings.length} produk'
-                        : null,
-                    onAction: () => _placeholder('Daftar investasi'),
+                    action: null,
+                    onAction: () {},
                   ),
                   const SizedBox(height: 10),
                   _InvestmentTabs(
@@ -226,17 +322,38 @@ class _InvestmentPageState extends State<InvestmentPage> {
                     onChanged: (tab) => setState(() => _selectedTab = tab),
                   ),
                   const SizedBox(height: 18),
-                  if (widget.session != null)
-                    const Text(
-                      'Data produk dan portofolio belum tersedia.',
-                      style: TextStyle(color: AppTheme.muted),
-                    )
-                  else if (_selectedTab == _InvestmentTab.opportunities) ...[
+                  if (_selectedTab == _InvestmentTab.opportunities) ...[
+                    if (_opportunitiesLoading) const LinearProgressIndicator(),
+                    if (_opportunitiesError != null) ...[
+                      Text(
+                        _opportunitiesError!,
+                        style: const TextStyle(color: AppTheme.muted),
+                      ),
+                      TextButton(
+                        onPressed: _loadOpportunities,
+                        child: const Text('Coba lagi'),
+                      ),
+                    ],
+                    if (!_opportunitiesLoading &&
+                        _opportunitiesError == null &&
+                        _data.opportunities.isEmpty)
+                      const Text('Belum ada peluang investasi yang tersedia.'),
                     for (final opportunity in _data.opportunities)
-                      _OpportunityCard(
-                        opportunity: opportunity,
-                        money: _money,
-                        onTap: () => _placeholder('Detail investasi'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: _OpportunityCard(
+                          opportunity: opportunity,
+                          money: _money,
+                          onTap: () => showOpportunityDetail(
+                            context,
+                            opportunity: opportunity,
+                            session: widget.session,
+                            money: _money,
+                            buyPower: _summary?.isGlobal == false
+                                ? _summary?.buyPower
+                                : null,
+                          ),
+                        ),
                       ),
                     const SizedBox(height: 18),
                     const Text(
@@ -248,6 +365,20 @@ class _InvestmentPageState extends State<InvestmentPage> {
                         height: 1.45,
                       ),
                     ),
+                  ] else if (widget.session != null) ...[
+                    if (_portfolioLoading) const LinearProgressIndicator(),
+                    if (_portfolioError != null) ...[
+                      Text(
+                        _portfolioError!,
+                        style: const TextStyle(color: AppTheme.muted),
+                      ),
+                      TextButton(
+                        onPressed: _loadPortfolio,
+                        child: const Text('Coba lagi'),
+                      ),
+                    ],
+                    if (_portfolio != null)
+                      PortfolioCards(data: _portfolio!, money: _money),
                   ] else
                     _PortfolioContent(
                       holdings: _data.holdings,
@@ -731,7 +862,13 @@ class _OpportunityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allocated = 1 - (opportunity.availableLots / opportunity.totalLots);
+    final allocated =
+        (opportunity.id == 0
+                ? (opportunity.totalLots > 0
+                      ? 1 - opportunity.availableLots / opportunity.totalLots
+                      : 0.0)
+                : opportunity.allocatedPercent / 100)
+            .clamp(0.0, 1.0);
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -749,7 +886,16 @@ class _OpportunityCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _ProductArtwork(kind: 0),
+          OpportunityImage(url: opportunity.imageUrl),
+          const SizedBox(height: 10),
+          Text(
+            opportunity.category,
+            style: const TextStyle(
+              color: AppTheme.teal,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 16),
           Text(
             opportunity.name,
@@ -768,9 +914,13 @@ class _OpportunityCard extends StatelessWidget {
                 color: AppTheme.muted,
               ),
               const SizedBox(width: 4),
-              Text(
-                opportunity.location,
-                style: const TextStyle(color: AppTheme.muted, fontSize: 11),
+              Expanded(
+                child: Text(
+                  opportunity.location,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: AppTheme.muted, fontSize: 11),
+                ),
               ),
             ],
           ),
@@ -1097,22 +1247,23 @@ class _PerformanceChartState extends State<_PerformanceChart>
   bool _entranceStarted = false;
   late final AnimationController _entrance = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 600),
-  )..addListener(_onEntranceTick);
-
-  void _onEntranceTick() => setState(() {});
+    duration: const Duration(milliseconds: 1100),
+  );
+  late final Listenable _barAnimation = Listenable.merge([_entrance, _pulse]);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!TickerMode.of(context)) {
-      _entrance.stop();
+      _entranceStarted = false;
+      _entrance.reset();
+      _selected = null;
       return;
     }
     if (MediaQuery.disableAnimationsOf(context)) {
       _entranceStarted = true;
       _entrance.value = 1;
-    } else if (!_entranceStarted || _entrance.value < 1) {
+    } else if (!_entranceStarted) {
       _entranceStarted = true;
       _entrance.forward();
     }
@@ -1227,24 +1378,28 @@ class _PerformanceChartState extends State<_PerformanceChart>
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
                                       child: FractionallySizedBox(
-                                        key: ValueKey(
-                                          'investment-bar-height-$i',
-                                        ),
                                         heightFactor: maximum == 0
                                             ? 0
-                                            : values[i].abs() /
-                                                  maximum *
-                                                  Curves.easeOutCubic.transform(
-                                                    _entrance.value,
-                                                  ),
+                                            : values[i].abs() / maximum,
                                         widthFactor: 1,
                                         child: AnimatedBuilder(
-                                          animation: _scale,
+                                          animation: _barAnimation,
                                           builder: (context, child) =>
                                               Transform.scale(
-                                                scale: selected == i
+                                                key: ValueKey(
+                                                  'investment-bar-height-$i',
+                                                ),
+                                                scaleX: selected == i
                                                     ? _scale.value
                                                     : 1,
+                                                scaleY:
+                                                    Curves.easeInOutSine
+                                                        .transform(
+                                                          _entrance.value,
+                                                        ) *
+                                                    (selected == i
+                                                        ? _scale.value
+                                                        : 1),
                                                 alignment:
                                                     Alignment.bottomCenter,
                                                 child: child,

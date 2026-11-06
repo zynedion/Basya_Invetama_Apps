@@ -6,24 +6,7 @@ import '../../forms/presentation/form_routes.dart';
 import '../../../core/widgets/basya_components.dart';
 import '../../../core/widgets/module_page_header.dart';
 import '../domain/multiguna_overview_data.dart';
-
-String _multigunaDate(DateTime value) {
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'Mei',
-    'Jun',
-    'Jul',
-    'Agu',
-    'Sep',
-    'Okt',
-    'Nov',
-    'Des',
-  ];
-  return '${value.day} ${months[value.month - 1]} ${value.year}';
-}
+import 'installment_calendar.dart';
 
 class MultigunaPage extends StatefulWidget {
   const MultigunaPage({
@@ -58,14 +41,6 @@ class _MultigunaPageState extends State<MultigunaPage> {
 
   String _sensitiveMoney(int value) =>
       _obligationVisible ? _money(value) : 'Rp •••••••';
-
-  void _placeholder(String action) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(content: Text('$action akan tersedia pada tahap berikutnya.')),
-      );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +84,6 @@ class _MultigunaPageState extends State<MultigunaPage> {
                 totalInstallment: data.accessible
                     ? _sensitiveMoney(data.totalInstallment)
                     : '\u2014',
-                activeLoans: data.accessible ? data.totalContracts : null,
                 visible: _obligationVisible,
                 onToggleVisibility: () =>
                     setState(() => _obligationVisible = !_obligationVisible),
@@ -119,37 +93,33 @@ class _MultigunaPageState extends State<MultigunaPage> {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 30, 20, 150),
+              padding: const EdgeInsets.fromLTRB(20, 18, 20, 150),
               sliver: SliverList.list(
                 children: [
-                  _SectionHeader(
-                    title: 'Tagihan terdekat',
-                    action: nearest == null ? null : 'Lihat jadwal',
-                    onAction: nearest == null
-                        ? null
-                        : () => _placeholder('Jadwal cicilan'),
+                  InstallmentCalendar(
+                    loans: data.accessible ? data.loans : const [],
+                    money: _money,
+                    onPay: (loan) => openBasyaForm(
+                      context,
+                      BasyaFormKind.installment,
+                      loan: loan,
+                    ),
                   ),
-                  const SizedBox(height: 10),
-                  if (nearest != null)
-                    _NextInstallmentCard(
-                      amount: _money(nearest.nextAmount),
-                      contract: nearest.contractNumber,
-                      dueDate: _multigunaDate(nearest.nextDueDate),
-                      overduePeriods: nearest.arrearsMonths,
-                      nextInstallmentNumber: nearest.nextInstallmentNumber,
-                      overdue: nearest.isOverdue,
-                      onPay: () => openBasyaForm(
-                        context,
-                        BasyaFormKind.installment,
-                        loan: data.nearestLoan,
+                  if (data.accessible)
+                    for (final loan in data.loans.where(
+                      (loan) => loan.arrearsAmount > 0 || loan.isOverdue,
+                    )) ...[
+                      const SizedBox(height: 18),
+                      _OverdueNotice(
+                        loan: loan,
+                        money: _money,
+                        onTap: () => openBasyaForm(
+                          context,
+                          BasyaFormKind.installment,
+                          loan: loan,
+                        ),
                       ),
-                    ),
-                  if (nearest == null)
-                    _EmptyMultigunaSection(
-                      message: data.accessible
-                          ? 'Tidak ada tagihan saat ini.'
-                          : 'Data tagihan belum tersedia untuk akun ini.',
-                    ),
+                    ],
                   const SizedBox(height: 30),
                   _SectionHeader(
                     title: 'Pinjaman aktif',
@@ -166,11 +136,7 @@ class _MultigunaPageState extends State<MultigunaPage> {
                     ),
                   if (data.accessible)
                     for (var index = 0; index < data.loans.length; index++) ...[
-                      _ActiveLoanCard(
-                        loan: data.loans[index],
-                        money: _money,
-                        onTap: () => _placeholder('Detail pinjaman'),
-                      ),
+                      _ActiveLoanCard(loan: data.loans[index], money: _money),
                       if (index != data.loans.length - 1)
                         const SizedBox(height: 14),
                     ],
@@ -330,63 +296,54 @@ class _MultigunaHero extends StatelessWidget {
   const _MultigunaHero({
     required this.totalObligation,
     required this.totalInstallment,
-    required this.activeLoans,
     required this.visible,
     required this.onToggleVisibility,
     required this.onApply,
   });
-
   final String totalObligation;
   final String totalInstallment;
-  final int? activeLoans;
   final bool visible;
   final VoidCallback onToggleVisibility;
   final VoidCallback? onApply;
-
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const ModulePageHeader(
-          title: 'Multiguna',
-          subtitle: 'Kelola pengajuan dan cicilan pembiayaan',
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppTheme.heroRadius),
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 22, 20, 24),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: AppTheme.heroGradientColors,
-                  stops: AppTheme.heroGradientStops,
-                ),
+  Widget build(BuildContext context) => Column(
+    children: [
+      const ModulePageHeader(
+        title: 'Multiguna',
+        subtitle: 'Atur cicilan, rencanakan kebutuhan.',
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: AppTheme.teal,
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
                     'Total sisa kewajiban',
-                    style: TextStyle(color: Color(0xFFD6F3EC), fontSize: 13),
+                    style: TextStyle(color: Color(0xFFD8EFEB), fontSize: 12),
                   ),
-                  const SizedBox(height: 4),
                   Row(
                     children: [
                       Expanded(
-                        child: Text(
-                          totalObligation,
-                          key: const ValueKey('multiguna-total-obligation'),
-                          maxLines: 1,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            height: 1.2,
-                            fontWeight: FontWeight.w700,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            totalObligation,
+                            key: const ValueKey('multiguna-total-obligation'),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                         ),
                       ),
@@ -405,95 +362,51 @@ class _MultigunaHero extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Text(
-                    'Gabungan dari seluruh pinjaman aktif',
-                    style: TextStyle(color: Color(0xFFD6F3EC), fontSize: 11),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
+                  const SizedBox(height: 8),
+                  Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    spacing: 12,
+                    runSpacing: 4,
                     children: [
-                      Expanded(
-                        child: _HeroMetric(
-                          label: 'Cicilan bulanan',
-                          value: totalInstallment,
+                      const Text(
+                        'Cicilan bulanan',
+                        style: TextStyle(
+                          color: Color(0xFFD8EFEB),
+                          fontSize: 12,
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _HeroMetric(
-                          label: 'Pinjaman aktif',
-                          value: activeLoans == null
-                              ? '\u2014'
-                              : '$activeLoans kontrak',
+                      Text(
+                        totalInstallment,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 18),
-                  BasyaActionButton(
-                    label: 'Ajukan Multiguna',
-                    icon: Icons.add_rounded,
-                    onPressed: onApply,
-                    style: BasyaActionStyle.secondary,
-                    expand: true,
-                  ),
                 ],
               ),
             ),
-          ),
+            const SizedBox(height: 12),
+            BasyaActionButton(
+              label: 'Ajukan Multiguna',
+              icon: Icons.add_rounded,
+              onPressed: onApply,
+              style: BasyaActionStyle.secondary,
+              expand: true,
+            ),
+          ],
         ),
-      ],
-    );
-  }
-}
-
-class _HeroMetric extends StatelessWidget {
-  const _HeroMetric({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    height: 70,
-    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 11),
-    decoration: BoxDecoration(
-      color: Colors.white.withValues(alpha: .11),
-      borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-      border: Border.all(color: Colors.white.withValues(alpha: .38)),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(color: Color(0xFFD8F3ED), fontSize: 11),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          maxLines: 1,
-          overflow: TextOverflow.fade,
-          softWrap: false,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.title, this.action, this.onAction});
-
+  const _SectionHeader({required this.title, this.action});
   final String title;
   final String? action;
-  final VoidCallback? onAction;
-
   @override
   Widget build(BuildContext context) => Row(
     children: [
@@ -508,136 +421,72 @@ class _SectionHeader extends StatelessWidget {
         ),
       ),
       if (action != null)
-        onAction == null
-            ? Text(
-                action!,
-                style: const TextStyle(color: AppTheme.teal, fontSize: 12),
-              )
-            : TextButton(
-                onPressed: onAction,
-                child: Text(
-                  action!,
-                  style: const TextStyle(color: AppTheme.teal, fontSize: 12),
-                ),
-              ),
+        Text(
+          action!,
+          style: const TextStyle(color: AppTheme.teal, fontSize: 12),
+        ),
     ],
   );
 }
 
-class _NextInstallmentCard extends StatelessWidget {
-  const _NextInstallmentCard({
-    required this.amount,
-    required this.contract,
-    required this.dueDate,
-    required this.overduePeriods,
-    required this.nextInstallmentNumber,
-    required this.overdue,
-    required this.onPay,
+class _OverdueNotice extends StatelessWidget {
+  const _OverdueNotice({
+    required this.loan,
+    required this.money,
+    required this.onTap,
   });
-
-  final String amount;
-  final String contract;
-  final String dueDate;
-  final int overduePeriods;
-  final int nextInstallmentNumber;
-  final bool overdue;
-  final VoidCallback onPay;
-
+  final MultigunaLoan loan;
+  final String Function(int) money;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) => Container(
+    key: ValueKey('overdue-${loan.contractNumber}'),
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
-      color: overdue ? const Color(0xFFFFF8F5) : const Color(0xFFF3FAF8),
-      borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-      border: Border.all(
-        color: overdue ? const Color(0xFFFFB7AA) : AppTheme.cardBorder,
-      ),
+      color: const Color(0xFFFFF5F2),
+      borderRadius: BorderRadius.circular(18),
+      border: Border.all(color: const Color(0xFFF0D1C7)),
     ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    child: Row(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                color: overdue
-                    ? const Color(0xFFFFE3DC)
-                    : AppTheme.neutralSurface,
-                borderRadius: BorderRadius.circular(AppTheme.controlRadius),
+        const Icon(Icons.error_outline, color: AppTheme.negative, size: 23),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                loan.arrearsMonths > 0
+                    ? '${loan.arrearsMonths} cicilan menunggak'
+                    : 'Cicilan menunggak',
+                style: const TextStyle(
+                  color: AppTheme.negative,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-              child: Icon(
-                overdue
-                    ? Icons.warning_amber_rounded
-                    : Icons.calendar_month_outlined,
-                color: overdue ? const Color(0xFFD83B27) : AppTheme.teal,
-                size: 23,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    overdue ? 'Cicilan menunggak' : 'Cicilan berikutnya',
-                    style: TextStyle(
-                      color: overdue ? const Color(0xFFD83B27) : AppTheme.teal,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    amount,
-                    style: const TextStyle(
-                      color: AppTheme.ink,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            BasyaStatusBadge(
-              text: overdue ? 'Menunggak' : 'Waktu bayar',
-              icon: Icons.schedule_rounded,
-              tone: overdue ? BasyaStatusTone.danger : BasyaStatusTone.warning,
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Text(
-          '$contract · Jatuh tempo $dueDate',
-          style: const TextStyle(color: AppTheme.muted, fontSize: 11),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                overdue
-                    ? '$overduePeriods periode belum dibayar'
-                    : 'Cicilan ke-$nextInstallmentNumber siap dibayar',
-                style: TextStyle(
-                  color: overdue ? const Color(0xFFD83B27) : AppTheme.muted,
-                  fontSize: 11,
+              const SizedBox(height: 5),
+              Text(
+                money(loan.nextAmount),
+                style: const TextStyle(
+                  color: AppTheme.ink,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            ),
-            BasyaActionButton(
-              label: 'Bayar cicilan',
-              icon: Icons.account_balance_wallet_outlined,
-              onPressed: onPay,
-              style: overdue
-                  ? BasyaActionStyle.danger
-                  : BasyaActionStyle.emphasis,
-              compact: true,
-            ),
-          ],
+              Text(
+                loan.contractNumber,
+                style: const TextStyle(color: AppTheme.muted, fontSize: 11),
+              ),
+            ],
+          ),
+        ),
+        TextButton(
+          onPressed: onTap,
+          child: const Text(
+            'Lihat',
+            style: TextStyle(color: AppTheme.negative),
+          ),
         ),
       ],
     ),
@@ -645,149 +494,104 @@ class _NextInstallmentCard extends StatelessWidget {
 }
 
 class _ActiveLoanCard extends StatelessWidget {
-  const _ActiveLoanCard({
-    required this.loan,
-    required this.money,
-    required this.onTap,
-  });
-
+  const _ActiveLoanCard({required this.loan, required this.money});
   final MultigunaLoan loan;
   final String Function(int) money;
-  final VoidCallback onTap;
+  String _contractDate(DateTime date) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'Mei',
+      'Jun',
+      'Jul',
+      'Agu',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Des',
+    ];
+    return '${date.day} ${months[date.month - 1]} ${date.year}';
+  }
 
   @override
-  Widget build(BuildContext context) {
-    final overdue = loan.status == MultigunaLoanStatus.overdue;
-    final accent = overdue ? const Color(0xFFD83B27) : AppTheme.teal;
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-        child: Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-            border: Border.all(
-              color: overdue ? const Color(0xFFFFB7AA) : AppTheme.cardBorder,
+  Widget build(BuildContext context) => Material(
+    color: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: const BorderSide(color: AppTheme.cardBorder),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            loan.contractNumber,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: AppTheme.ink,
             ),
-            boxShadow: const [
-              BoxShadow(
-                color: AppTheme.softShadow,
-                blurRadius: 22,
-                offset: Offset(0, 8),
-              ),
-            ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: loan.isOverdue
+                    ? const Color(0xFFFFF0EB)
+                    : AppTheme.neutralSurface,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                loan.paymentStatusLabel,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: loan.isOverdue ? AppTheme.negative : AppTheme.teal,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Sisa kewajiban',
+            style: TextStyle(fontSize: 11, color: AppTheme.muted),
+          ),
+          Row(
             children: [
-              Row(
-                children: [
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: overdue
-                          ? const Color(0xFFFFE6DF)
-                          : const Color(0xFFEDF8F5),
-                      borderRadius: BorderRadius.circular(
-                        AppTheme.controlRadius,
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.account_balance_outlined,
-                      color: accent,
-                      size: 21,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'Multiguna ${loan.contractNumber}',
-                      style: const TextStyle(
-                        color: AppTheme.ink,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.chevron_right_rounded, color: accent),
-                ],
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: BasyaStatusBadge(
-                  text: loan.paymentStatusLabel,
-                  icon: overdue
-                      ? Icons.warning_amber_rounded
-                      : Icons.check_rounded,
-                  tone: overdue
-                      ? BasyaStatusTone.danger
-                      : BasyaStatusTone.success,
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Sisa kewajiban',
-                style: TextStyle(color: AppTheme.muted, fontSize: 11),
-              ),
-              const SizedBox(height: 3),
-              Text(
-                money(loan.remainingBalance),
-                style: const TextStyle(
-                  color: AppTheme.ink,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 10),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(99),
-                child: LinearProgressIndicator(
-                  value: loan.paidProgress,
-                  minHeight: 7,
-                  backgroundColor: const Color(0xFFE3ECE9),
-                  valueColor: AlwaysStoppedAnimation(
-                    overdue ? const Color(0xFFE88D7D) : AppTheme.mint,
+              Expanded(
+                child: Text(
+                  money(loan.remainingBalance),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.ink,
                   ),
                 ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                '${(loan.paidProgress * 100).round()}% terbayar',
-                style: const TextStyle(color: AppTheme.muted, fontSize: 10),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Cicilan ${money(loan.installmentAmount)}',
-                      style: const TextStyle(
-                        color: AppTheme.ink,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    overdue
-                        ? 'Terlambat ${loan.arrearsMonths} periode'
-                        : 'Berikutnya ${_multigunaDate(loan.nextDueDate)}',
-                    style: TextStyle(
-                      color: overdue ? accent : AppTheme.muted,
-                      fontSize: 11,
-                      fontWeight: overdue ? FontWeight.w600 : FontWeight.w400,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
-        ),
+          const SizedBox(height: 6),
+          Text(
+            'Cicilan ${money(loan.installmentAmount)} / bulan',
+            style: const TextStyle(fontSize: 12, color: AppTheme.muted),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            '${loan.paidInstallments} dari ${loan.totalInstallments} cicilan dibayar',
+            style: const TextStyle(fontSize: 11, color: AppTheme.muted),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Periode ${_contractDate(loan.startDate)} ? ${_contractDate(loan.endDate)}',
+            style: const TextStyle(fontSize: 11, color: AppTheme.muted),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }

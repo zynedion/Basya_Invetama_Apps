@@ -8,6 +8,24 @@ class InvestmentOpportunity {
     required this.pricePerLot,
     required this.availableLots,
     required this.totalLots,
+    this.id = 0,
+    this.code = '',
+    this.description = '',
+    this.company = '',
+    this.imageUrl = '',
+    this.logoUrl = '',
+    this.pricePerShare = 0,
+    this.totalValue = 0,
+    this.allocatedLots = 0,
+    this.pendingLots = 0,
+    this.allocatedValue = 0,
+    this.pendingValue = 0,
+    this.remainingValue = 0,
+    this.allocatedPercent = 0,
+    this.averageRoi = 0,
+    this.endDate = '',
+    this.projectStatus = '',
+    this.status = '',
   });
 
   final String name;
@@ -16,6 +34,24 @@ class InvestmentOpportunity {
   final int pricePerLot;
   final int availableLots;
   final int totalLots;
+  final int id;
+  final String code;
+  final String description;
+  final String company;
+  final String imageUrl;
+  final String logoUrl;
+  final int pricePerShare;
+  final int totalValue;
+  final int allocatedLots;
+  final int pendingLots;
+  final int allocatedValue;
+  final int pendingValue;
+  final int remainingValue;
+  final double allocatedPercent;
+  final double averageRoi;
+  final String endDate;
+  final String projectStatus;
+  final String status;
 }
 
 class InvestmentHolding {

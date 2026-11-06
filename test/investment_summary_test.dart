@@ -29,57 +29,62 @@ class FakeSummary implements HomeSummaryGateway {
 }
 
 void main() {
-  testWidgets('entrance waits until investment tab becomes visible', (
-    tester,
-  ) async {
-    var active = false;
-    late StateSetter update;
-    await tester.pumpWidget(
-      MaterialApp(
-        home: StatefulBuilder(
-          builder: (context, setState) {
-            update = setState;
-            return Scaffold(
-              body: IndexedStack(
-                index: active ? 1 : 0,
-                children: [
-                  const SizedBox(),
-                  TickerMode(enabled: active, child: const InvestmentPage()),
-                ],
-              ),
-            );
-          },
+  testWidgets(
+    'entrance waits for visibility and replays when returning to tab',
+    (tester) async {
+      var active = false;
+      late StateSetter update;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: StatefulBuilder(
+            builder: (context, setState) {
+              update = setState;
+              return Scaffold(
+                body: IndexedStack(
+                  index: active ? 1 : 0,
+                  children: [
+                    const SizedBox(),
+                    TickerMode(enabled: active, child: const InvestmentPage()),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
-      ),
-    );
-    await tester.pump(const Duration(seconds: 2));
-    final bar = find.byKey(
-      const ValueKey('investment-bar-height-5'),
-      skipOffstage: false,
-    );
-    double height() => tester.widget<FractionallySizedBox>(bar).heightFactor!;
-    expect(height(), 0);
-    update(() => active = true);
-    await tester.pump();
-    expect(height(), 0);
-    await tester.pump(const Duration(milliseconds: 300));
-    expect(height(), inExclusiveRange(0, 1));
-    await tester.pumpAndSettle();
-    expect(height(), 1);
-    update(() => active = false);
-    await tester.pump();
-    update(() => active = true);
-    await tester.pump();
-    expect(height(), 1);
-    expect(tester.takeException(), isNull);
-  });
+      );
+      await tester.pump(const Duration(seconds: 2));
+      final bar = find.byKey(
+        const ValueKey('investment-bar-height-5'),
+        skipOffstage: false,
+      );
+      double height() => tester.widget<Transform>(bar).transform.entry(1, 1);
+      expect(height(), 0);
+      update(() => active = true);
+      await tester.pump();
+      expect(height(), 0);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(height(), inExclusiveRange(0, 1));
+      await tester.pumpAndSettle();
+      expect(height(), 1);
+      update(() => active = false);
+      await tester.pump();
+      update(() => active = true);
+      await tester.pump();
+      expect(height(), 0);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(height(), inExclusiveRange(0, .4));
+      await tester.pumpAndSettle();
+      expect(height(), 1);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('bars grow once and stay full when selected', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(home: Scaffold(body: InvestmentPage())),
     );
     final bar = find.byKey(const ValueKey('investment-bar-height-5'));
-    double height() => tester.widget<FractionallySizedBox>(bar).heightFactor!;
+    double height() => tester.widget<Transform>(bar).transform.entry(1, 1);
     expect(height(), 0);
     await tester.pump(const Duration(milliseconds: 300));
     expect(height(), greaterThan(0));
@@ -105,10 +110,11 @@ void main() {
     );
     expect(
       tester
-          .widget<FractionallySizedBox>(
+          .widget<Transform>(
             find.byKey(const ValueKey('investment-bar-height-5')),
           )
-          .heightFactor,
+          .transform
+          .entry(1, 1),
       1,
     );
     expect(tester.takeException(), isNull);
