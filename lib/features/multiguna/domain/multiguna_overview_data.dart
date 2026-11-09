@@ -2,6 +2,7 @@ enum MultigunaLoanStatus { active, overdue }
 
 class MultigunaLoan {
   const MultigunaLoan({
+    this.id,
     required this.contractNumber,
     required this.startDate,
     required this.endDate,
@@ -22,6 +23,7 @@ class MultigunaLoan {
     required this.arrearsAmount,
   });
 
+  final int? id;
   final String contractNumber;
   final DateTime startDate;
   final DateTime endDate;

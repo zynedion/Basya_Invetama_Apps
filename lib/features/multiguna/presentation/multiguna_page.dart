@@ -1,3 +1,7 @@
+import '../../auth/domain/auth_session.dart';
+import '../data/multiguna_api_client.dart';
+import '../domain/loan_detail.dart';
+import 'loan_detail_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,11 +16,13 @@ class MultigunaPage extends StatefulWidget {
   const MultigunaPage({
     super.key,
     this.data,
+    this.session,
     this.loading = false,
     this.errorMessage,
     this.onRetry,
   });
 
+  final AuthSession? session;
   final MultigunaOverviewData? data;
   final bool loading;
   final String? errorMessage;
@@ -28,6 +34,121 @@ class MultigunaPage extends StatefulWidget {
 
 class _MultigunaPageState extends State<MultigunaPage> {
   bool _obligationVisible = true;
+  final _detailClient = MultigunaApiClient();
+  final _details = <int, LoanDetail>{};
+  final _pending = <int, Future<LoanDetail>>{};
+  bool _detailsLoading = false;
+  bool _detailsIncomplete = false;
+  int _generation = 0;
+  @override
+  void initState() {
+    super.initState();
+    widget.session?.cache?.addListener(_clearDetails);
+    _loadDetails();
+  }
+
+  @override
+  void didUpdateWidget(covariant MultigunaPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.session != widget.session) {
+      oldWidget.session?.cache?.removeListener(_clearDetails);
+      widget.session?.cache?.addListener(_clearDetails);
+      _clearDetails();
+    }
+    if (oldWidget.data != widget.data || oldWidget.session != widget.session) {
+      _loadDetails();
+    }
+  }
+
+  void _clearDetails() {
+    _generation++;
+    _pending.clear();
+    if (mounted) {
+      setState(() {
+        _details.clear();
+        _detailsLoading = false;
+        _detailsIncomplete = true;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _generation++;
+    widget.session?.cache?.removeListener(_clearDetails);
+    super.dispose();
+  }
+
+  Future<LoanDetail> _detail(int id, {bool refresh = false}) {
+    if (!refresh && _details.containsKey(id)) return Future.value(_details[id]);
+    return _pending.putIfAbsent(id, () async {
+      final session = widget.session;
+      if (session == null) throw StateError('No session');
+      final generation = _generation;
+      final key = 'multiguna:detail:$id';
+      final ticket = session.cache?.begin(key);
+      try {
+        final detail = await _detailClient.getDetail(session, id);
+        if (!mounted || generation != _generation) {
+          throw StateError('Session changed');
+        }
+        if (ticket != null && !session.cache!.write(key, detail, ticket)) {
+          throw StateError('Session changed');
+        }
+        setState(() => _details[id] = detail);
+        return detail;
+      } finally {
+        if (generation == _generation) _pending.remove(id);
+      }
+    });
+  }
+
+  Future<void> _loadDetails() async {
+    final loans = widget.data?.loans ?? [];
+    if (widget.session == null || loans.isEmpty) return;
+    final generation = ++_generation;
+    _pending.clear();
+    setState(() {
+      _details.clear();
+      for (final loan in loans) {
+        if (loan.id == null) continue;
+        final cached = widget.session?.cache?.read<LoanDetail>(
+          'multiguna:detail:${loan.id}',
+        );
+        if (cached != null) _details[loan.id!] = cached;
+      }
+      _detailsLoading = true;
+      _detailsIncomplete = loans.any((l) => l.id == null);
+    });
+    final ids = loans.map((l) => l.id).whereType<int>().toSet().toList();
+    for (var i = 0; i < ids.length; i += 3) {
+      if (!mounted || generation != _generation) return;
+      await Future.wait(
+        ids.skip(i).take(3).map((id) async {
+          try {
+            await _detail(id, refresh: true);
+          } catch (_) {
+            if (mounted && generation == _generation) {
+              setState(() => _detailsIncomplete = true);
+            }
+          }
+        }),
+      );
+    }
+    if (mounted && generation == _generation) {
+      setState(() => _detailsLoading = false);
+    }
+  }
+
+  void _openDetail(MultigunaLoan loan) {
+    if (loan.id == null || widget.session == null) return;
+    showLoanDetail(
+      context,
+      reference: loan.contractNumber,
+      money: _money,
+      load: () => _detail(loan.id!),
+    );
+  }
 
   String _money(int value) {
     final digits = value.toString();
@@ -99,12 +220,38 @@ class _MultigunaPageState extends State<MultigunaPage> {
                   InstallmentCalendar(
                     loans: data.accessible ? data.loans : const [],
                     money: _money,
+                    details: _details,
+                    onDetail: _openDetail,
                     onPay: (loan) => openBasyaForm(
                       context,
                       BasyaFormKind.installment,
                       loan: loan,
                     ),
                   ),
+                  if (_detailsLoading)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: LinearProgressIndicator(),
+                    ),
+                  if (_detailsIncomplete)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Sebagian jadwal belum tersedia. Tanggal tanpa detail masih berupa perkiraan.',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppTheme.muted,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: _loadDetails,
+                            child: const Text('Coba lagi'),
+                          ),
+                        ],
+                      ),
+                    ),
                   if (data.accessible)
                     for (final loan in data.loans.where(
                       (loan) => loan.arrearsAmount > 0 || loan.isOverdue,
@@ -136,7 +283,15 @@ class _MultigunaPageState extends State<MultigunaPage> {
                     ),
                   if (data.accessible)
                     for (var index = 0; index < data.loans.length; index++) ...[
-                      _ActiveLoanCard(loan: data.loans[index], money: _money),
+                      _ActiveLoanCard(
+                        loan: data.loans[index],
+                        money: _money,
+                        onDetail:
+                            data.loans[index].id != null &&
+                                widget.session != null
+                            ? () => _openDetail(data.loans[index])
+                            : null,
+                      ),
                       if (index != data.loans.length - 1)
                         const SizedBox(height: 14),
                     ],
@@ -494,7 +649,12 @@ class _OverdueNotice extends StatelessWidget {
 }
 
 class _ActiveLoanCard extends StatelessWidget {
-  const _ActiveLoanCard({required this.loan, required this.money});
+  const _ActiveLoanCard({
+    required this.loan,
+    required this.money,
+    this.onDetail,
+  });
+  final VoidCallback? onDetail;
   final MultigunaLoan loan;
   final String Function(int) money;
   String _contractDate(DateTime date) {
@@ -587,9 +747,17 @@ class _ActiveLoanCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Periode ${_contractDate(loan.startDate)} ? ${_contractDate(loan.endDate)}',
+            'Periode ${_contractDate(loan.startDate)} - ${_contractDate(loan.endDate)}',
             style: const TextStyle(fontSize: 11, color: AppTheme.muted),
           ),
+          if (onDetail != null)
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: onDetail,
+                child: const Text('Lihat detail'),
+              ),
+            ),
         ],
       ),
     ),

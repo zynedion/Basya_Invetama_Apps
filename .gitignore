@@ -2,6 +2,10 @@
 *.class
 *.log
 *.pyc
+# Release signing secrets, wherever they are stored in this repository.
+**/key.properties
+*.jks
+*.keystore
 *.swp
 .DS_Store
 .atom/

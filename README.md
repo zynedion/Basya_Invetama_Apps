@@ -9,7 +9,11 @@ flutter pub get
 flutter run
 ```
 
-Startup menampilkan animasi splash lalu login mengikuti desain Pen Dev. Login terhubung ke API produksi Basya; JWT disimpan melalui secure storage dan kata sandi tidak disimpan.
+Startup menampilkan animasi splash lalu login mengikuti desain Pen Dev. Login terhubung ke API produksi Basya; token dan kredensial untuk pemulihan sesi disimpan melalui secure storage.
+
+## Rilis Google Play
+
+Panduan signing, build AAB, listing, deklarasi, dan pekerjaan sebelum publikasi ada di [docs/release/google-play.md](docs/release/google-play.md).
 
 ## Aset
 

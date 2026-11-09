@@ -1,5 +1,5 @@
 {
-  "version": "2.18",
+  "version": "2.20",
   "children": [
     {
       "type": "frame",
@@ -2137,7 +2137,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "assets/logo/logo_basya.png",
-                        "mode": "fit"
+                        "mode": "contain"
                       },
                       "width": 142,
                       "height": 28
@@ -2440,7 +2440,7 @@
             "type": "image",
             "enabled": true,
             "url": "https://images.unsplash.com/photo-1658497714148-eb009d3ea195?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NDA0NTZ8&ixlib=rb-4.1.0&q=80&w=1080",
-            "mode": "fill"
+            "mode": "cover"
           },
           "cornerRadius": 23,
           "stroke": "#FFFFFF80",
@@ -9799,7 +9799,7 @@
             "type": "image",
             "enabled": true,
             "url": "https://images.unsplash.com/photo-1782179147105-4af0b8105356?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk2MTU2MDV8&ixlib=rb-4.1.0&q=80&w=1080",
-            "mode": "fill"
+            "mode": "cover"
           },
           "cornerRadius": 18
         },
@@ -11216,7 +11216,7 @@
             "type": "image",
             "enabled": true,
             "url": "https://images.unsplash.com/photo-1650519520215-96c5566bfbae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk2MTYxMjR8&ixlib=rb-4.1.0&q=80&w=1080",
-            "mode": "fill"
+            "mode": "cover"
           },
           "cornerRadius": 17
         },
@@ -11419,7 +11419,7 @@
             "type": "image",
             "enabled": true,
             "url": "https://images.unsplash.com/photo-1747588541727-2b83b23158d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk2MTYxNjR8&ixlib=rb-4.1.0&q=80&w=1080",
-            "mode": "fill"
+            "mode": "cover"
           },
           "cornerRadius": 17
         },
@@ -12929,7 +12929,7 @@
             "type": "image",
             "enabled": true,
             "url": "Untitled%20design%20(3).png",
-            "mode": "fill"
+            "mode": "cover"
           },
           "cornerRadius": 24,
           "stroke": "#FFFFFFA6",
@@ -13869,7 +13869,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "assets/logo/logo_basya.png",
-                        "mode": "fit"
+                        "mode": "contain"
                       },
                       "width": 142,
                       "height": 28
@@ -19007,6 +19007,4878 @@
           "fontFamily": "Plus Jakarta Sans",
           "fontSize": 10,
           "fontWeight": "500"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "gpv20",
+      "x": 3800,
+      "y": 2785,
+      "name": "11A / MULTIGUNA-02 / Kalender mingguan default",
+      "clip": true,
+      "width": 390,
+      "height": 1272,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "IaxyU",
+          "x": 24,
+          "y": 14,
+          "name": "Status time",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 90,
+          "content": "9:41",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "MMj1O",
+          "x": 328,
+          "y": 14,
+          "name": "WiFi",
+          "width": 15,
+          "height": 15,
+          "icon": "wifi",
+          "library": "lucide",
+          "fill": "#17324A"
+        },
+        {
+          "type": "icon",
+          "id": "ySPTL",
+          "x": 350,
+          "y": 13,
+          "name": "Battery",
+          "width": 18,
+          "height": 18,
+          "icon": "battery-full",
+          "library": "lucide",
+          "fill": "#17324A"
+        },
+        {
+          "type": "text",
+          "id": "M302U",
+          "x": 20,
+          "y": 53,
+          "name": "Page title",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 280,
+          "content": "Multiguna",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 26,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "FO04m",
+          "x": 346,
+          "y": 60,
+          "name": "Help",
+          "width": 22,
+          "height": 22,
+          "icon": "help",
+          "library": "Material Symbols Rounded",
+          "fill": "#006A66"
+        },
+        {
+          "type": "text",
+          "id": "lZGHc",
+          "x": 20,
+          "y": 91,
+          "name": "Page subtitle",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 350,
+          "content": "Atur cicilan, rencanakan kebutuhan.",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "vexjA",
+          "x": 20,
+          "y": 126,
+          "name": "Compact obligation summary",
+          "width": 350,
+          "height": 106,
+          "fill": "#006A66",
+          "cornerRadius": 24,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "KL2dg",
+              "x": 18,
+              "y": 17,
+              "name": "Outstanding label",
+              "fill": "#D8EFEB",
+              "textGrowth": "fixed-width",
+              "width": 210,
+              "content": "Total sisa kewajiban",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "aAKc7",
+              "x": 18,
+              "y": 37,
+              "name": "Outstanding amount",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 315,
+              "content": "Rp 18.750.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 26,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "z9ymdc",
+              "x": 18,
+              "y": 79,
+              "name": "Monthly installment label",
+              "fill": "#D8EFEB",
+              "textGrowth": "fixed-width",
+              "width": 145,
+              "content": "Cicilan bulanan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "ghE9m",
+              "x": 190,
+              "y": 77,
+              "name": "Monthly installment amount",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 145,
+              "content": "Rp 1.150.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 14,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "P6NYaD",
+          "x": 20,
+          "y": 244,
+          "name": "Separate application action",
+          "width": 350,
+          "height": 44,
+          "fill": "#FFFFFF",
+          "cornerRadius": 15,
+          "stroke": "#B7DDD5",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "icon",
+              "id": "Q4izGe",
+              "x": 85,
+              "y": 12,
+              "name": "Add application icon",
+              "width": 20,
+              "height": 20,
+              "icon": "plus",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "llQ2Y",
+              "x": 113,
+              "y": 11,
+              "name": "Apply action",
+              "fill": "#006A66",
+              "textGrowth": "fixed-width",
+              "width": 215,
+              "content": "Ajukan Multiguna",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 14,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "w4z4a9",
+          "x": 20,
+          "y": 632,
+          "name": "Overdue installment notice",
+          "width": 350,
+          "height": 76,
+          "fill": "#FFF5F2",
+          "cornerRadius": 18,
+          "stroke": "#F0D1C7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "icon",
+              "id": "qowRe",
+              "x": 14,
+              "y": 18,
+              "name": "Overdue alert icon",
+              "width": 22,
+              "height": 22,
+              "icon": "circle-alert",
+              "library": "lucide",
+              "fill": "#BD5140"
+            },
+            {
+              "type": "text",
+              "id": "Yg5Ap",
+              "x": 46,
+              "y": 12,
+              "name": "Overdue heading",
+              "fill": "#A54132",
+              "textGrowth": "fixed-width",
+              "width": 240,
+              "content": "1 cicilan menunggak",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "f3YGNd",
+              "x": 46,
+              "y": 37,
+              "name": "Overdue amount",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 215,
+              "content": "Rp 625.000 · 10 Sep",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "qF3au",
+              "x": 294,
+              "y": 28,
+              "name": "Overdue detail action",
+              "fill": "#A54132",
+              "textGrowth": "fixed-width",
+              "width": 44,
+              "content": "Lihat",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "SZ18F",
+          "x": 20,
+          "y": 306,
+          "name": "Installment calendar week",
+          "width": 350,
+          "height": 174,
+          "fill": "#FFFFFF",
+          "cornerRadius": 22,
+          "stroke": "#DFEAE7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "v9NpF",
+              "x": 16,
+              "y": 16,
+              "name": "Calendar title",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "Jadwal cicilan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 17,
+              "fontWeight": "800"
+            },
+            {
+              "type": "icon",
+              "id": "SlGZP",
+              "x": 310,
+              "y": 18,
+              "name": "Calendar icon",
+              "width": 20,
+              "height": 20,
+              "icon": "calendar-days",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "U4i89",
+              "x": 16,
+              "y": 49,
+              "name": "Displayed month",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 210,
+              "content": "September 2026",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "RT7rE",
+              "x": 278,
+              "y": 48,
+              "name": "Previous period",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-left",
+              "library": "lucide",
+              "fill": "#5F6B76"
+            },
+            {
+              "type": "icon",
+              "id": "LwgEd",
+              "x": 310,
+              "y": 48,
+              "name": "Next period",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#5F6B76"
+            },
+            {
+              "type": "text",
+              "id": "x9HdI",
+              "x": 19,
+              "y": 78,
+              "name": "Weekday 0",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "S",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "paCgi",
+              "x": 65,
+              "y": 78,
+              "name": "Weekday 1",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "S",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "v3r3j",
+              "x": 111,
+              "y": 78,
+              "name": "Weekday 2",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "R",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "gTOQo",
+              "x": 157,
+              "y": 78,
+              "name": "Weekday 3",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "K",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "R9uF8x",
+              "x": 203,
+              "y": 78,
+              "name": "Weekday 4",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "J",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "b0zr76",
+              "x": 249,
+              "y": 78,
+              "name": "Weekday 5",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "S",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "nIU7S",
+              "x": 295,
+              "y": 78,
+              "name": "Weekday 6",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "M",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "l3s1Ol",
+              "x": 10,
+              "y": 99,
+              "name": "Day 21",
+              "width": 38,
+              "height": 34,
+              "fill": "#F0F8F6",
+              "cornerRadius": 11,
+              "stroke": "#5DA99A",
+              "strokeWidth": 1,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "ynGdk",
+              "x": 20,
+              "y": 106,
+              "name": "Date 21",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "21",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "Z0Agp",
+              "x": 56,
+              "y": 99,
+              "name": "Day 22",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "b3Oqk",
+              "x": 66,
+              "y": 106,
+              "name": "Date 22",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "22",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "y4VEd",
+              "x": 102,
+              "y": 99,
+              "name": "Day 23",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "yFGDG",
+              "x": 112,
+              "y": 106,
+              "name": "Date 23",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "23",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "QxR2Q",
+              "x": 148,
+              "y": 99,
+              "name": "Day 24",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "w96ihC",
+              "x": 158,
+              "y": 106,
+              "name": "Date 24",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "24",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "JHvGb",
+              "x": 194,
+              "y": 99,
+              "name": "Day 25",
+              "width": 38,
+              "height": 34,
+              "fill": "#006A66",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "mKouQ",
+              "x": 204,
+              "y": 106,
+              "name": "Date 25",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "25",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "OoAaP",
+              "x": 211,
+              "y": 126,
+              "name": "Due date marker",
+              "width": 4,
+              "height": 4,
+              "fill": "#F5C65C",
+              "cornerRadius": 2,
+              "layout": "none"
+            },
+            {
+              "type": "frame",
+              "id": "DVheR",
+              "x": 240,
+              "y": 99,
+              "name": "Day 26",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "RBtvo",
+              "x": 250,
+              "y": 106,
+              "name": "Date 26",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "26",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "d8YIt",
+              "x": 286,
+              "y": 99,
+              "name": "Day 27",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "WfNgI",
+              "x": 296,
+              "y": 106,
+              "name": "Date 27",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "27",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "C9wbnQ",
+              "x": 16,
+              "y": 144,
+              "name": "Expand collapse action",
+              "fill": "#006A66",
+              "textGrowth": "fixed-width",
+              "width": 240,
+              "content": "Lihat sebulan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "j4oNO",
+              "x": 310,
+              "y": 144,
+              "name": "Expand collapse indicator",
+              "width": 16,
+              "height": 16,
+              "icon": "chevron-down",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "NwMjb",
+          "x": 20,
+          "y": 494,
+          "name": "Selected date heading",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 280,
+          "content": "Jumat, 25 September",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "J6Aey",
+          "x": 300,
+          "y": 494,
+          "name": "Selected date count",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 70,
+          "content": "1 cicilan",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "F1yX8",
+          "x": 20,
+          "y": 523,
+          "name": "Selected installment detail",
+          "width": 350,
+          "height": 91,
+          "fill": "#EDF7F5",
+          "cornerRadius": 18,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "gulCb",
+              "x": 16,
+              "y": 13,
+              "name": "Selected loan reference",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "MG-2026-002",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "Y1Ysmw",
+              "x": 16,
+              "y": 36,
+              "name": "Selected installment amount",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 220,
+              "content": "Rp 525.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 21,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "Wy73L",
+              "x": 16,
+              "y": 66,
+              "name": "Selected installment status",
+              "fill": "#9A6A12",
+              "textGrowth": "fixed-width",
+              "width": 180,
+              "content": "Belum dibayar",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "w2To1",
+              "x": 246,
+              "y": 26,
+              "name": "Pay installment action",
+              "width": 88,
+              "height": 40,
+              "fill": "#006A66",
+              "cornerRadius": 13,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "uI6Si",
+                  "x": 22,
+                  "y": 10,
+                  "name": "Pay label",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 65,
+                  "content": "Bayar",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "MvTUL",
+          "x": 20,
+          "y": 734,
+          "name": "Application section title",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 280,
+          "content": "Pengajuan aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "nzZOF",
+          "x": 20,
+          "y": 770,
+          "name": "Compact pending application",
+          "width": 350,
+          "height": 82,
+          "fill": "#FFFAEF",
+          "cornerRadius": 20,
+          "stroke": "#EBD7A6",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Yccs7",
+              "x": 14,
+              "y": 19,
+              "name": "Pending icon surface",
+              "width": 40,
+              "height": 40,
+              "fill": "#FFF0C7",
+              "cornerRadius": 14,
+              "layout": "none"
+            },
+            {
+              "type": "icon",
+              "id": "bCbi9",
+              "x": 24,
+              "y": 29,
+              "name": "Pending clock",
+              "width": 20,
+              "height": 20,
+              "icon": "clock-3",
+              "library": "lucide",
+              "fill": "#A67616"
+            },
+            {
+              "type": "text",
+              "id": "z9SpU",
+              "x": 66,
+              "y": 13,
+              "name": "Pending amount",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 264,
+              "content": "Pengajuan Rp 4.000.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "U4Z08",
+              "x": 66,
+              "y": 35,
+              "name": "Pending tenor",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 240,
+              "content": "Tenor 12 bulan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "R8QYI9",
+              "x": 66,
+              "y": 55,
+              "name": "Pending status",
+              "fill": "#986A12",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Sedang diproses",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "D8UHp",
+              "x": 317,
+              "y": 31,
+              "name": "Pending details",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "YmuL8",
+          "x": 20,
+          "y": 880,
+          "name": "Loans heading",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 240,
+          "content": "Pinjaman aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "oI0Lp",
+          "x": 292,
+          "y": 884,
+          "name": "Loans count",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 80,
+          "content": "2 kontrak",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "AE0wR",
+          "x": 20,
+          "y": 917,
+          "name": "Loan summary 0",
+          "width": 350,
+          "height": 119,
+          "fill": "#FFFFFF",
+          "cornerRadius": 20,
+          "stroke": "#DFEAE7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "p2B6kT",
+              "x": 16,
+              "y": 14,
+              "name": "Loan reference",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 220,
+              "content": "MG-2026-002",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "X7k0L4",
+              "x": 280,
+              "y": 12,
+              "name": "Loan status",
+              "width": 54,
+              "height": 24,
+              "fill": "#E8F6EF",
+              "cornerRadius": 9,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "m5pxeM",
+                  "x": 9,
+                  "y": 5,
+                  "name": "Status text",
+                  "fill": "#168265",
+                  "textGrowth": "fixed-width",
+                  "width": 86,
+                  "content": "Aktif",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 10,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "k5xYx3",
+              "x": 16,
+              "y": 42,
+              "name": "Outstanding caption",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "Sisa kewajiban",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "pZDde",
+              "x": 16,
+              "y": 61,
+              "name": "Outstanding value",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 280,
+              "content": "Rp 6.250.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 19,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "JdXmF",
+              "x": 16,
+              "y": 94,
+              "name": "Installment value",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 290,
+              "content": "Cicilan Rp 525.000 / bulan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "icon",
+              "id": "bQPtj",
+              "x": 315,
+              "y": 65,
+              "name": "Open loan detail",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "P36s28",
+          "x": 20,
+          "y": 1050,
+          "name": "Loan summary 1",
+          "width": 350,
+          "height": 119,
+          "fill": "#FFFFFF",
+          "cornerRadius": 20,
+          "stroke": "#DFEAE7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "I9MF39",
+              "x": 16,
+              "y": 14,
+              "name": "Loan reference",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 220,
+              "content": "MG-2025-004",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "YTJii",
+              "x": 239,
+              "y": 12,
+              "name": "Loan status",
+              "width": 95,
+              "height": 24,
+              "fill": "#FFF0EB",
+              "cornerRadius": 9,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "y7Dc6",
+                  "x": 9,
+                  "y": 5,
+                  "name": "Status text",
+                  "fill": "#B64C39",
+                  "textGrowth": "fixed-width",
+                  "width": 86,
+                  "content": "Menunggak",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 10,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "SXkFf",
+              "x": 16,
+              "y": 42,
+              "name": "Outstanding caption",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "Sisa kewajiban",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "p6Z3k",
+              "x": 16,
+              "y": 61,
+              "name": "Outstanding value",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 280,
+              "content": "Rp 12.500.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 19,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "g4YwQ",
+              "x": 16,
+              "y": 94,
+              "name": "Installment value",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 290,
+              "content": "Cicilan Rp 625.000 / bulan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "icon",
+              "id": "DKDSM",
+              "x": 315,
+              "y": 65,
+              "name": "Open loan detail",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "id": "GnENl",
+          "type": "ref",
+          "ref": "TlUY0",
+          "name": "Multiguna active bottom navigation",
+          "x": 20,
+          "y": 1194,
+          "descendants": {
+            "J1GpKD": {
+              "width": "fill_container",
+              "fill": "#FFFFFF"
+            },
+            "q1f3mg": {
+              "fill": "#5F6B76"
+            },
+            "efJPr": {
+              "enabled": false
+            },
+            "g6uMt": {
+              "width": 126,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 110,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#004E50",
+                    "position": 0
+                  },
+                  {
+                    "color": "#006A66",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#008579",
+                    "position": 1
+                  }
+                ]
+              }
+            },
+            "dlk52": {
+              "fill": "#FFFFFF"
+            },
+            "qLK09": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "H6L44x",
+      "x": 4250,
+      "y": 2785,
+      "name": "11B / MULTIGUNA-03 / Kalender bulanan diperluas",
+      "clip": true,
+      "width": 390,
+      "height": 1452,
+      "fill": "#FBFDFC",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "U5xgyo",
+          "x": 24,
+          "y": 14,
+          "name": "Status time",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 90,
+          "content": "9:41",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "700"
+        },
+        {
+          "type": "icon",
+          "id": "H7uhP",
+          "x": 328,
+          "y": 14,
+          "name": "WiFi",
+          "width": 15,
+          "height": 15,
+          "icon": "wifi",
+          "library": "lucide",
+          "fill": "#17324A"
+        },
+        {
+          "type": "icon",
+          "id": "E2IQ1",
+          "x": 350,
+          "y": 13,
+          "name": "Battery",
+          "width": 18,
+          "height": 18,
+          "icon": "battery-full",
+          "library": "lucide",
+          "fill": "#17324A"
+        },
+        {
+          "type": "text",
+          "id": "fF5Sf",
+          "x": 20,
+          "y": 53,
+          "name": "Page title",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 280,
+          "content": "Multiguna",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 26,
+          "fontWeight": "800"
+        },
+        {
+          "type": "icon",
+          "id": "uvZvY",
+          "x": 346,
+          "y": 60,
+          "name": "Help",
+          "width": 22,
+          "height": 22,
+          "icon": "help",
+          "library": "Material Symbols Rounded",
+          "fill": "#006A66"
+        },
+        {
+          "type": "text",
+          "id": "XoLW7",
+          "x": 20,
+          "y": 91,
+          "name": "Page subtitle",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 350,
+          "content": "Atur cicilan, rencanakan kebutuhan.",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "tuKM1",
+          "x": 20,
+          "y": 126,
+          "name": "Compact obligation summary",
+          "width": 350,
+          "height": 106,
+          "fill": "#006A66",
+          "cornerRadius": 24,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "Z5tgk",
+              "x": 18,
+              "y": 17,
+              "name": "Outstanding label",
+              "fill": "#D8EFEB",
+              "textGrowth": "fixed-width",
+              "width": 210,
+              "content": "Total sisa kewajiban",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "kReBv",
+              "x": 18,
+              "y": 37,
+              "name": "Outstanding amount",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 315,
+              "content": "Rp 18.750.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 26,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "hUWrt",
+              "x": 18,
+              "y": 79,
+              "name": "Monthly installment label",
+              "fill": "#D8EFEB",
+              "textGrowth": "fixed-width",
+              "width": 145,
+              "content": "Cicilan bulanan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "D3sTF",
+              "x": 190,
+              "y": 77,
+              "name": "Monthly installment amount",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 145,
+              "content": "Rp 1.150.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 14,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "P9z5n",
+          "x": 20,
+          "y": 244,
+          "name": "Separate application action",
+          "width": 350,
+          "height": 44,
+          "fill": "#FFFFFF",
+          "cornerRadius": 15,
+          "stroke": "#B7DDD5",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "icon",
+              "id": "mdio6",
+              "x": 85,
+              "y": 12,
+              "name": "Add application icon",
+              "width": 20,
+              "height": 20,
+              "icon": "plus",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "GWhAE",
+              "x": 113,
+              "y": 11,
+              "name": "Apply action",
+              "fill": "#006A66",
+              "textGrowth": "fixed-width",
+              "width": 215,
+              "content": "Ajukan Multiguna",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 14,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "tfLjT",
+          "x": 20,
+          "y": 812,
+          "name": "Overdue installment notice",
+          "width": 350,
+          "height": 76,
+          "fill": "#FFF5F2",
+          "cornerRadius": 18,
+          "stroke": "#F0D1C7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "icon",
+              "id": "u2DkE",
+              "x": 14,
+              "y": 18,
+              "name": "Overdue alert icon",
+              "width": 22,
+              "height": 22,
+              "icon": "circle-alert",
+              "library": "lucide",
+              "fill": "#BD5140"
+            },
+            {
+              "type": "text",
+              "id": "YlCBC",
+              "x": 46,
+              "y": 12,
+              "name": "Overdue heading",
+              "fill": "#A54132",
+              "textGrowth": "fixed-width",
+              "width": 240,
+              "content": "1 cicilan menunggak",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "CxfrC",
+              "x": 46,
+              "y": 37,
+              "name": "Overdue amount",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 215,
+              "content": "Rp 625.000 · 10 Sep",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "mdJib",
+              "x": 294,
+              "y": 28,
+              "name": "Overdue detail action",
+              "fill": "#A54132",
+              "textGrowth": "fixed-width",
+              "width": 44,
+              "content": "Lihat",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wMEOg",
+          "x": 20,
+          "y": 306,
+          "name": "Installment calendar month",
+          "width": 350,
+          "height": 354,
+          "fill": "#FFFFFF",
+          "cornerRadius": 22,
+          "stroke": "#DFEAE7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "wj9Q0",
+              "x": 16,
+              "y": 16,
+              "name": "Calendar title",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "Jadwal cicilan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 17,
+              "fontWeight": "800"
+            },
+            {
+              "type": "icon",
+              "id": "EiDMM",
+              "x": 310,
+              "y": 18,
+              "name": "Calendar icon",
+              "width": 20,
+              "height": 20,
+              "icon": "calendar-days",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "zCTsB",
+              "x": 16,
+              "y": 49,
+              "name": "Displayed month",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 210,
+              "content": "September 2026",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "h4QZu",
+              "x": 278,
+              "y": 48,
+              "name": "Previous period",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-left",
+              "library": "lucide",
+              "fill": "#5F6B76"
+            },
+            {
+              "type": "icon",
+              "id": "V05y8",
+              "x": 310,
+              "y": 48,
+              "name": "Next period",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#5F6B76"
+            },
+            {
+              "type": "text",
+              "id": "zdmni",
+              "x": 19,
+              "y": 78,
+              "name": "Weekday 0",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "S",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "O3sTtQ",
+              "x": 65,
+              "y": 78,
+              "name": "Weekday 1",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "S",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "nwfJ0",
+              "x": 111,
+              "y": 78,
+              "name": "Weekday 2",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "R",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "iJJgz",
+              "x": 157,
+              "y": 78,
+              "name": "Weekday 3",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "K",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "eT460",
+              "x": 203,
+              "y": 78,
+              "name": "Weekday 4",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "J",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "X451xk",
+              "x": 249,
+              "y": 78,
+              "name": "Weekday 5",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "S",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "Pejpk",
+              "x": 295,
+              "y": 78,
+              "name": "Weekday 6",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 30,
+              "content": "M",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "x6m6N",
+              "x": 56,
+              "y": 99,
+              "name": "Day 1",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "hLiIn",
+              "x": 71,
+              "y": 106,
+              "name": "Date 1",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "1",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "Tku5d",
+              "x": 102,
+              "y": 99,
+              "name": "Day 2",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "DTQWy",
+              "x": 117,
+              "y": 106,
+              "name": "Date 2",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "2",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "Q9fgAI",
+              "x": 148,
+              "y": 99,
+              "name": "Day 3",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "cV0VV",
+              "x": 163,
+              "y": 106,
+              "name": "Date 3",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "3",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "d4a7wZ",
+              "x": 194,
+              "y": 99,
+              "name": "Day 4",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "McfzB",
+              "x": 209,
+              "y": 106,
+              "name": "Date 4",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "4",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "kJMOI",
+              "x": 240,
+              "y": 99,
+              "name": "Day 5",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "U08Dsg",
+              "x": 255,
+              "y": 106,
+              "name": "Date 5",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "5",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "icon",
+              "id": "TvUqa",
+              "x": 265,
+              "y": 100,
+              "name": "Paid marker",
+              "width": 11,
+              "height": 11,
+              "icon": "check",
+              "library": "lucide",
+              "fill": "#168265"
+            },
+            {
+              "type": "frame",
+              "id": "ohvD6",
+              "x": 286,
+              "y": 99,
+              "name": "Day 6",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "FeKAS",
+              "x": 301,
+              "y": 106,
+              "name": "Date 6",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "6",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "VPkqR",
+              "x": 10,
+              "y": 139,
+              "name": "Day 7",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "ohsQG",
+              "x": 25,
+              "y": 146,
+              "name": "Date 7",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "7",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "FoyNw",
+              "x": 56,
+              "y": 139,
+              "name": "Day 8",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "V8zyY",
+              "x": 71,
+              "y": 146,
+              "name": "Date 8",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "8",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "Z4ouu2",
+              "x": 102,
+              "y": 139,
+              "name": "Day 9",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "nVzVt",
+              "x": 117,
+              "y": 146,
+              "name": "Date 9",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "9",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "GIgTQ",
+              "x": 148,
+              "y": 139,
+              "name": "Day 10",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "eesw2",
+              "x": 158,
+              "y": 146,
+              "name": "Date 10",
+              "fill": "#B94636",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "10",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "HBz5c",
+              "x": 165,
+              "y": 166,
+              "name": "Overdue marker",
+              "width": 4,
+              "height": 4,
+              "fill": "#C45040",
+              "cornerRadius": 2,
+              "layout": "none"
+            },
+            {
+              "type": "frame",
+              "id": "yQVpS",
+              "x": 194,
+              "y": 139,
+              "name": "Day 11",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "tfMrO",
+              "x": 204,
+              "y": 146,
+              "name": "Date 11",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "11",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "XSSqG",
+              "x": 240,
+              "y": 139,
+              "name": "Day 12",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "qGtg6",
+              "x": 250,
+              "y": 146,
+              "name": "Date 12",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "12",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "aDVwz",
+              "x": 286,
+              "y": 139,
+              "name": "Day 13",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "QOQH9",
+              "x": 296,
+              "y": 146,
+              "name": "Date 13",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "13",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "Z7IyQ4",
+              "x": 10,
+              "y": 179,
+              "name": "Day 14",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "dzt6i",
+              "x": 20,
+              "y": 186,
+              "name": "Date 14",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "14",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "nERAo",
+              "x": 56,
+              "y": 179,
+              "name": "Day 15",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "oSzSN",
+              "x": 66,
+              "y": 186,
+              "name": "Date 15",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "15",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "f6kzrq",
+              "x": 102,
+              "y": 179,
+              "name": "Day 16",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "kgBcq",
+              "x": 112,
+              "y": 186,
+              "name": "Date 16",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "16",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "MlQDP",
+              "x": 148,
+              "y": 179,
+              "name": "Day 17",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "j4SjQ",
+              "x": 158,
+              "y": 186,
+              "name": "Date 17",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "17",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "iFnjN",
+              "x": 194,
+              "y": 179,
+              "name": "Day 18",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "U0vJc",
+              "x": 204,
+              "y": 186,
+              "name": "Date 18",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "18",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "O5DhY",
+              "x": 240,
+              "y": 179,
+              "name": "Day 19",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "bvrLs",
+              "x": 250,
+              "y": 186,
+              "name": "Date 19",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "19",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "aeCXr",
+              "x": 286,
+              "y": 179,
+              "name": "Day 20",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "D7aSc",
+              "x": 296,
+              "y": 186,
+              "name": "Date 20",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "20",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "v1LAl",
+              "x": 10,
+              "y": 219,
+              "name": "Day 21",
+              "width": 38,
+              "height": 34,
+              "fill": "#F0F8F6",
+              "cornerRadius": 11,
+              "stroke": "#5DA99A",
+              "strokeWidth": 1,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "Y6fpWe",
+              "x": 20,
+              "y": 226,
+              "name": "Date 21",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "21",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "u4Eeyi",
+              "x": 56,
+              "y": 219,
+              "name": "Day 22",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "dNrch",
+              "x": 66,
+              "y": 226,
+              "name": "Date 22",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "22",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "T9Kwi",
+              "x": 102,
+              "y": 219,
+              "name": "Day 23",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "eYtUu",
+              "x": 112,
+              "y": 226,
+              "name": "Date 23",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "23",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "RbXS5",
+              "x": 148,
+              "y": 219,
+              "name": "Day 24",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "k24AL",
+              "x": 158,
+              "y": 226,
+              "name": "Date 24",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "24",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "sdvOr",
+              "x": 194,
+              "y": 219,
+              "name": "Day 25",
+              "width": 38,
+              "height": 34,
+              "fill": "#006A66",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "E5Bte",
+              "x": 204,
+              "y": 226,
+              "name": "Date 25",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "25",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "l608UU",
+              "x": 211,
+              "y": 246,
+              "name": "Due date marker",
+              "width": 4,
+              "height": 4,
+              "fill": "#F5C65C",
+              "cornerRadius": 2,
+              "layout": "none"
+            },
+            {
+              "type": "frame",
+              "id": "QdhtA",
+              "x": 240,
+              "y": 219,
+              "name": "Day 26",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "ICcpC",
+              "x": 250,
+              "y": 226,
+              "name": "Date 26",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "26",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "b5exAF",
+              "x": 286,
+              "y": 219,
+              "name": "Day 27",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "gQC5U",
+              "x": 296,
+              "y": 226,
+              "name": "Date 27",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "27",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "IyaMU",
+              "x": 10,
+              "y": 259,
+              "name": "Day 28",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "uwuCd",
+              "x": 20,
+              "y": 266,
+              "name": "Date 28",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "28",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "kUa1D",
+              "x": 56,
+              "y": 259,
+              "name": "Day 29",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "ZqYtr",
+              "x": 66,
+              "y": 266,
+              "name": "Date 29",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "29",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "vFLuT",
+              "x": 102,
+              "y": 259,
+              "name": "Day 30",
+              "width": 38,
+              "height": 34,
+              "fill": "#FFFFFF",
+              "cornerRadius": 11,
+              "layout": "none"
+            },
+            {
+              "type": "text",
+              "id": "cxwvy",
+              "x": 112,
+              "y": 266,
+              "name": "Date 30",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 28,
+              "content": "30",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "hYpwx",
+              "x": 16,
+              "y": 324,
+              "name": "Expand collapse action",
+              "fill": "#006A66",
+              "textGrowth": "fixed-width",
+              "width": 240,
+              "content": "Tampilkan mingguan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "wWV3V",
+              "x": 310,
+              "y": 324,
+              "name": "Expand collapse indicator",
+              "width": 16,
+              "height": 16,
+              "icon": "chevron-up",
+              "library": "lucide",
+              "fill": "#006A66"
+            },
+            {
+              "type": "text",
+              "id": "mPQEU",
+              "x": 16,
+              "y": 299,
+              "name": "Calendar status legend",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 318,
+              "content": "✓ Lunas    • Terlambat    • Jatuh tempo",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 10,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "G9FIb",
+          "x": 20,
+          "y": 674,
+          "name": "Selected date heading",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 280,
+          "content": "Jumat, 25 September",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 13,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "Xb84r",
+          "x": 300,
+          "y": 674,
+          "name": "Selected date count",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 70,
+          "content": "1 cicilan",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "S8sTz",
+          "x": 20,
+          "y": 703,
+          "name": "Selected installment detail",
+          "width": 350,
+          "height": 91,
+          "fill": "#EDF7F5",
+          "cornerRadius": 18,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "yfOCP",
+              "x": 16,
+              "y": 13,
+              "name": "Selected loan reference",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "MG-2026-002",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "yRgAY",
+              "x": 16,
+              "y": 36,
+              "name": "Selected installment amount",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 220,
+              "content": "Rp 525.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 21,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "vdTSU",
+              "x": 16,
+              "y": 66,
+              "name": "Selected installment status",
+              "fill": "#9A6A12",
+              "textGrowth": "fixed-width",
+              "width": 180,
+              "content": "Belum dibayar",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "G7XwbI",
+              "x": 246,
+              "y": 26,
+              "name": "Pay installment action",
+              "width": 88,
+              "height": 40,
+              "fill": "#006A66",
+              "cornerRadius": 13,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Qo2VK",
+                  "x": 22,
+                  "y": 10,
+                  "name": "Pay label",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 65,
+                  "content": "Bayar",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 13,
+                  "fontWeight": "700"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "g8Ovs",
+          "x": 20,
+          "y": 914,
+          "name": "Application section title",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 280,
+          "content": "Pengajuan aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "frame",
+          "id": "vlbf1",
+          "x": 20,
+          "y": 950,
+          "name": "Compact pending application",
+          "width": 350,
+          "height": 82,
+          "fill": "#FFFAEF",
+          "cornerRadius": 20,
+          "stroke": "#EBD7A6",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Hfn4x",
+              "x": 14,
+              "y": 19,
+              "name": "Pending icon surface",
+              "width": 40,
+              "height": 40,
+              "fill": "#FFF0C7",
+              "cornerRadius": 14,
+              "layout": "none"
+            },
+            {
+              "type": "icon",
+              "id": "n25Sd",
+              "x": 24,
+              "y": 29,
+              "name": "Pending clock",
+              "width": 20,
+              "height": 20,
+              "icon": "clock-3",
+              "library": "lucide",
+              "fill": "#A67616"
+            },
+            {
+              "type": "text",
+              "id": "ziV7P",
+              "x": 66,
+              "y": 13,
+              "name": "Pending amount",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 264,
+              "content": "Pengajuan Rp 4.000.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "gQGNW",
+              "x": 66,
+              "y": 35,
+              "name": "Pending tenor",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 240,
+              "content": "Tenor 12 bulan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "RmPXX",
+              "x": 66,
+              "y": 55,
+              "name": "Pending status",
+              "fill": "#986A12",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Sedang diproses",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "mJcPX",
+              "x": 317,
+              "y": 31,
+              "name": "Pending details",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "AukoA",
+          "x": 20,
+          "y": 1060,
+          "name": "Loans heading",
+          "fill": "#17324A",
+          "textGrowth": "fixed-width",
+          "width": 240,
+          "content": "Pinjaman aktif",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 18,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "k0K9FD",
+          "x": 292,
+          "y": 1064,
+          "name": "Loans count",
+          "fill": "#5F6B76",
+          "textGrowth": "fixed-width",
+          "width": 80,
+          "content": "2 kontrak",
+          "fontFamily": "Plus Jakarta Sans",
+          "fontSize": 12,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "HEMW8",
+          "x": 20,
+          "y": 1097,
+          "name": "Loan summary 0",
+          "width": 350,
+          "height": 119,
+          "fill": "#FFFFFF",
+          "cornerRadius": 20,
+          "stroke": "#DFEAE7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "fiV4k",
+              "x": 16,
+              "y": 14,
+              "name": "Loan reference",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 220,
+              "content": "MG-2026-002",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "vLw5p",
+              "x": 280,
+              "y": 12,
+              "name": "Loan status",
+              "width": 54,
+              "height": 24,
+              "fill": "#E8F6EF",
+              "cornerRadius": 9,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kU0PZ",
+                  "x": 9,
+                  "y": 5,
+                  "name": "Status text",
+                  "fill": "#168265",
+                  "textGrowth": "fixed-width",
+                  "width": 86,
+                  "content": "Aktif",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 10,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "u2y49D",
+              "x": 16,
+              "y": 42,
+              "name": "Outstanding caption",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "Sisa kewajiban",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "t05Q09",
+              "x": 16,
+              "y": 61,
+              "name": "Outstanding value",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 280,
+              "content": "Rp 6.250.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 19,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "UKD4p",
+              "x": 16,
+              "y": 94,
+              "name": "Installment value",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 290,
+              "content": "Cicilan Rp 525.000 / bulan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "icon",
+              "id": "MEPtW",
+              "x": 315,
+              "y": 65,
+              "name": "Open loan detail",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "JDDWH",
+          "x": 20,
+          "y": 1230,
+          "name": "Loan summary 1",
+          "width": 350,
+          "height": 119,
+          "fill": "#FFFFFF",
+          "cornerRadius": 20,
+          "stroke": "#DFEAE7",
+          "strokeWidth": 1,
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "TGF0C",
+              "x": 16,
+              "y": 14,
+              "name": "Loan reference",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 220,
+              "content": "MG-2025-004",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 13,
+              "fontWeight": "700"
+            },
+            {
+              "type": "frame",
+              "id": "Y1jJj",
+              "x": 239,
+              "y": 12,
+              "name": "Loan status",
+              "width": 95,
+              "height": 24,
+              "fill": "#FFF0EB",
+              "cornerRadius": 9,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "s3ZiNj",
+                  "x": 9,
+                  "y": 5,
+                  "name": "Status text",
+                  "fill": "#B64C39",
+                  "textGrowth": "fixed-width",
+                  "width": 86,
+                  "content": "Menunggak",
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 10,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "dNade",
+              "x": 16,
+              "y": 42,
+              "name": "Outstanding caption",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 200,
+              "content": "Sisa kewajiban",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "Ba2VW",
+              "x": 16,
+              "y": 61,
+              "name": "Outstanding value",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": 280,
+              "content": "Rp 12.500.000",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 19,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "UH6q9",
+              "x": 16,
+              "y": 94,
+              "name": "Installment value",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": 290,
+              "content": "Cicilan Rp 625.000 / bulan",
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "icon",
+              "id": "zLjPH",
+              "x": 315,
+              "y": 65,
+              "name": "Open loan detail",
+              "width": 18,
+              "height": 18,
+              "icon": "chevron-right",
+              "library": "lucide",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "id": "jNJju",
+          "type": "ref",
+          "ref": "TlUY0",
+          "name": "Multiguna active bottom navigation",
+          "x": 20,
+          "y": 1374,
+          "descendants": {
+            "J1GpKD": {
+              "width": "fill_container",
+              "fill": "#FFFFFF"
+            },
+            "q1f3mg": {
+              "fill": "#5F6B76"
+            },
+            "efJPr": {
+              "enabled": false
+            },
+            "g6uMt": {
+              "width": 126,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 110,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#004E50",
+                    "position": 0
+                  },
+                  {
+                    "color": "#006A66",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#008579",
+                    "position": 1
+                  }
+                ]
+              }
+            },
+            "dlk52": {
+              "fill": "#FFFFFF"
+            },
+            "qLK09": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "EPPs7",
+      "x": 4710,
+      "y": 2785,
+      "name": "24 / INVEST-REG-01 / Non-investor / Pengantar",
+      "clip": true,
+      "width": 390,
+      "fill": "#FBFDFC",
+      "layout": "vertical",
+      "padding": [
+        0,
+        0,
+        20,
+        0
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "ALkhm",
+          "name": "System status",
+          "width": "fill_container",
+          "height": 54,
+          "gap": 16,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "HmGKQ",
+              "name": "Time",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "9:41",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "nQQCI",
+              "name": "Network",
+              "width": 24,
+              "height": 24,
+              "icon": "wifi",
+              "library": "Material Symbols Rounded",
+              "fill": "#006A66"
+            },
+            {
+              "type": "icon",
+              "id": "Z6E0Hp",
+              "name": "Battery",
+              "width": 24,
+              "height": 24,
+              "icon": "battery_full",
+              "library": "Material Symbols Rounded",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "LI2Hb",
+          "name": "Page content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            12,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "Y3SY78",
+              "name": "Page heading",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cek3d",
+                  "name": "Page title",
+                  "fill": "#17324A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Investasi",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 26,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "d9wY5",
+                  "name": "Page description",
+                  "fill": "#5F6B76",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Mulai dengan melengkapi profil investor.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "CZh6o",
+              "name": "Investor invitation",
+              "width": "fill_container",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 120,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#004E50",
+                    "position": 0
+                  },
+                  {
+                    "color": "#008579",
+                    "position": 1
+                  }
+                ]
+              },
+              "cornerRadius": 26,
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "A1sFsH",
+                  "name": "Invitation eyebrow",
+                  "fill": "#BFFFE8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "MENJADI INVESTOR BASYA",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 11,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "sOn5C",
+                  "name": "Invitation title",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Langkah awal untuk\nberinvestasi bersama.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 26,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "cT8Yd",
+                  "name": "Invitation description",
+                  "fill": "#D8EFEB",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Lengkapi data diri agar Anda dapat melanjutkan pendaftaran sebagai investor.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rSFe0",
+              "name": "Registration steps",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "E9gr7d",
+                  "name": "Steps heading",
+                  "fill": "#17324A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Tiga langkah sederhana",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "OC3JN",
+                  "name": "Lengkapi profil",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "O4Mmi",
+                      "name": "Lengkapi profil icon",
+                      "width": 44,
+                      "height": 44,
+                      "fill": "#EDF7F5",
+                      "cornerRadius": 14,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "gNd0c",
+                          "name": "Lengkapi profil symbol",
+                          "width": 24,
+                          "height": 24,
+                          "icon": "person",
+                          "library": "Material Symbols Rounded",
+                          "fill": "#006A66"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "A8EPYf",
+                      "name": "Lengkapi profil text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 3,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Ysr45",
+                          "name": "Step title",
+                          "fill": "#17324A",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Lengkapi profil",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "h6ilH",
+                          "name": "Step description",
+                          "fill": "#5F6B76",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Siapkan identitas, NPWP, dan informasi keuangan.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Vu8q2",
+                  "name": "Tinjau data",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "hunMd",
+                      "name": "Tinjau data icon",
+                      "width": 44,
+                      "height": 44,
+                      "fill": "#EDF7F5",
+                      "cornerRadius": 14,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "V9rtTl",
+                          "name": "Tinjau data symbol",
+                          "width": 24,
+                          "height": 24,
+                          "icon": "fact_check",
+                          "library": "Material Symbols Rounded",
+                          "fill": "#006A66"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JyyA7",
+                      "name": "Tinjau data text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 3,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y4poxv",
+                          "name": "Step title",
+                          "fill": "#17324A",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Tinjau data",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "FGiew",
+                          "name": "Step description",
+                          "fill": "#5F6B76",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Periksa kembali data sebelum mengirim pendaftaran.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "C76i8Q",
+                  "name": "Pantau status",
+                  "width": "fill_container",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "dnHX0",
+                      "name": "Pantau status icon",
+                      "width": 44,
+                      "height": 44,
+                      "fill": "#EDF7F5",
+                      "cornerRadius": 14,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "cmpDh",
+                          "name": "Pantau status symbol",
+                          "width": 24,
+                          "height": 24,
+                          "icon": "hourglass_top",
+                          "library": "Material Symbols Rounded",
+                          "fill": "#006A66"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kU8uI",
+                      "name": "Pantau status text",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 3,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "iuHeF",
+                          "name": "Step title",
+                          "fill": "#17324A",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Pantau status",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 14,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "RyRu5",
+                          "name": "Step description",
+                          "fill": "#5F6B76",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Lihat perkembangan pendaftaran di tab Investasi.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Plus Jakarta Sans",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "g5Rhky",
+              "type": "ref",
+              "ref": "hMfe5",
+              "name": "Daftar menjadi investor",
+              "width": "fill_container",
+              "descendants": {
+                "bDate": {
+                  "content": "Daftar menjadi investor"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "xKtoU",
+              "name": "Registration clarification",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Pendaftaran tidak langsung melakukan pembelian investasi.",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "XCfZe",
+          "name": "Bottom navigation inset",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            12,
+            20,
+            0,
+            20
+          ],
+          "children": [
+            {
+              "id": "rPsAP",
+              "type": "ref",
+              "ref": "TlUY0",
+              "name": "Investasi selected for non-investor",
+              "width": "fill_container",
+              "descendants": {
+                "J1GpKD": {
+                  "width": "fill_container",
+                  "fill": "#FFFFFF"
+                },
+                "q1f3mg": {
+                  "fill": "#5F6B76"
+                },
+                "efJPr": {
+                  "enabled": false
+                },
+                "uW8yJ": {
+                  "width": 120,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 110,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#004E50",
+                        "position": 0
+                      },
+                      {
+                        "color": "#006A66",
+                        "position": 0.5
+                      },
+                      {
+                        "color": "#008579",
+                        "position": 1
+                      }
+                    ]
+                  }
+                },
+                "gpTM0": {
+                  "fill": "#FFFFFF"
+                },
+                "deD6p": {
+                  "enabled": true
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "R4mAs",
+      "x": 5170,
+      "y": 2785,
+      "name": "25 / INVEST-REG-02 / Form pendaftaran / Full content",
+      "clip": true,
+      "width": 390,
+      "fill": "#FBFDFC",
+      "layout": "vertical",
+      "padding": [
+        0,
+        0,
+        20,
+        0
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "CViXi",
+          "name": "System status",
+          "width": "fill_container",
+          "height": 54,
+          "gap": 16,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "F8gsc",
+              "name": "Time",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "9:41",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "ko38J",
+              "name": "Network",
+              "width": 24,
+              "height": 24,
+              "icon": "wifi",
+              "library": "Material Symbols Rounded",
+              "fill": "#006A66"
+            },
+            {
+              "type": "icon",
+              "id": "Kta0X",
+              "name": "Battery",
+              "width": 24,
+              "height": 24,
+              "icon": "battery_full",
+              "library": "Material Symbols Rounded",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "y6QQ48",
+          "name": "Page content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            12,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "xpDrF",
+              "name": "Page heading",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Y2emGf",
+                  "name": "Back navigation",
+                  "width": "fill_container",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "Ectev",
+                      "name": "Back",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "arrow_back",
+                      "library": "Material Symbols Rounded",
+                      "fill": "#006A66"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ipszU",
+                      "name": "Back label",
+                      "fill": "#006A66",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Investasi",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "vtErA",
+                  "name": "Page title",
+                  "fill": "#17324A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Daftar investor",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 26,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "Oc0aA",
+                  "name": "Page description",
+                  "fill": "#5F6B76",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Lengkapi data berikut. Semua kolom wajib diisi.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k9F83",
+              "name": "Identity fields",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "y2yHf",
+                  "name": "Identity heading",
+                  "fill": "#17324A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "01  Identitas",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "id": "OEJwH",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Nama anggota",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Nama anggota"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#EDF3F1"
+                    },
+                    "j57vq": {
+                      "content": "Nama anggota dari akun",
+                      "fill": "#17324A"
+                    },
+                    "tZ6ZV": {
+                      "enabled": true,
+                      "library": "Material Symbols Rounded",
+                      "icon": "lock",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "yB7NM",
+                  "name": "Account source",
+                  "fill": "#5F6B76",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Terisi otomatis dari akun yang sedang login.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 11,
+                  "fontWeight": "500"
+                },
+                {
+                  "id": "s3HLWl",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Nomor KTP",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Nomor KTP"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Masukkan 16 digit nomor KTP",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "BjMO1",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Nomor kontak",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Nomor kontak"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "08xxxxxxxxxx",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "do4Sg",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Tempat lahir",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Tempat lahir"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Masukkan tempat lahir",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "y3cwpK",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Tanggal lahir",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Tanggal lahir"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Pilih tanggal lahir",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": true,
+                      "library": "Material Symbols Rounded",
+                      "icon": "calendar_month",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "qX2HR",
+              "name": "Personal fields",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "q3k3G",
+                  "name": "Personal heading",
+                  "fill": "#17324A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "02  Data pribadi",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "id": "vG6OR",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Alamat",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Alamat"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF",
+                      "height": 90
+                    },
+                    "j57vq": {
+                      "content": "Jalan, nomor rumah, kelurahan, kecamatan",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "cxe1R",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Nomor NPWP",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Nomor NPWP"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Masukkan nomor NPWP",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "Z85eAu",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Nama ibu kandung",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Nama ibu kandung"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Masukkan nama ibu kandung",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "g7OKq6",
+              "name": "Financial fields",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rf1MR",
+                  "name": "Finance heading",
+                  "fill": "#17324A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "03  Profil keuangan",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "id": "Cl9sI",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Pekerjaan",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Pekerjaan"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Pilih pekerjaan",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": true,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "iE67e",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Pendapatan",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Pendapatan"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Rp  Masukkan pendapatan",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "L8Y4w",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Sumber dana",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Sumber dana"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Contoh: gaji atau hasil usaha",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": false,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                },
+                {
+                  "id": "M96nv",
+                  "type": "ref",
+                  "ref": "yvJaU",
+                  "name": "Pendidikan terakhir",
+                  "width": "fill_container",
+                  "descendants": {
+                    "PBFFo": {
+                      "content": "Pendidikan terakhir"
+                    },
+                    "gcG1p": {
+                      "stroke": "#D3DFDC",
+                      "fill": "#FFFFFF"
+                    },
+                    "j57vq": {
+                      "content": "Pilih pendidikan terakhir",
+                      "fill": "#78847F"
+                    },
+                    "tZ6ZV": {
+                      "enabled": true,
+                      "library": "Material Symbols Rounded",
+                      "icon": "expand_more",
+                      "width": 20,
+                      "height": 20
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "TfJKM",
+              "name": "Review guidance",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Anda dapat memeriksa kembali seluruh data sebelum mengirim pendaftaran.",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "id": "BYJdi",
+              "type": "ref",
+              "ref": "hMfe5",
+              "name": "Tinjau pendaftaran",
+              "width": "fill_container",
+              "descendants": {
+                "bDate": {
+                  "content": "Tinjau pendaftaran"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "rcW6t",
+      "x": 5630,
+      "y": 2785,
+      "name": "26 / INVEST-REG-03 / Tinjau pendaftaran",
+      "clip": true,
+      "width": 390,
+      "fill": "#FBFDFC",
+      "layout": "vertical",
+      "padding": [
+        0,
+        0,
+        20,
+        0
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "C1V9Ft",
+          "name": "System status",
+          "width": "fill_container",
+          "height": 54,
+          "gap": 16,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "mB2zP",
+              "name": "Time",
+              "fill": "#17324A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "9:41",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "rbDnG",
+              "name": "Network",
+              "width": 24,
+              "height": 24,
+              "icon": "wifi",
+              "library": "Material Symbols Rounded",
+              "fill": "#006A66"
+            },
+            {
+              "type": "icon",
+              "id": "AQALe",
+              "name": "Battery",
+              "width": 24,
+              "height": 24,
+              "icon": "battery_full",
+              "library": "Material Symbols Rounded",
+              "fill": "#006A66"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "HVUUh",
+          "name": "Page content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            12,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "nlptS",
+              "name": "Page heading",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "x4PDv",
+                  "name": "Back navigation",
+                  "width": "fill_container",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "N6uj5",
+                      "name": "Back",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "arrow_back",
+                      "library": "Material Symbols Rounded",
+                      "fill": "#006A66"
+                    },
+                    {
+                      "type": "text",
+                      "id": "E3yDsI",
+                      "name": "Back label",
+                      "fill": "#006A66",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Form pendaftaran",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "bmFXt",
+                  "name": "Page title",
+                  "fill": "#17324A",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Tinjau pendaftaran",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 26,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "vWIOr",
+                  "name": "Page description",
+                  "fill": "#5F6B76",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Pastikan data Anda sudah benar sebelum dikirim.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Plus Jakarta Sans",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "TwVC1",
+              "name": "Example notice",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Pratinjau desain · data contoh",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 11,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "UiwGf",
+              "name": "Identitas",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "lXdhT",
+                  "name": "Identitas heading",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wmFHd",
+                      "name": "Section title",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Identitas",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "GQ2Ok",
+                      "name": "Edit Identitas",
+                      "fill": "#006A66",
+                      "content": "Ubah",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "k2P6k",
+                  "name": "Nama anggota",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "XpLY3",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Nama anggota",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "D5rJq1",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Anggota Contoh",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Kn3Ki",
+                  "name": "Nomor KTP",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "a517m",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Nomor KTP",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "vMdZ0",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "•••• •••• •••• 1234",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Z1Xo9",
+                  "name": "Nomor kontak",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "igLDe",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Nomor kontak",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "RSUyN",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "0812 3456 7890",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "zIeU2",
+                  "name": "Tempat, tanggal lahir",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "YxEC0",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Tempat, tanggal lahir",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "K08wWN",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Sukabumi, 12 Mei 1990",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "GwGWW",
+                  "name": "Section separator",
+                  "fill": "#DFEAE7",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IO6Am",
+              "name": "Data pribadi",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "L7AfOB",
+                  "name": "Data pribadi heading",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "b37HF",
+                      "name": "Section title",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Data pribadi",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "B1HFy4",
+                      "name": "Edit Data pribadi",
+                      "fill": "#006A66",
+                      "content": "Ubah",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "uatsd",
+                  "name": "Alamat",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "y9QBT",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Alamat",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "sxYhw",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Jl. Contoh No. 12, Sukabumi",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Lxi3T",
+                  "name": "NPWP",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "J4tZvE",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "NPWP",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xHHFf",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "•••• •••• •••• 5678",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ENNeh",
+                  "name": "Nama ibu kandung",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "H8wNr",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Nama ibu kandung",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "QqBbR",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Ibu Contoh",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "A13OY",
+                  "name": "Section separator",
+                  "fill": "#DFEAE7",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "X96vvZ",
+              "name": "Profil keuangan",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "l4DhU",
+                  "name": "Profil keuangan heading",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "sL2Jl",
+                      "name": "Section title",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Profil keuangan",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "KjoWr",
+                      "name": "Edit Profil keuangan",
+                      "fill": "#006A66",
+                      "content": "Ubah",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "c2qfeJ",
+                  "name": "Pekerjaan",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "InLqf",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Pekerjaan",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "oSkXH",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Wiraswasta",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wi7ZS",
+                  "name": "Pendapatan",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xfRWB",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Pendapatan",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "oTE3Y",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Rp 5.000.000",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Rjk7Y",
+                  "name": "Sumber dana",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fTopr",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Sumber dana",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "aDE3j",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Hasil usaha",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "xMhp7",
+                  "name": "Pendidikan terakhir",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "c5t81p",
+                      "name": "Review label",
+                      "fill": "#5F6B76",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Pendidikan terakhir",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 11,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "T7bJU",
+                      "name": "Review value",
+                      "fill": "#17324A",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "S1",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "hmpvY",
+                  "name": "Section separator",
+                  "fill": "#DFEAE7",
+                  "width": "fill_container",
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "nr8v1",
+              "name": "Submission confirmation",
+              "fill": "#5F6B76",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Dengan mengirim pendaftaran, saya menyatakan data yang diisi sesuai dengan keadaan sebenarnya.",
+              "lineHeight": 1.5,
+              "fontFamily": "Plus Jakarta Sans",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "id": "plfUo",
+              "type": "ref",
+              "ref": "hMfe5",
+              "name": "Kirim pendaftaran",
+              "width": "fill_container",
+              "descendants": {
+                "bDate": {
+                  "content": "Kirim pendaftaran"
+                }
+              }
+            }
+          ]
         }
       ]
     }

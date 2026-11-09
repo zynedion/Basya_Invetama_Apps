@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../../features/auth/domain/auth_session.dart';
 
@@ -22,20 +23,26 @@ class FcmTokenApi {
   }
 
   Future<void> clear(AuthSession session) async {
-    print(
-      '[FCM][logout] Queued removal; sessionExpired=${session.isExpired}; '
-      'expiresAt=${session.expiresAt.toUtc().toIso8601String()}',
-    );
+    if (kDebugMode) {
+      debugPrint(
+        '[FCM][logout] Queued removal; sessionExpired=${session.isExpired}; '
+        'expiresAt=${session.expiresAt.toUtc().toIso8601String()}',
+      );
+    }
     // Block queued/late registration and send an empty string after any in-flight PUT.
     _revokedSessions.add(session.accessToken);
     try {
       await _enqueue(() => _send(session, ''));
-      print('[FCM][logout] Removal succeeded');
+      if (kDebugMode) {
+        debugPrint('[FCM][logout] Removal succeeded');
+      }
     } catch (error) {
-      print(
-        '[FCM][logout] Removal failed: ${error.runtimeType}; '
-        'local session retained for retry',
-      );
+      if (kDebugMode) {
+        debugPrint(
+          '[FCM][logout] Removal failed: ${error.runtimeType}; '
+          'local session retained for retry',
+        );
+      }
       _revokedSessions.remove(session.accessToken);
       rethrow;
     }
@@ -53,13 +60,16 @@ class FcmTokenApi {
       session = await session.recovery!.resolve();
     }
     final action = isLogout ? '[FCM][logout]' : '[FCM][update]';
-    print(
-      '$action Sending PUT https://api.basyainvestama.id/app/profile/fcm-token',
-    );
-    print(
-      '$action Headers: Content-Type=application/json; Accept=application/json; Authorization=[REDACTED]',
-    );
-    print('$action Request body: ${jsonEncode({'fcm_token': token})}');
+    if (kDebugMode) {
+      debugPrint(
+        '$action Sending PUT https://api.basyainvestama.id/app/profile/fcm-token',
+      );
+    }
+    if (kDebugMode) {
+      debugPrint(
+        '$action Headers: Content-Type=application/json; Accept=application/json; Authorization=[REDACTED]',
+      );
+    }
     final response = await _client
         .put(
           Uri.parse('https://api.basyainvestama.id/app/profile/fcm-token'),
@@ -71,73 +81,31 @@ class FcmTokenApi {
           body: jsonEncode({'fcm_token': token}),
         )
         .timeout(const Duration(seconds: 15));
-    print(
-      '$action HTTP ${response.statusCode}; content-type=${response.headers['content-type'] ?? '(missing)'}',
-    );
-    print('$action Response: ${_safeResponse(response.body, session)}');
+    if (kDebugMode) {
+      debugPrint(
+        '$action HTTP ${response.statusCode}; content-type=${response.headers['content-type'] ?? '(missing)'}',
+      );
+    }
     if (isLogout && response.statusCode == 401) return;
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('$action Failed with status code: ${response.statusCode}');
+      if (kDebugMode) {
+        debugPrint('$action Failed with status code: ${response.statusCode}');
+      }
       throw StateError('FCM registration failed (${response.statusCode}).');
     }
     if (response.body.trim().isNotEmpty) {
       final body = jsonDecode(response.body);
       if (body is Map && body['status'] == false) {
-        print('$action Backend rejected FCM registration: ${response.body}');
+        if (kDebugMode) {
+          debugPrint('$action Backend rejected FCM registration');
+        }
         throw StateError('FCM registration was rejected.');
       }
     }
     if (!isLogout) {
-      print('$action FCM token successfully registered to backend!');
-    }
-  }
-
-  String _safeResponse(String raw, AuthSession session) {
-    if (raw.trim().isEmpty) return '(empty body)';
-    try {
-      final decoded = jsonDecode(raw);
-      if (decoded is! Map) {
-        return '(JSON without an object; ${raw.length} characters)';
+      if (kDebugMode) {
+        debugPrint('$action FCM token successfully registered to backend!');
       }
-      // Only diagnostics are useful here; never dump a returned user/session object.
-      Object? sanitize(Object? value) {
-        if (value is Map) {
-          return value.map(
-            (key, item) => MapEntry(
-              key.toString(),
-              RegExp(
-                    r'token|password|authorization|secret|cookie',
-                    caseSensitive: false,
-                  ).hasMatch(key.toString())
-                  ? '[REDACTED]'
-                  : sanitize(item),
-            ),
-          );
-        }
-        if (value is List) return value.map(sanitize).toList();
-        if (value is String && session.accessToken.isNotEmpty) {
-          return value.replaceAll(session.accessToken, '[REDACTED]');
-        }
-        return value;
-      }
-
-      final diagnostic = <String, Object?>{
-        for (final key in [
-          'status',
-          'code',
-          'message',
-          'messages',
-          'error',
-          'errors',
-        ])
-          if (decoded.containsKey(key)) key: sanitize(decoded[key]),
-      };
-      final text = jsonEncode(diagnostic);
-      return text.length > 2000
-          ? '${text.substring(0, 2000)}… [truncated]'
-          : text;
-    } on FormatException {
-      return '(non-JSON body; ${raw.length} characters; not printed)';
     }
   }
 }

@@ -1,3 +1,4 @@
+import '../domain/loan_detail.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/basya_components.dart';
@@ -25,7 +26,11 @@ class InstallmentCalendar extends StatefulWidget {
     required this.loans,
     required this.money,
     required this.onPay,
+    this.details = const {},
+    this.onDetail,
   });
+  final Map<int, LoanDetail> details;
+  final ValueChanged<MultigunaLoan>? onDetail;
   final List<MultigunaLoan> loans;
   final String Function(int) money;
   final ValueChanged<MultigunaLoan> onPay;
@@ -83,7 +88,7 @@ class _InstallmentCalendarState extends State<InstallmentCalendar> {
         : 7;
     final selected = _selected == null
         ? <InstallmentOccurrence>[]
-        : installmentsOn(widget.loans, _selected!);
+        : installmentsOn(widget.loans, _selected!, details: widget.details);
     final today = DateTime.now();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -172,10 +177,17 @@ class _InstallmentCalendarState extends State<InstallmentCalendar> {
                             if (_monthly && day.month != _focus.month) {
                               return const SizedBox(height: 48);
                             }
-                            final events = installmentsOn(widget.loans, day);
+                            final events = installmentsOn(
+                              widget.loans,
+                              day,
+                              details: widget.details,
+                            );
                             final active = _selected == day;
                             final current = DateUtils.isSameDay(today, day);
                             final overdue = events.any((e) => e.overdue);
+                            final paid =
+                                events.isNotEmpty &&
+                                events.every((e) => e.paid);
                             final label =
                                 '${day.day} ${_months[day.month - 1]} ${day.year}';
                             return Semantics(
@@ -239,6 +251,8 @@ class _InstallmentCalendarState extends State<InstallmentCalendar> {
                                               ? Colors.transparent
                                               : overdue
                                               ? AppTheme.negative
+                                              : paid
+                                              ? AppTheme.positive
                                               : const Color(0xFFE6AF37),
                                         ),
                                       ),
@@ -258,12 +272,16 @@ class _InstallmentCalendarState extends State<InstallmentCalendar> {
                 runSpacing: 4,
                 children: [
                   Text(
-                    '● Jatuh tempo / perkiraan',
+                    '\u25cf Jatuh tempo / perkiraan',
                     style: TextStyle(fontSize: 10, color: Color(0xFF976A13)),
                   ),
                   Text(
-                    '● Menunggak',
+                    '\u25cf Menunggak',
                     style: TextStyle(fontSize: 10, color: AppTheme.negative),
+                  ),
+                  Text(
+                    '\u25cf Lunas',
+                    style: TextStyle(fontSize: 10, color: AppTheme.positive),
                   ),
                 ],
               ),
@@ -317,7 +335,7 @@ class _InstallmentCalendarState extends State<InstallmentCalendar> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      widget.money(event.loan.installmentAmount),
+                      widget.money(event.amount),
                       style: const TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.w700,
@@ -326,7 +344,7 @@ class _InstallmentCalendarState extends State<InstallmentCalendar> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Cicilan ke-${event.number} · ${event.estimated ? "Perkiraan jadwal" : event.loan.paymentStatusLabel}',
+                      'Cicilan ke-${event.number} · ${event.label}',
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppTheme.muted,
@@ -340,7 +358,28 @@ class _InstallmentCalendarState extends State<InstallmentCalendar> {
                           style: TextStyle(fontSize: 11, color: AppTheme.muted),
                         ),
                       ),
-                    if (!event.estimated)
+                    if (event.item?.paymentDate != null)
+                      Text(
+                        'Dibayar ${event.item!.paymentDate!.day}/${event.item!.paymentDate!.month}/${event.item!.paymentDate!.year}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppTheme.muted,
+                        ),
+                      ),
+                    if (event.item != null && !event.paid)
+                      const Text(
+                        'Nominal cicilan reguler',
+                        style: TextStyle(fontSize: 11, color: AppTheme.muted),
+                      ),
+                    if (event.item != null && widget.onDetail != null)
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () => widget.onDetail!(event.loan),
+                          child: const Text('Lihat detail pinjaman'),
+                        ),
+                      ),
+                    if (!event.estimated && event.item == null)
                       Align(
                         alignment: Alignment.centerRight,
                         child: Padding(

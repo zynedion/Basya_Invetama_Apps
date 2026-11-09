@@ -14,6 +14,7 @@ import '../../auth/presentation/login_page.dart';
 import '../../home/domain/home_summary_gateway.dart';
 import '../../home/presentation/investor_home_page.dart';
 import '../../investment/presentation/investment_page.dart';
+import '../../investment/presentation/investor_registration_page.dart';
 import '../../multiguna/data/multiguna_api_client.dart';
 import '../../multiguna/domain/multiguna_gateway.dart';
 import '../../multiguna/domain/multiguna_overview_data.dart';
@@ -163,20 +164,13 @@ class _MainContainerState extends State<MainContainer> {
     }
   }
 
-  List<_MainDestination> get _destinations => _audience == HomeAudience.investor
-      ? const [
-          _MainDestination('Beranda', Icons.home_rounded),
-          _MainDestination('Simpanan', Icons.account_balance_wallet_outlined),
-          _MainDestination('Investasi', Icons.show_chart_rounded),
-          _MainDestination('Multiguna', Icons.account_balance_outlined),
-          _MainDestination('Profil', Icons.person_outline_rounded),
-        ]
-      : const [
-          _MainDestination('Beranda', Icons.home_rounded),
-          _MainDestination('Simpanan', Icons.account_balance_wallet_outlined),
-          _MainDestination('Multiguna', Icons.account_balance_outlined),
-          _MainDestination('Profil', Icons.person_outline_rounded),
-        ];
+  List<_MainDestination> get _destinations => const [
+    _MainDestination('Beranda', Icons.home_rounded),
+    _MainDestination('Simpanan', Icons.account_balance_wallet_outlined),
+    _MainDestination('Investasi', Icons.show_chart_rounded),
+    _MainDestination('Multiguna', Icons.account_balance_outlined),
+    _MainDestination('Profil', Icons.person_outline_rounded),
+  ];
 
   void _changeAudience(HomeAudience audience) {
     _destinationChanged = true;
@@ -188,15 +182,19 @@ class _MainContainerState extends State<MainContainer> {
 
   Future<void> _logout() async {
     final auth = widget.auth;
-    print(
-      '[AUTH][logout] Button pressed; authAvailable=${auth != null}; busy=$_loggingOut',
-    );
+    if (kDebugMode) {
+      debugPrint(
+        '[AUTH][logout] Button pressed; authAvailable=${auth != null}; busy=$_loggingOut',
+      );
+    }
     if (auth == null || _loggingOut) return;
     setState(() => _loggingOut = true);
     try {
       await auth.logout();
       await _lastDestination.clear();
-      print('[AUTH][logout] Opening login');
+      if (kDebugMode) {
+        debugPrint('[AUTH][logout] Opening login');
+      }
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute<void>(
@@ -206,7 +204,9 @@ class _MainContainerState extends State<MainContainer> {
         (_) => false,
       );
     } catch (error) {
-      print('[AUTH][logout] Failed: ${error.runtimeType}');
+      if (kDebugMode) {
+        debugPrint('[AUTH][logout] Failed: ${error.runtimeType}');
+      }
       if (!mounted) return;
       setState(() => _loggingOut = false);
       ScaffoldMessenger.of(context)
@@ -249,11 +249,15 @@ class _MainContainerState extends State<MainContainer> {
               profile: widget.profile,
             ),
           ),
-          'Investasi' => InvestmentPage(
-            session: widget.session,
-            summaryGateway: widget.summaryGateway,
-          ),
+          'Investasi' =>
+            _audience != HomeAudience.investor
+                ? InvestorRegistrationIntro(profile: widget.profile)
+                : InvestmentPage(
+                    session: widget.session,
+                    summaryGateway: widget.summaryGateway,
+                  ),
           'Multiguna' => MultigunaPage(
+            session: widget.session,
             data: _multigunaData,
             loading: _multigunaLoading,
             errorMessage: _multigunaError,
@@ -313,11 +317,7 @@ class _MainContainerState extends State<MainContainer> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: _audience == HomeAudience.investor
-                          ? double.infinity
-                          : 320,
-                    ),
+                    constraints: BoxConstraints(maxWidth: double.infinity),
                     child: _FloatingNavigation(
                       destinations: destinations,
                       selectedIndex: _selectedIndex,

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -8,9 +10,34 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val uploadPropertiesFile = rootProject.file("key.properties")
+val uploadProperties = Properties().apply {
+    if (uploadPropertiesFile.isFile) {
+        uploadPropertiesFile.inputStream().use { load(it) }
+    }
+}
+val validateUploadSigning = tasks.register("validateUploadSigning") {
+    doLast {
+        check(uploadPropertiesFile.isFile) {
+            "Release requires android/key.properties. See docs/release/google-play.md."
+        }
+        listOf("storeFile", "storePassword", "keyAlias", "keyPassword").forEach { key ->
+            check(!uploadProperties.getProperty(key).isNullOrBlank()) {
+                "Missing $key in android/key.properties."
+            }
+        }
+        check(rootProject.file(uploadProperties.getProperty("storeFile")).isFile) {
+            "Upload keystore not found. storeFile is relative to android/ or absolute."
+        }
+    }
+}
+tasks.configureEach {
+    if (name == "preReleaseBuild") dependsOn(validateUploadSigning)
+}
+
 android {
     namespace = "id.basyainvestama.app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = maxOf(36, flutter.compileSdkVersion)
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -27,16 +54,24 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = maxOf(36, flutter.targetSdkVersion)
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = uploadProperties.getProperty("keyAlias")
+            keyPassword = uploadProperties.getProperty("keyPassword")
+            storePassword = uploadProperties.getProperty("storePassword")
+            storeFile = uploadProperties.getProperty("storeFile")
+                ?.takeIf { it.isNotBlank() }?.let { rootProject.file(it) }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 }

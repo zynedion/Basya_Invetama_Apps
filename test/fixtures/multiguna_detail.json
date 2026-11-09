@@ -1,0 +1,411 @@
+{
+    "status": true,
+    "message": "Detail multiguna berhasil diambil",
+    "data": {
+        "currency": "IDR",
+        "contract": {
+            "id": 292,
+            "trx_id": "L260721025837627",
+            "status": {
+                "code": 17,
+                "label": "Akad"
+            },
+            "contract_state": "active",
+            "start_date": "2026-08-01",
+            "end_date": "2028-01-20",
+            "document_url": "https://portal.basyainvestama.id/upload/pdf_landing/1784602717_70ce69b1f4c64c32b470.pdf"
+        },
+        "object": {
+            "asset_type": "MODAL USAHA",
+            "supplier_name": "BASYA INVESTAMA MANDIRI"
+        },
+        "financing": {
+            "price": 4000000,
+            "down_payment": 0,
+            "plafon": 4000000,
+            "margin_rate": 25.5,
+            "margin": 1020000,
+            "sale_price": 5020000,
+            "total_financing": 5020000,
+            "administration_fee": 80000,
+            "installment": 295294,
+            "tenor": 17,
+            "total_payment": 590588,
+            "total_adjustment": 0,
+            "outstanding": 4429412,
+            "remaining_principal": 3529412,
+            "remaining_margin": 900000
+        },
+        "billing": {
+            "due_day": 20,
+            "next_due_date": "2026-10-20",
+            "installment_progress": {
+                "paid": 2,
+                "total": 17,
+                "next": 3
+            },
+            "collectibility": {
+                "value": -1,
+                "label": "COL -1",
+                "category": "warning"
+            },
+            "payment_status": {
+                "code": "overdue",
+                "label": "Cicilan Belum Dibayar"
+            },
+            "arrears": {
+                "months": 1,
+                "amount": 295294
+            }
+        },
+        "installments_summary": {
+            "total": 17,
+            "billing": 15,
+            "paid": 2,
+            "skipped": 0,
+            "overdue": 1
+        },
+        "installments": [
+            {
+                "id": 7655,
+                "trx_id": "LD2607210258373931",
+                "installment_number": 1,
+                "period": "2026-08",
+                "due_date": "2026-08-20",
+                "payment_date": "2026-08-02",
+                "status": {
+                    "code": 96,
+                    "key": "paid",
+                    "label": "Paid"
+                },
+                "payment_state": null,
+                "amount": 295294,
+                "principal": 235294,
+                "margin": 60000,
+                "adjustment": 0,
+                "payment_method": "Transfer",
+                "receipt_url": "https://portal.basyainvestama.id/upload/payment/1785746566_aa0c8c0daa78580b1b90.jpeg"
+            },
+            {
+                "id": 7656,
+                "trx_id": "LD2607210258379022",
+                "installment_number": 2,
+                "period": "2026-09",
+                "due_date": "2026-09-20",
+                "payment_date": "2026-10-12",
+                "status": {
+                    "code": 96,
+                    "key": "paid",
+                    "label": "Paid"
+                },
+                "payment_state": null,
+                "amount": 295294,
+                "principal": 235294,
+                "margin": 60000,
+                "adjustment": 0,
+                "payment_method": "Transfer",
+                "receipt_url": "https://portal.basyainvestama.id/upload/payment/1791792077_50ccd71792fd97ffe75d.jpeg"
+            },
+            {
+                "id": 7657,
+                "trx_id": "LD2607210258373423",
+                "installment_number": 3,
+                "period": "2026-10",
+                "due_date": "2026-10-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "overdue",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7658,
+                "trx_id": "LD2607210258375744",
+                "installment_number": 4,
+                "period": "2026-11",
+                "due_date": "2026-11-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7659,
+                "trx_id": "LD2607210258375825",
+                "installment_number": 5,
+                "period": "2026-12",
+                "due_date": "2026-12-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7660,
+                "trx_id": "LD2607210258379406",
+                "installment_number": 6,
+                "period": "2027-01",
+                "due_date": "2027-01-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7661,
+                "trx_id": "LD2607210258378557",
+                "installment_number": 7,
+                "period": "2027-02",
+                "due_date": "2027-02-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7662,
+                "trx_id": "LD2607210258374128",
+                "installment_number": 8,
+                "period": "2027-03",
+                "due_date": "2027-03-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7663,
+                "trx_id": "LD2607210258377609",
+                "installment_number": 9,
+                "period": "2027-04",
+                "due_date": "2027-04-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7664,
+                "trx_id": "LD26072102583728110",
+                "installment_number": 10,
+                "period": "2027-05",
+                "due_date": "2027-05-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7665,
+                "trx_id": "LD26072102583792611",
+                "installment_number": 11,
+                "period": "2027-06",
+                "due_date": "2027-06-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7666,
+                "trx_id": "LD26072102583724812",
+                "installment_number": 12,
+                "period": "2027-07",
+                "due_date": "2027-07-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7667,
+                "trx_id": "LD26072102583786113",
+                "installment_number": 13,
+                "period": "2027-08",
+                "due_date": "2027-08-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7668,
+                "trx_id": "LD26072102583752514",
+                "installment_number": 14,
+                "period": "2027-09",
+                "due_date": "2027-09-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7669,
+                "trx_id": "LD26072102583757315",
+                "installment_number": 15,
+                "period": "2027-10",
+                "due_date": "2027-10-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7670,
+                "trx_id": "LD26072102583798616",
+                "installment_number": 16,
+                "period": "2027-11",
+                "due_date": "2027-11-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            },
+            {
+                "id": 7671,
+                "trx_id": "LD26072102583726717",
+                "installment_number": 17,
+                "period": "2027-12",
+                "due_date": "2027-12-20",
+                "payment_date": null,
+                "status": {
+                    "code": 95,
+                    "key": "billing",
+                    "label": "Billing"
+                },
+                "payment_state": "upcoming",
+                "amount": 0,
+                "principal": 0,
+                "margin": 0,
+                "adjustment": 0,
+                "payment_method": "Cash",
+                "receipt_url": null
+            }
+        ]
+    }
+}

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../auth/data/auth_exception.dart';
 import '../../auth/domain/auth_session.dart';
 import '../domain/multiguna_gateway.dart';
+import '../domain/loan_detail.dart';
 import '../domain/multiguna_overview_data.dart';
 
 class MultigunaApiClient implements MultigunaGateway {
@@ -69,6 +70,56 @@ class MultigunaApiClient implements MultigunaGateway {
     }
   }
 
+  Future<LoanDetail> getDetail(AuthSession session, int id) async {
+    try {
+      final response = await authorizedGet(
+        _client,
+        Uri.parse('$multigunaUri/detail/$id'),
+        session,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': session.authorizationHeader,
+        },
+      );
+      if (response.statusCode == 401) {
+        throw const AuthException(
+          AuthFailureType.invalidCredentials,
+          'Sesi Anda sudah tidak berlaku. Silakan masuk kembali.',
+        );
+      }
+      if (response.statusCode != 200) {
+        throw const AuthException(
+          AuthFailureType.server,
+          'Detail pinjaman belum dapat dimuat. Silakan coba lagi.',
+        );
+      }
+      final body = _decodeBody(response.body);
+      if (body['status'] != true || body['data'] is! Map) {
+        throw const FormatException();
+      }
+      final detail = LoanDetail(body['data'] as Map);
+      if (detail.id != id) throw const FormatException();
+      return detail;
+    } on AuthException {
+      rethrow;
+    } on TimeoutException {
+      throw const AuthException(
+        AuthFailureType.timeout,
+        'Waktu memuat detail habis. Silakan coba lagi.',
+      );
+    } on http.ClientException {
+      throw const AuthException(
+        AuthFailureType.connection,
+        'Periksa koneksi internet Anda.',
+      );
+    } on Object {
+      throw const AuthException(
+        AuthFailureType.invalidResponse,
+        'Respons detail pinjaman tidak dapat dibaca.',
+      );
+    }
+  }
+
   Map<String, dynamic> _decodeBody(String source) {
     final decoded = jsonDecode(source);
     if (decoded is! Map<String, dynamic>) throw const FormatException();
@@ -114,6 +165,7 @@ class MultigunaApiClient implements MultigunaGateway {
       }
       loans.add(
         MultigunaLoan(
+          id: (raw['id'] as num?)?.toInt(),
           contractNumber: text(raw, 'trx_id'),
           startDate: date(raw, 'start_date'),
           endDate: date(raw, 'end_date'),

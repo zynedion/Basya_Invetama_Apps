@@ -1326,6 +1326,8 @@ class _PerformanceChartState extends State<_PerformanceChart>
         ? _selected
         : null;
     String label(int i) => i < labels.length ? labels[i] : '-';
+    String axisLabel(int i) =>
+        label(i).replaceFirst(RegExp(r'\s+(?=\d{4}$)'), '\n');
     return TapRegion(
       onTapOutside: (_) {
         if (_selected != null) setState(() => _selected = null);
@@ -1426,14 +1428,24 @@ class _PerformanceChartState extends State<_PerformanceChart>
                                     ),
                                   ),
                                   const SizedBox(height: 8),
-                                  Text(
-                                    label(i),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: selected == i
-                                          ? FontWeight.w800
-                                          : FontWeight.w400,
+                                  SizedBox(
+                                    height:
+                                        MediaQuery.textScalerOf(
+                                          context,
+                                        ).scale(10) *
+                                        2.8,
+                                    child: Text(
+                                      axisLabel(i),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        height: 1.4,
+                                        fontWeight: selected == i
+                                            ? FontWeight.w800
+                                            : FontWeight.w400,
+                                      ),
                                     ),
                                   ),
                                 ],

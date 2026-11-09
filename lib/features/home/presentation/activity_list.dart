@@ -26,9 +26,15 @@ class ActivityList extends StatelessWidget {
 }
 
 class ActivityRow extends StatelessWidget {
-  const ActivityRow({super.key, required this.activity, required this.money});
+  const ActivityRow({
+    super.key,
+    required this.activity,
+    required this.money,
+    this.onTap,
+  });
 
   final InvestorHomeActivity activity;
+  final VoidCallback? onTap;
   final String Function(int) money;
 
   String get _prefix => switch (activity.direction) {
@@ -53,8 +59,9 @@ class ActivityRow extends StatelessWidget {
   Widget build(BuildContext context) => Material(
     color: Colors.transparent,
     child: InkWell(
-      onTap: () =>
-          showActivityDetail(context, activity: activity, money: money),
+      onTap:
+          onTap ??
+          () => showActivityDetail(context, activity: activity, money: money),
       borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),

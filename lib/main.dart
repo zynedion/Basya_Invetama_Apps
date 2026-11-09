@@ -9,18 +9,32 @@ import 'features/auth/presentation/splash_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  print('[FCM][main] Initializing app; kIsWeb=$kIsWeb, platform=$defaultTargetPlatform');
+  if (kDebugMode) {
+    debugPrint(
+      '[FCM][main] Initializing app; kIsWeb=$kIsWeb, platform=$defaultTargetPlatform',
+    );
+  }
   if (kIsWeb || defaultTargetPlatform == TargetPlatform.android) {
     try {
       final app = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      print('[FCM][main] Firebase initialized successfully: ${app.name}');
-    } catch (e, stack) {
-      print('[FCM][main] Firebase.initializeApp error: $e\n$stack');
+      if (kDebugMode) {
+        debugPrint(
+          '[FCM][main] Firebase initialized successfully: ${app.name}',
+        );
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint(
+          '[FCM][main] Firebase.initializeApp error: ${e.runtimeType}',
+        );
+      }
     }
   }
-  print('[FCM][main] Firebase.apps count: ${Firebase.apps.length}');
+  if (kDebugMode) {
+    debugPrint('[FCM][main] Firebase.apps count: ${Firebase.apps.length}');
+  }
   runApp(const BasyaApp());
 }
 
