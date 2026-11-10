@@ -1,5 +1,5 @@
+import '../../../core/widgets/history_card_segment.dart';
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_theme.dart';
 import '../../auth/data/auth_exception.dart';
 import '../../auth/domain/auth_session.dart';
 import '../domain/activities_gateway.dart';
@@ -285,29 +285,9 @@ class ActivitiesFeedState extends State<ActivitiesFeed> {
             );
           }
           final row = index - 1;
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                left: const BorderSide(color: AppTheme.cardBorder),
-                right: const BorderSide(color: AppTheme.cardBorder),
-                top: row == 0
-                    ? const BorderSide(color: AppTheme.cardBorder)
-                    : BorderSide.none,
-                bottom: row == count - 1
-                    ? const BorderSide(color: AppTheme.cardBorder)
-                    : BorderSide.none,
-              ),
-              borderRadius: BorderRadius.vertical(
-                top: row == 0
-                    ? const Radius.circular(AppTheme.cardRadius)
-                    : Radius.zero,
-                bottom: row == count - 1
-                    ? const Radius.circular(AppTheme.cardRadius)
-                    : Radius.zero,
-              ),
-            ),
+          return HistoryCardSegment(
+            first: row == 0,
+            last: row == count - 1,
             child: hasItems
                 ? Column(
                     children: [

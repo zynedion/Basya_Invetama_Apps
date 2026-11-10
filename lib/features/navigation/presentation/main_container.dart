@@ -251,7 +251,10 @@ class _MainContainerState extends State<MainContainer> {
           ),
           'Investasi' =>
             _audience != HomeAudience.investor
-                ? InvestorRegistrationIntro(profile: widget.profile)
+                ? InvestorRegistrationIntro(
+                    profile: widget.profile,
+                    session: widget.session,
+                  )
                 : InvestmentPage(
                     session: widget.session,
                     summaryGateway: widget.summaryGateway,

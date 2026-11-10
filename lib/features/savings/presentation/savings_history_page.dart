@@ -1,3 +1,4 @@
+import '../../../core/widgets/history_card_segment.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../auth/data/auth_exception.dart';
@@ -123,6 +124,27 @@ class _SavingsHistoryPageState extends State<SavingsHistoryPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Simpanan Anda',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.ink,
+                      ),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'Catatan transaksi simpanan Anda.',
+                      style: TextStyle(fontSize: 12, color: AppTheme.muted),
+                    ),
+                  ],
+                ),
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.all(20),
@@ -209,15 +231,19 @@ class _SavingsHistoryPageState extends State<SavingsHistoryPage> {
                           ),
                         );
                       }
-                      return Column(
-                        children: [
-                          SavingsTransactionRow(
-                            transaction: _items![index],
-                            money: widget.money,
-                          ),
-                          if (index < _items!.length - 1)
-                            const Divider(height: 1, indent: 52),
-                        ],
+                      return HistoryCardSegment(
+                        first: index == 0,
+                        last: index == _items!.length - 1,
+                        child: Column(
+                          children: [
+                            SavingsTransactionRow(
+                              transaction: _items![index],
+                              money: widget.money,
+                            ),
+                            if (index < _items!.length - 1)
+                              const Divider(height: 1, indent: 52),
+                          ],
+                        ),
                       );
                     },
                   ),
