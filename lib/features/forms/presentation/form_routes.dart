@@ -1,3 +1,6 @@
+import '../../multiguna/presentation/multiguna_application_page.dart';
+import '../../savings/presentation/savings_withdraw_page.dart';
+import '../../auth/domain/auth_session.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_theme.dart';
@@ -12,20 +15,31 @@ Future<void> openBasyaForm(
   BuildContext context,
   BasyaFormKind kind, {
   AuthProfile? profile,
+  AuthSession? session,
   MultigunaLoan? loan,
 }) => Navigator.of(context).push<void>(
   MaterialPageRoute(
     settings: RouteSettings(name: '/forms/${kind.name}'),
-    builder: (_) => BasyaFormPage(kind: kind, profile: profile, loan: loan),
+    builder: (_) => kind == BasyaFormKind.financing
+        ? MultigunaApplicationPage(session: session)
+        : kind == BasyaFormKind.withdraw && session != null
+        ? SavingsWithdrawPage(session: session)
+        : BasyaFormPage(
+            kind: kind,
+            profile: profile,
+            loan: loan,
+            session: session,
+          ),
   ),
 );
 
 Future<void> openTopUpDestination(
   BuildContext context, {
   required bool investor,
+  AuthSession? session,
 }) async {
   if (!investor) {
-    await openBasyaForm(context, BasyaFormKind.topUpSavings);
+    await openBasyaForm(context, BasyaFormKind.topUpSavings, session: session);
     return;
   }
   final destination = await showModalBottomSheet<BasyaFormKind>(
@@ -101,6 +115,6 @@ Future<void> openTopUpDestination(
     ),
   );
   if (destination != null && context.mounted) {
-    await openBasyaForm(context, destination);
+    await openBasyaForm(context, destination, session: session);
   }
 }

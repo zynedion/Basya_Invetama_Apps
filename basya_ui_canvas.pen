@@ -23881,6 +23881,1251 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "zCYYq",
+      "x": 1438,
+      "y": 4575,
+      "name": "27 / WITHDRAW-OTP / Verifikasi WhatsApp",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#FBFDFC",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "B6wk4",
+          "name": "Status bar",
+          "width": "fill_container",
+          "padding": [
+            12,
+            20
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "text",
+              "id": "pzBZJ",
+              "name": "Time",
+              "fill": "$basya-ink",
+              "content": "9:41",
+              "fontFamily": "$basya-font",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "FBP2S",
+              "name": "Battery",
+              "width": 18,
+              "height": 18,
+              "icon": "battery_full",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "iJ6ef",
+          "name": "Toolbar",
+          "width": "fill_container",
+          "gap": 14,
+          "padding": [
+            14,
+            20
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "biKGj",
+              "name": "Back",
+              "width": 24,
+              "height": 24,
+              "icon": "arrow_back",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            },
+            {
+              "type": "text",
+              "id": "a3rLnw",
+              "name": "Page title",
+              "fill": "$basya-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Verifikasi penarikan",
+              "lineHeight": 1.5,
+              "fontFamily": "$basya-font",
+              "fontSize": 20,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "GhtLK",
+          "name": "Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 20,
+          "padding": [
+            20,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "Dp0zp",
+              "name": "Introduction",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "NPVzO",
+                  "name": "Status icon",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$basya-soft",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "c18wW",
+                      "name": "Verification symbol",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "lock",
+                      "library": "Material Symbols Rounded",
+                      "fill": "$basya-primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "z6u6U",
+                  "name": "Headline",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Masukkan kode OTP",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "MEbJF",
+                  "name": "Explanation",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Kode 6 digit dikirim melalui WhatsApp ke 6289••••3221.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "knjLP",
+              "name": "Withdrawal summary",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "stroke": "#E0EBE8",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "whqu1",
+                  "name": "Summary label",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Penarikan Sukarela",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "jmpGk",
+                  "name": "Amount",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Rp 1.000.000",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "zPvmQ",
+                  "name": "Destination",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "BCA • 1234567890\nNAMA ANGGOTA",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "Z5Emd",
+                  "name": "Transaction reference",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WD261113130000123",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 11,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pxldM",
+              "name": "OTP input group",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nT66W",
+                  "name": "Input label",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Kode OTP",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "ZEOdV",
+                  "name": "Six digit input",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "M083yx",
+                      "name": "Digit 1",
+                      "width": "fill_container",
+                      "height": 54,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": "$basya-primary",
+                      "strokeWidth": 2,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "bbdgd",
+                          "name": "Digit placeholder",
+                          "fill": "$basya-primary",
+                          "content": "│",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ABEin",
+                      "name": "Digit 2",
+                      "width": "fill_container",
+                      "height": 54,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": "#CAD8D4",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "yZJPO",
+                          "name": "Digit placeholder",
+                          "fill": "#CAD8D4",
+                          "content": "—",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "koyUp",
+                      "name": "Digit 3",
+                      "width": "fill_container",
+                      "height": 54,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": "#CAD8D4",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Z5x0ta",
+                          "name": "Digit placeholder",
+                          "fill": "#CAD8D4",
+                          "content": "—",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "N13DhV",
+                      "name": "Digit 4",
+                      "width": "fill_container",
+                      "height": 54,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": "#CAD8D4",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "i0dYL",
+                          "name": "Digit placeholder",
+                          "fill": "#CAD8D4",
+                          "content": "—",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dTByh",
+                      "name": "Digit 5",
+                      "width": "fill_container",
+                      "height": 54,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": "#CAD8D4",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vI01W",
+                          "name": "Digit placeholder",
+                          "fill": "#CAD8D4",
+                          "content": "—",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "t3YzLD",
+                      "name": "Digit 6",
+                      "width": "fill_container",
+                      "height": 54,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": "#CAD8D4",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "MgpVL",
+                          "name": "Digit placeholder",
+                          "fill": "#CAD8D4",
+                          "content": "—",
+                          "fontFamily": "$basya-font",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Q3usUz",
+                  "name": "Expiration timer",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Berlaku selama 29:42",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "id": "ZrmN1",
+              "type": "ref",
+              "ref": "hMfe5",
+              "name": "Verify OTP action",
+              "width": "fill_container",
+              "descendants": {
+                "bDate": {
+                  "content": "Verifikasi OTP"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "PWIW7",
+              "name": "Security reminder",
+              "fill": "$basya-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Jangan bagikan kode OTP kepada siapa pun.",
+              "lineHeight": 1.5,
+              "fontFamily": "$basya-font",
+              "fontSize": 12,
+              "fontWeight": "500"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "I0nzPd",
+      "x": 1878,
+      "y": 4575,
+      "name": "28 / WITHDRAW-OTP / Menunggu admin",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#FBFDFC",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Y84W1w",
+          "name": "Status bar",
+          "width": "fill_container",
+          "padding": [
+            12,
+            20
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "text",
+              "id": "k5EXHR",
+              "name": "Time",
+              "fill": "$basya-ink",
+              "content": "9:41",
+              "fontFamily": "$basya-font",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "zfCjS",
+              "name": "Battery",
+              "width": 18,
+              "height": 18,
+              "icon": "battery_full",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "A02c1",
+          "name": "Toolbar",
+          "width": "fill_container",
+          "gap": 14,
+          "padding": [
+            14,
+            20
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "Timnb",
+              "name": "Back",
+              "width": 24,
+              "height": 24,
+              "icon": "arrow_back",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            },
+            {
+              "type": "text",
+              "id": "Y3toU",
+              "name": "Page title",
+              "fill": "$basya-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Verifikasi penarikan",
+              "lineHeight": 1.5,
+              "fontFamily": "$basya-font",
+              "fontSize": 20,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "UCYmv",
+          "name": "Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 20,
+          "padding": [
+            20,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "AwkDp",
+              "name": "Introduction",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CLKqZ",
+                  "name": "Status icon",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "#DDF8EA",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rrTNv",
+                      "name": "Verification symbol",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "task_alt",
+                      "library": "Material Symbols Rounded",
+                      "fill": "$basya-primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "s65VaW",
+                  "name": "Headline",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Menunggu verifikasi admin",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "lFRKB",
+                  "name": "Explanation",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "OTP berhasil diverifikasi. Pengajuan penarikan Anda akan diperiksa oleh admin.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "C5sxwa",
+              "name": "Withdrawal summary",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "stroke": "#E0EBE8",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "iq2hZ",
+                  "name": "Summary label",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Penarikan Sukarela",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "n2bOM",
+                  "name": "Amount",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Rp 1.000.000",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "xFhc3",
+                  "name": "Destination",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "BCA • 1234567890\nNAMA ANGGOTA",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "GYLrZ",
+                  "name": "Transaction reference",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WD261113130000123",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 11,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "fyBRE",
+              "name": "Status guidance",
+              "width": "fill_container",
+              "fill": "$basya-soft",
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "a3vah",
+                  "name": "Guidance",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Dana akan dicairkan ke rekening terdaftar setelah pengajuan disetujui.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "id": "YAbt4",
+              "type": "ref",
+              "ref": "hMfe5",
+              "name": "Return to savings action",
+              "width": "fill_container",
+              "descendants": {
+                "bDate": {
+                  "content": "Kembali ke Simpanan"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Inqmz",
+      "x": 2318,
+      "y": 4575,
+      "name": "29 / WITHDRAW-OTP / Kedaluwarsa",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#FBFDFC",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "L7LuI",
+          "name": "Status bar",
+          "width": "fill_container",
+          "padding": [
+            12,
+            20
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "text",
+              "id": "OfLuu",
+              "name": "Time",
+              "fill": "$basya-ink",
+              "content": "9:41",
+              "fontFamily": "$basya-font",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "a8Ho7",
+              "name": "Battery",
+              "width": 18,
+              "height": 18,
+              "icon": "battery_full",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "K7DDL",
+          "name": "Toolbar",
+          "width": "fill_container",
+          "gap": 14,
+          "padding": [
+            14,
+            20
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "Z2IppN",
+              "name": "Back",
+              "width": 24,
+              "height": 24,
+              "icon": "arrow_back",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            },
+            {
+              "type": "text",
+              "id": "bhiYY",
+              "name": "Page title",
+              "fill": "$basya-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Verifikasi penarikan",
+              "lineHeight": 1.5,
+              "fontFamily": "$basya-font",
+              "fontSize": 20,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "xiPyQ",
+          "name": "Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 20,
+          "padding": [
+            20,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "yI3Dj",
+              "name": "Introduction",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "auTO0",
+                  "name": "Status icon",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "#FFF1E7",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "Q2wmyJ",
+                      "name": "Verification symbol",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "timer_off",
+                      "library": "Material Symbols Rounded",
+                      "fill": "#996300"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "r8hZO2",
+                  "name": "Headline",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Kode OTP kedaluwarsa",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "K9zEaK",
+                  "name": "Explanation",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Waktu verifikasi telah berakhir. Pengajuan ini sudah kedaluwarsa.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "D0SLOT",
+              "name": "Withdrawal summary",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "stroke": "#E0EBE8",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "MZCCA",
+                  "name": "Summary label",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Penarikan Sukarela",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "QtQoO",
+                  "name": "Amount",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Rp 1.000.000",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "g0fO8I",
+                  "name": "Destination",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "BCA • 1234567890\nNAMA ANGGOTA",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "hG9ol",
+                  "name": "Transaction reference",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WD261113130000123",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 11,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EHzfi",
+              "name": "Status guidance",
+              "width": "fill_container",
+              "fill": "$basya-soft",
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "bSOzB",
+                  "name": "Guidance",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Kembali ke Simpanan untuk memeriksa saldo tersedia sebelum mengajukan kembali.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "id": "EvFkF",
+              "type": "ref",
+              "ref": "hMfe5",
+              "name": "Return to savings action",
+              "width": "fill_container",
+              "descendants": {
+                "bDate": {
+                  "content": "Kembali ke Simpanan"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "O4tV60",
+      "x": 2758,
+      "y": 4575,
+      "name": "30 / WITHDRAW-OTP / Pengiriman gagal",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "#FBFDFC",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "gu36K",
+          "name": "Status bar",
+          "width": "fill_container",
+          "padding": [
+            12,
+            20
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "text",
+              "id": "pe0Ua",
+              "name": "Time",
+              "fill": "$basya-ink",
+              "content": "9:41",
+              "fontFamily": "$basya-font",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "icon",
+              "id": "KL40V",
+              "name": "Battery",
+              "width": 18,
+              "height": 18,
+              "icon": "battery_full",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "K3Tg9D",
+          "name": "Toolbar",
+          "width": "fill_container",
+          "gap": 14,
+          "padding": [
+            14,
+            20
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "ZLfKY",
+              "name": "Back",
+              "width": 24,
+              "height": 24,
+              "icon": "arrow_back",
+              "library": "Material Symbols Rounded",
+              "fill": "$basya-ink"
+            },
+            {
+              "type": "text",
+              "id": "xwXbX",
+              "name": "Page title",
+              "fill": "$basya-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Verifikasi penarikan",
+              "lineHeight": 1.5,
+              "fontFamily": "$basya-font",
+              "fontSize": 20,
+              "fontWeight": "700"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "B7Rj0",
+          "name": "Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 20,
+          "padding": [
+            20,
+            20,
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "RizOS",
+              "name": "Introduction",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "olVbh",
+                  "name": "Status icon",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "#FFF1E7",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "szOs5",
+                      "name": "Verification symbol",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "info",
+                      "library": "Material Symbols Rounded",
+                      "fill": "#996300"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "gRj05",
+                  "name": "Headline",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "OTP belum terkirim",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "DhXae",
+                  "name": "Explanation",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Pengajuan Anda sudah tersimpan, tetapi kode OTP belum berhasil dikirim melalui WhatsApp.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "J0ucU",
+              "name": "Withdrawal summary",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "stroke": "#E0EBE8",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "GBJqq",
+                  "name": "Summary label",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Penarikan Sukarela",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "VTjJI",
+                  "name": "Amount",
+                  "fill": "$basya-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Rp 1.000.000",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 24,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "Xjnl5",
+                  "name": "Destination",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "BCA • 1234567890\nNAMA ANGGOTA",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "izi7Q",
+                  "name": "Transaction reference",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "WD261113130000123",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 11,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Llvbl",
+              "name": "Status guidance",
+              "width": "fill_container",
+              "fill": "$basya-soft",
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "txHCE",
+                  "name": "Guidance",
+                  "fill": "$basya-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Jangan membuat pengajuan baru untuk transaksi yang sama. Hubungi pengelola dengan nomor transaksi di atas.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$basya-font",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "id": "L7MR3B",
+              "type": "ref",
+              "ref": "hMfe5",
+              "name": "Return to savings action",
+              "width": "fill_container",
+              "descendants": {
+                "bDate": {
+                  "content": "Kembali ke Simpanan"
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {

@@ -633,7 +633,13 @@ class _BasyaAttachmentFieldState extends State<BasyaAttachmentField> {
 }
 
 class FormReviewSheet extends StatelessWidget {
-  const FormReviewSheet({super.key, required this.title, required this.values});
+  const FormReviewSheet({
+    super.key,
+    required this.title,
+    required this.values,
+    this.liveTopUp = false,
+  });
+  final bool liveTopUp;
   final String title;
   final Map<String, String> values;
   @override
@@ -690,13 +696,19 @@ class FormReviewSheet extends StatelessWidget {
                   ],
                 ),
               ),
-            const FormNotice(
-              'Ini pratinjau frontend. Konfirmasi tidak mengirim transaksi atau mengubah data akun.',
-              title: 'Mode demo',
-            ),
+            if (liveTopUp)
+              const FormNotice(
+                'Saldo bertambah setelah top up disetujui admin.',
+                title: 'Menunggu verifikasi',
+              )
+            else
+              const FormNotice(
+                'Ini pratinjau frontend. Konfirmasi tidak mengirim transaksi atau mengubah data akun.',
+                title: 'Mode demo',
+              ),
             const SizedBox(height: 20),
             BasyaActionButton(
-              label: 'Konfirmasi demo',
+              label: liveTopUp ? 'Kirim top up' : 'Konfirmasi demo',
               expand: true,
               labelSize: 16,
               style: BasyaActionStyle.emphasis,

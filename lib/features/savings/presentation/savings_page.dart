@@ -1,3 +1,4 @@
+import 'savings_withdraw_pending.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../auth/domain/auth_session.dart';
@@ -192,10 +193,24 @@ class _SavingsPageState extends State<SavingsPage> {
                     setState(() => _balanceVisible = !_balanceVisible),
                 onTopUp:
                     widget.onTopUp ??
-                    () => openBasyaForm(context, BasyaFormKind.topUpSavings),
+                    () async {
+                      await openBasyaForm(
+                        context,
+                        BasyaFormKind.topUpSavings,
+                        session: widget.session,
+                      );
+                      if (mounted) await _load();
+                    },
                 onWithdraw:
                     widget.onWithdraw ??
-                    () => openBasyaForm(context, BasyaFormKind.withdraw),
+                    () async {
+                      await openBasyaForm(
+                        context,
+                        BasyaFormKind.withdraw,
+                        session: widget.session,
+                      );
+                      if (mounted) await _load();
+                    },
               ),
             ),
             SliverPadding(
@@ -210,6 +225,13 @@ class _SavingsPageState extends State<SavingsPage> {
                       child: const Text('Coba lagi'),
                     ),
                   ],
+                  if (widget.session != null)
+                    SavingsWithdrawPending(
+                      key: ValueKey('withdraw-$_request'),
+                      session: widget.session!,
+                      onChanged: _load,
+                      visible: _balanceVisible,
+                    ),
                   const Text(
                     'Simpanan keanggotaan',
                     style: TextStyle(

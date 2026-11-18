@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
+import 'package:basya_investama/features/auth/domain/auth_session.dart';
+import 'package:basya_investama/features/savings/data/savings_topup_api.dart';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -73,6 +78,27 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
+    final topUpApi = SavingsTopUpApi(
+      client: MockClient(
+        (request) async => http.Response(
+          jsonEncode({
+            'status': true,
+            'data': {
+              'bank_accounts': [
+                {
+                  'id': 7,
+                  'bank_name': 'Bank BCA',
+                  'account_name': 'Basya',
+                  'account_no': '001234',
+                },
+              ],
+            },
+          }),
+          200,
+        ),
+      ),
+    );
+    addTearDown(topUpApi.dispose);
     await tester.pumpWidget(
       RepaintBoundary(
         key: boundary,
@@ -86,7 +112,16 @@ void main() {
             ),
             child: child!,
           ),
-          home: BasyaFormPage(kind: kind, attachmentPicker: picker),
+          home: BasyaFormPage(
+            kind: kind,
+            attachmentPicker: picker,
+            topUpApi: topUpApi,
+            session: AuthSession(
+              accessToken: 'test',
+              tokenType: 'Bearer',
+              expiresAt: DateTime.utc(2030),
+            ),
+          ),
         ),
       ),
     );
@@ -213,15 +248,18 @@ void main() {
     await tester.tap(find.text('Pilih').last);
     await tester.pumpAndSettle();
     await fill(tester, 'Nominal', '250000');
-    await choose(
-      tester,
-      'Rekening tujuan',
-      FormPreview.cooperativeAccounts.first,
-    );
+    await tapVisible(tester, find.byType(DropdownButtonFormField<int>));
+    await tester.tap(find.text('Bank BCA ? 001234').last);
+    await tester.pumpAndSettle();
     await tapVisible(tester, find.text('Pilih berkas'));
     expect(find.text('bukti.pdf'), findsOneWidget);
     await tapVisible(tester, find.byKey(const ValueKey('review-form')));
     expect(find.byType(FormReviewSheet), findsOneWidget);
+    expect(
+      tester.widget<FormReviewSheet>(find.byType(FormReviewSheet)).liveTopUp,
+      isTrue,
+    );
+    expect(find.text('Mode demo'), findsNothing);
     expect(
       tester
           .widget<FormReviewSheet>(find.byType(FormReviewSheet))
@@ -272,7 +310,7 @@ void main() {
     'financing updates preview calculation and rejects excess principal',
     (tester) async {
       await showForm(tester, BasyaFormKind.financing);
-      await fill(tester, 'Harga penawaran', '10000000');
+      await fill(tester, 'Harga barang / biaya kebutuhan', '10000000');
       await fill(tester, 'Uang muka', '3000000');
       await choose(tester, 'Jangka waktu', '12 bulan');
       expect(find.text('Rp 7.000.000'), findsOneWidget);
@@ -281,7 +319,7 @@ void main() {
       await fill(tester, 'Uang muka', '1000000');
       await tapVisible(tester, find.byKey(const ValueKey('review-form')));
       expect(
-        find.textContaining('plafon maksimal Rp 7.250.000'),
+        find.textContaining('jumlah pembiayaan maksimal Rp 7.250.000'),
         findsOneWidget,
       );
     },

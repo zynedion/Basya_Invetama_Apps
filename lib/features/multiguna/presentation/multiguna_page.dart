@@ -1,3 +1,4 @@
+import 'multiguna_applications.dart';
 import '../../auth/domain/auth_session.dart';
 import '../data/multiguna_api_client.dart';
 import '../domain/loan_detail.dart';
@@ -34,6 +35,7 @@ class MultigunaPage extends StatefulWidget {
 
 class _MultigunaPageState extends State<MultigunaPage> {
   bool _obligationVisible = true;
+  int _applicationsRevision = 0;
   final _detailClient = MultigunaApiClient();
   final _details = <int, LoanDetail>{};
   final _pending = <int, Future<LoanDetail>>{};
@@ -209,7 +211,14 @@ class _MultigunaPageState extends State<MultigunaPage> {
                 onToggleVisibility: () =>
                     setState(() => _obligationVisible = !_obligationVisible),
                 onApply: data.accessible
-                    ? () => openBasyaForm(context, BasyaFormKind.financing)
+                    ? () async {
+                        await openBasyaForm(
+                          context,
+                          BasyaFormKind.financing,
+                          session: widget.session,
+                        );
+                        if (mounted) setState(() => _applicationsRevision++);
+                      }
                     : null,
               ),
             ),
@@ -267,6 +276,16 @@ class _MultigunaPageState extends State<MultigunaPage> {
                         ),
                       ),
                     ],
+                  if (widget.session != null && data.accessible) ...[
+                    const SizedBox(height: 24),
+                    MultigunaApplications(
+                      key: ValueKey(
+                        'applications-$_applicationsRevision-$_generation',
+                      ),
+                      session: widget.session!,
+                      visible: _obligationVisible,
+                    ),
+                  ],
                   const SizedBox(height: 30),
                   _SectionHeader(
                     title: 'Pinjaman aktif',

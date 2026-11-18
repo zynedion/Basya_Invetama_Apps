@@ -1,3 +1,4 @@
+import '../../../core/widgets/visible_page_state.dart';
 import 'dart:async';
 import 'dart:ui';
 import '../data/activities_api_client.dart';
@@ -89,7 +90,8 @@ class InvestorHomePage extends StatefulWidget {
   State<InvestorHomePage> createState() => _InvestorHomePageState();
 }
 
-class _InvestorHomePageState extends State<InvestorHomePage> {
+class _InvestorHomePageState extends State<InvestorHomePage>
+    with VisiblePageState<InvestorHomePage> {
   late HomeAudience _previewAudience = widget.audience;
   bool _balanceVisible = true;
   final _activitiesKey = GlobalKey<ActivitiesFeedState>();
@@ -223,12 +225,18 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
   void initState() {
     super.initState();
     _currentTime = (widget.now ?? DateTime.now)();
-    if (widget.now == null) {
-      _greetingTimer = Timer.periodic(const Duration(minutes: 1), (_) {
-        if (mounted) setState(() => _currentTime = DateTime.now());
-      });
-    }
+
     _loadSummary();
+  }
+
+  @override
+  void onPageVisibilityChanged(bool visible) {
+    _greetingTimer?.cancel();
+    if (!visible || widget.now != null) return;
+    _currentTime = DateTime.now();
+    _greetingTimer = Timer.periodic(const Duration(minutes: 1), (_) {
+      if (mounted) setState(() => _currentTime = DateTime.now());
+    });
   }
 
   Future<void> _loadSummary() async {
@@ -289,11 +297,24 @@ class _InvestorHomePageState extends State<InvestorHomePage> {
   void _openQuickAction(String action) {
     switch (action) {
       case 'Top Up':
-        openTopUpDestination(context, investor: _isInvestor);
+        openTopUpDestination(
+          context,
+          investor: _isInvestor,
+          session: widget.session,
+        );
       case 'Withdraw':
-        openBasyaForm(context, BasyaFormKind.withdraw, profile: widget.profile);
+        openBasyaForm(
+          context,
+          BasyaFormKind.withdraw,
+          profile: widget.profile,
+          session: widget.session,
+        );
       case 'Pinjam':
-        openBasyaForm(context, BasyaFormKind.financing);
+        openBasyaForm(
+          context,
+          BasyaFormKind.financing,
+          session: widget.session,
+        );
       case 'Mutasi':
         openBasyaForm(context, BasyaFormKind.mutation);
     }

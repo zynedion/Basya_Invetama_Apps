@@ -241,14 +241,7 @@ class _MainContainerState extends State<MainContainer> {
               if (index >= 0) _selectDestination(index);
             },
           ),
-          'Simpanan' => SavingsPage(
-            session: widget.session,
-            onWithdraw: () => openBasyaForm(
-              context,
-              BasyaFormKind.withdraw,
-              profile: widget.profile,
-            ),
-          ),
+          'Simpanan' => SavingsPage(session: widget.session),
           'Investasi' =>
             _audience != HomeAudience.investor
                 ? InvestorRegistrationIntro(

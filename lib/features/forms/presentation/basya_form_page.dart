@@ -1,3 +1,5 @@
+import '../../auth/domain/auth_session.dart';
+import '../../savings/data/savings_topup_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,13 +16,17 @@ class BasyaFormPage extends StatefulWidget {
     super.key,
     required this.kind,
     this.profile,
+    this.session,
     this.loan,
     this.attachmentPicker,
+    this.topUpApi,
   });
   final BasyaFormKind kind;
   final AuthProfile? profile;
+  final AuthSession? session;
   final MultigunaLoan? loan;
   final AttachmentPicker? attachmentPicker;
+  final SavingsTopUpApi? topUpApi;
 
   @override
   State<BasyaFormPage> createState() => _BasyaFormPageState();
@@ -40,6 +46,116 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
   bool _allowPop = false;
   bool _leaving = false;
   bool _busy = false;
+  bool _loadingAccounts = false;
+  String? _topUpError;
+  List<Map<String, dynamic>> _accounts = [];
+  int? _accountId;
+  late final _topUpApi = widget.topUpApi ?? SavingsTopUpApi();
+  bool get _isTopUp => _kind == BasyaFormKind.topUpSavings;
+  Map<String, dynamic>? get _account =>
+      _accounts.where((e) => e['id'] == _accountId).firstOrNull;
+  Future<void> _loadAccounts() async {
+    setState(() {
+      _loadingAccounts = true;
+      _topUpError = null;
+    });
+    try {
+      if (widget.session == null) {
+        throw const SavingsTopUpFailure(
+          'Silakan masuk untuk melakukan top up.',
+        );
+      }
+      final accounts = await _topUpApi.options(widget.session!);
+      if (mounted) {
+        setState(() {
+          _accounts = accounts;
+          _accountId = null;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(
+          () => _topUpError = e is SavingsTopUpFailure
+              ? e.message
+              : 'Rekening tujuan belum dapat dimuat. Periksa koneksi Anda.',
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _loadingAccounts = false);
+    }
+  }
+
+  Future<void> _sendTopUp() async {
+    setState(() {
+      _busy = true;
+      _topUpError = null;
+    });
+    try {
+      final proof = _files['Bukti pembayaran']!;
+      final result = await _topUpApi.submit(
+        widget.session!,
+        date: _dates['Tanggal transfer']!,
+        amount: _amount('Nominal'),
+        accountId: _accountId!,
+        filename: proof.name,
+        bytes: proof.bytes,
+        note: _value('Catatan'),
+      );
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => PopScope(
+          canPop: false,
+          child: AlertDialog(
+            icon: const Icon(Icons.task_alt, color: AppTheme.teal, size: 40),
+            title: const Text('Top up berhasil dikirim'),
+            content: Text(
+              'Menunggu verifikasi admin. Saldo akan bertambah setelah disetujui.${result['trx_id'] == null ? '' : '\n\nNomor transaksi: ${result['trx_id']}'}',
+            ),
+            actions: [
+              FilledButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Selesai'),
+              ),
+            ],
+          ),
+        ),
+      );
+      if (!mounted) return;
+      setState(() {
+        _dirty = false;
+        _allowPop = true;
+        _busy = false;
+      });
+      await WidgetsBinding.instance.endOfFrame;
+      if (mounted) Navigator.pop(context);
+    } catch (e) {
+      if (mounted) {
+        setState(
+          () => _topUpError = e is SavingsTopUpFailure
+              ? e.message
+              : 'Hasil pengiriman belum dapat dipastikan. Periksa riwayat simpanan sebelum mengirim ulang.',
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  bool _hasCollateral = false;
+  static const _collateralFields = {
+    'Jenis jaminan',
+    'Alamat jaminan',
+    'Status kepemilikan',
+    'Berlaku hingga',
+    'Nomor sertifikat / jaminan',
+    'Kondisi jaminan',
+  };
+  bool _includeInReview(String label) =>
+      _kind != BasyaFormKind.financing ||
+      _hasCollateral ||
+      !_collateralFields.contains(label);
 
   BasyaFormKind get _kind => widget.kind;
   MultigunaLoan get _loan =>
@@ -58,6 +174,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
   @override
   void initState() {
     super.initState();
+    if (_isTopUp) _loadAccounts();
     if (_kind == BasyaFormKind.editProfile) {
       final profile = widget.profile;
       _controller('Nama').text = _memberName;
@@ -101,6 +218,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
     for (final node in _focusNodes.values) {
       node.dispose();
     }
+    if (widget.topUpApi == null) _topUpApi.dispose();
     _files.clear();
     super.dispose();
   }
@@ -143,7 +261,13 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
   }
 
   Future<void> _review() async {
-    if (_busy) return;
+    if (_busy ||
+        (_isTopUp &&
+            (_loadingAccounts ||
+                _accounts.isEmpty ||
+                widget.session == null))) {
+      return;
+    }
     FocusManager.instance.primaryFocus?.unfocus();
     final invalid = _form.currentState!.validateGranularly();
     if (invalid.isNotEmpty) {
@@ -167,10 +291,17 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      builder: (_) =>
-          FormReviewSheet(title: _kind.title, values: _reviewValues()),
+      builder: (_) => FormReviewSheet(
+        title: _kind.title,
+        values: _reviewValues(),
+        liveTopUp: _isTopUp,
+      ),
     );
     if (confirmed != true || !mounted) return;
+    if (_isTopUp) {
+      await _sendTopUp();
+      return;
+    }
     setState(() => _busy = true);
     // A short local transition demonstrates submitting without contacting a server.
     await Future<void>.delayed(const Duration(milliseconds: 450));
@@ -357,32 +488,89 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
     _choice('Bulan', FormPreview.months),
     _choice('Tahun', _years),
   ];
-  List<Widget> _paymentDestination() => [
-    const FormValue('Metode pembayaran', 'Transfer manual'),
-    _choice(
-      'Rekening tujuan',
-      FormPreview.cooperativeAccounts,
-      helper: 'Rekening contoh untuk pratinjau. Jangan melakukan transfer.',
-    ),
-    if (_choices['Rekening tujuan'] != null)
-      Align(
-        alignment: Alignment.centerLeft,
-        child: TextButton.icon(
-          onPressed: () async {
-            await Clipboard.setData(
-              ClipboardData(text: _choices['Rekening tujuan']!.split(' · ')[1]),
-            );
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Nomor rekening contoh disalin.')),
-              );
-            }
-          },
-          icon: const Icon(Icons.copy_outlined, size: 18),
-          label: const Text('Salin nomor rekening contoh'),
-        ),
-      ),
-  ];
+  List<Widget> _paymentDestination() => _isTopUp
+      ? [
+          const FormValue('Metode pembayaran', 'Transfer manual'),
+          if (_loadingAccounts)
+            const LinearProgressIndicator()
+          else if (_accounts.isEmpty) ...[
+            const Text('Rekening tujuan belum tersedia.'),
+            TextButton(
+              onPressed: _loadAccounts,
+              child: const Text('Muat ulang rekening'),
+            ),
+          ] else
+            DropdownButtonFormField<int>(
+              initialValue: _accountId,
+              isExpanded: true,
+              decoration: formDecoration('Rekening tujuan'),
+              items: _accounts
+                  .map(
+                    (e) => DropdownMenuItem<int>(
+                      value: e['id'] as int,
+                      child: Text(
+                        '${e['bank_name']} ? ${e['account_no']}',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (value) => setState(() {
+                _accountId = value;
+                _dirty = true;
+              }),
+              validator: (value) =>
+                  value == null ? 'Pilih rekening tujuan.' : null,
+            ),
+          if (_account != null) ...[
+            FormValue('Atas nama', _account!['account_name'].toString()),
+            TextButton.icon(
+              onPressed: () async {
+                await Clipboard.setData(
+                  ClipboardData(text: _account!['account_no'].toString()),
+                );
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Nomor rekening disalin.')),
+                  );
+                }
+              },
+              icon: const Icon(Icons.copy_outlined),
+              label: const Text('Salin nomor rekening'),
+            ),
+          ],
+        ]
+      : [
+          const FormValue('Metode pembayaran', 'Transfer manual'),
+          _choice(
+            'Rekening tujuan',
+            FormPreview.cooperativeAccounts,
+            helper:
+                'Rekening contoh untuk pratinjau. Jangan melakukan transfer.',
+          ),
+          if (_choices['Rekening tujuan'] != null)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () async {
+                  await Clipboard.setData(
+                    ClipboardData(
+                      text: _choices['Rekening tujuan']!.split(' · ')[1],
+                    ),
+                  );
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Nomor rekening contoh disalin.'),
+                      ),
+                    );
+                  }
+                },
+                icon: const Icon(Icons.copy_outlined, size: 18),
+                label: const Text('Salin nomor rekening contoh'),
+              ),
+            ),
+        ];
 
   List<Widget> _payment() => [
     const FormNotice(
@@ -402,6 +590,13 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       _text('Nominal', money: true),
     ..._paymentDestination(),
     _file('Bukti pembayaran'),
+    if (_isTopUp)
+      _text(
+        'Catatan',
+        optional: true,
+        validate: (value) =>
+            value.length > 50 ? 'Catatan maksimal 50 karakter.' : null,
+      ),
     const Text(
       'Pengiriman bukti tidak berarti pembayaran telah disahkan.',
       style: TextStyle(fontSize: 13, height: 1.5, color: AppTheme.muted),
@@ -443,7 +638,10 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       lines: 3,
       hint: 'Tulis catatan jika diperlukan',
     ),
-    const FormNotice('Penarikan menunggu verifikasi admin.', warning: true),
+    const FormNotice(
+      'Verifikasi OTP melalui WhatsApp, lalu pengajuan diperiksa oleh admin.',
+      warning: true,
+    ),
   ];
 
   List<Widget> _mutation() => [
@@ -491,15 +689,18 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
     ),
   ];
 
-  int get _principal => (_amount('Harga penawaran') - _amount('Uang muka'))
-      .clamp(0, 999999999999);
+  int get _principal =>
+      (_amount('Harga barang / biaya kebutuhan') - _amount('Uang muka')).clamp(
+        0,
+        999999999999,
+      );
   int get _months =>
       int.tryParse(_choices['Jangka waktu']?.split(' ').first ?? '') ?? 0;
   bool get _quoteReady =>
       _principal > 0 &&
       _principal <= FormPreview.financingLimit &&
       _months > 0 &&
-      _amount('Uang muka') <= _amount('Harga penawaran');
+      _amount('Uang muka') <= _amount('Harga barang / biaya kebutuhan');
   int get _demoMargin => (_principal * .10).round();
 
   List<Widget> _financing() => [
@@ -510,7 +711,8 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
     ),
     const FormSection(
       'Detail pembiayaan',
-      subtitle: 'Plafon pengajuan adalah harga penawaran dikurangi uang muka.',
+      subtitle:
+          'Jumlah pembiayaan dihitung dari harga barang atau biaya kebutuhan dikurangi uang muka.',
     ),
     _choice('Tujuan pembiayaan', [
       'Pembelian kendaraan',
@@ -518,25 +720,27 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       'Peralatan usaha',
       'Kebutuhan lainnya',
     ]),
-    _text('Jenis aset pembiayaan', hint: 'Contoh: sepeda motor'),
-    _text('Harga penawaran', money: true),
+    _text('Barang atau kebutuhan yang dibiayai', hint: 'Contoh: sepeda motor'),
+    _text('Harga barang / biaya kebutuhan', money: true),
     _text(
       'Uang muka',
       money: true,
       allowZero: true,
       validate: (_) {
-        if (_amount('Uang muka') >= _amount('Harga penawaran')) {
-          return 'Uang muka harus lebih kecil dari harga penawaran.';
+        if (_amount('Uang muka') >= _amount('Harga barang / biaya kebutuhan')) {
+          return 'Uang muka harus lebih kecil dari harga barang atau biaya kebutuhan.';
         }
         if (_principal > FormPreview.financingLimit) {
-          return 'Sesuaikan harga atau uang muka agar plafon maksimal ${rupiah(FormPreview.financingLimit)}.';
+          return 'Sesuaikan harga atau uang muka agar jumlah pembiayaan maksimal ${rupiah(FormPreview.financingLimit)}.';
         }
         return null;
       },
     ),
     FormValue(
-      'Plafon pengajuan',
-      _value('Harga penawaran').isEmpty ? '—' : rupiah(_principal),
+      'Jumlah pembiayaan',
+      _value('Harga barang / biaya kebutuhan').isEmpty
+          ? '—'
+          : rupiah(_principal),
     ),
     _choice('Jangka waktu', [
       '3 bulan',
@@ -560,34 +764,35 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       _quoteReady ? rupiah(((_principal + _demoMargin) / _months).ceil()) : '—',
     ),
     FormValue('Biaya administrasi · contoh', _quoteReady ? rupiah(50000) : '—'),
-    const FormSection('Informasi supplier'),
-    _text('Nama supplier'),
-    _text(
-      'Nomor telepon supplier',
-      keyboard: TextInputType.phone,
-      validate: _phoneValidator,
-    ),
     const FormSection(
       'Data jaminan',
-      subtitle: 'Pastikan informasi sesuai berkas kepemilikan.',
+      subtitle: 'Apakah pengajuan ini menggunakan jaminan?',
     ),
-    _text('Jenis jaminan', hint: 'Contoh: BPKB kendaraan'),
-    _text('Alamat jaminan', lines: 3),
-    _choice('Status kepemilikan', [
-      'Milik sendiri',
-      'Milik pasangan',
-      'Milik keluarga',
-      'Lainnya',
-    ]),
-    _date('Berlaku hingga'),
-    _text('Nomor sertifikat / jaminan'),
-    _text('Kondisi jaminan', lines: 3),
-    const FormSection('Penagihan'),
-    _date('Awal penagihan'),
-    _choice('Tanggal jatuh tempo', [
-      for (var day = 1; day <= 31; day++) '$day',
-    ]),
-    _file('Berkas akad', pdfOnly: true),
+    BasyaSegmentedControl<bool>(
+      values: const [true, false],
+      selected: _hasCollateral,
+      labelBuilder: (value) => value ? 'Ada' : 'Tidak ada',
+      onChanged: (value) {
+        FocusManager.instance.primaryFocus?.unfocus();
+        setState(() {
+          _hasCollateral = value;
+          _dirty = true;
+        });
+      },
+    ),
+    if (_hasCollateral) ...[
+      _text('Jenis jaminan', hint: 'Contoh: BPKB kendaraan'),
+      _text('Alamat jaminan', lines: 3),
+      _choice('Status kepemilikan', [
+        'Milik sendiri',
+        'Milik pasangan',
+        'Milik keluarga',
+        'Lainnya',
+      ]),
+      _date('Berlaku hingga'),
+      _text('Nomor sertifikat / jaminan'),
+      _text('Kondisi jaminan', lines: 3),
+    ],
   ];
 
   String? _phoneValidator(String value) =>
@@ -705,6 +910,9 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       };
     }
     return {
+      if (_isTopUp && _account != null)
+        'Rekening tujuan':
+            '${_account!['bank_name']} ? ${_account!['account_no']} ? ${_account!['account_name']}',
       if (_kind == BasyaFormKind.withdraw) ...{
         'Nama penerima': _available(
           widget.profile?.nasabah?.accountName,
@@ -725,16 +933,19 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       if (_kind == BasyaFormKind.mandatorySavings)
         'Nominal kewajiban · contoh': rupiah(FormPreview.mandatoryAmount),
       for (final entry in _controllers.entries)
-        if (entry.value.text.trim().isNotEmpty)
+        if (_includeInReview(entry.key) && entry.value.text.trim().isNotEmpty)
           entry.key: _moneyFields.contains(entry.key)
               ? rupiah(_amount(entry.key))
               : entry.value.text,
-      ..._choices,
+      for (final entry in _choices.entries)
+        if (_includeInReview(entry.key)) entry.key: entry.value,
       for (final entry in _dates.entries)
-        entry.key:
-            '${entry.value.day} ${FormPreview.months[entry.value.month - 1]} ${entry.value.year}',
+        if (_includeInReview(entry.key))
+          entry.key:
+              '${entry.value.day} ${FormPreview.months[entry.value.month - 1]} ${entry.value.year}',
       if (_kind == BasyaFormKind.financing) ...{
-        'Plafon pengajuan': rupiah(_principal),
+        'Jaminan': _hasCollateral ? 'Ada' : 'Tidak ada',
+        'Jumlah pembiayaan': rupiah(_principal),
         'Margin · contoh': rupiah(_demoMargin),
         'Harga jual · contoh': rupiah(_principal + _demoMargin),
         'Cicilan per bulan · contoh': rupiah(
@@ -824,25 +1035,44 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Mode demo · Tidak ada perubahan akun atau transaksi.',
-                          style: TextStyle(
-                            fontSize: 13,
-                            height: 1.5,
-                            color: AppTheme.teal,
-                            fontWeight: FontWeight.w600,
+                        if (!_isTopUp)
+                          const Text(
+                            'Mode demo · Tidak ada perubahan akun atau transaksi.',
+                            style: TextStyle(
+                              fontSize: 13,
+                              height: 1.5,
+                              color: AppTheme.teal,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
                         const SizedBox(height: 28),
                         for (final child in children) ...[
                           child,
                           const SizedBox(height: 24),
                         ],
                         const SizedBox(height: 8),
+                        if (_isTopUp && _topUpError != null)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: Text(
+                              _topUpError!,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                          ),
                         BasyaActionButton(
                           key: const ValueKey('review-form'),
-                          label: _busy ? 'Memproses demo…' : _action,
-                          onPressed: _review,
+                          label: _busy
+                              ? (_isTopUp ? 'Mengirim...' : 'Memproses demo...')
+                              : _action,
+                          onPressed:
+                              _isTopUp &&
+                                  (_loadingAccounts ||
+                                      _accounts.isEmpty ||
+                                      widget.session == null)
+                              ? null
+                              : _review,
                           loading: _busy,
                           labelSize: 16,
                           style: BasyaActionStyle.emphasis,
