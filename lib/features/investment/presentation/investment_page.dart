@@ -1,4 +1,5 @@
 import 'applications_view.dart';
+import 'investment_mutation_pending.dart';
 import '../data/portfolio_api_client.dart';
 import '../domain/portfolio_data.dart';
 import 'portfolio_views.dart';
@@ -28,6 +29,7 @@ class InvestmentPage extends StatefulWidget {
     this.summaryGateway,
     this.opportunitiesGateway,
     this.portfolioGateway,
+    this.onMutationChanged,
   });
 
   final InvestmentOverviewData data;
@@ -35,6 +37,7 @@ class InvestmentPage extends StatefulWidget {
   final HomeSummaryGateway? summaryGateway;
   final OpportunitiesGateway? opportunitiesGateway;
   final PortfolioGateway? portfolioGateway;
+  final VoidCallback? onMutationChanged;
 
   @override
   State<InvestmentPage> createState() => _InvestmentPageState();
@@ -59,6 +62,7 @@ class _InvestmentPageState extends State<InvestmentPage> {
   bool _loading = false;
   String? _error;
   int _request = 0;
+  int _mutationRevision = 0;
   InvestmentOverviewData get _data {
     if (widget.session == null) return widget.data;
     final summary = _summary;
@@ -113,6 +117,7 @@ class _InvestmentPageState extends State<InvestmentPage> {
   }
 
   Future<void> _refresh() async {
+    setState(() => _mutationRevision++);
     await Future.wait([
       _load(),
       _loadOpportunities(),
@@ -287,12 +292,34 @@ class _InvestmentPageState extends State<InvestmentPage> {
                   ],
                   _BuyPowerCard(
                     amount: _sensitiveMoney(_data.buyPower),
-                    onTopUp: () =>
-                        openBasyaForm(context, BasyaFormKind.topUpBuyPower),
-                    onMutation: () =>
-                        openBasyaForm(context, BasyaFormKind.mutation),
+                    onTopUp: () => openBasyaForm(
+                      context,
+                      BasyaFormKind.topUpBuyPower,
+                      session: widget.session,
+                    ),
+                    onMutation: () async {
+                      await openBasyaForm(
+                        context,
+                        BasyaFormKind.mutation,
+                        session: widget.session,
+                      );
+                      if (!mounted) return;
+                      setState(() => _mutationRevision++);
+                      widget.onMutationChanged?.call();
+                      await _load();
+                    },
                   ),
                   const SizedBox(height: 32),
+                  if (widget.session != null)
+                    InvestmentMutationPending(
+                      key: ValueKey('mutation-$_mutationRevision'),
+                      session: widget.session!,
+                      visible: _balanceVisible,
+                      onChanged: () {
+                        widget.onMutationChanged?.call();
+                        _load();
+                      },
+                    ),
                   if (widget.session != null)
                     ApplicationsView(
                       key: _applicationsKey,

@@ -1,3 +1,5 @@
+import '../../forms/domain/form_preview.dart'
+    show RupiahInputFormatter, moneyValue;
 import '../../../core/widgets/visible_page_state.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -118,7 +120,7 @@ class _SavingsWithdrawPageState extends State<SavingsWithdrawPage> {
       return;
     }
     _reviewing = true;
-    final amount = int.parse(_amount.text);
+    final amount = moneyValue(_amount.text);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -244,15 +246,13 @@ class _SavingsWithdrawPageState extends State<SavingsWithdrawPage> {
                         controller: _amount,
                         enabled: !_busy,
                         keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
+                        inputFormatters: [RupiahInputFormatter()],
                         decoration: const InputDecoration(
                           labelText: 'Nominal penarikan',
                           prefixText: 'Rp ',
                         ),
                         validator: (v) {
-                          final amount = int.tryParse(v ?? '') ?? 0;
+                          final amount = moneyValue(v ?? '');
                           if (amount <
                                   withdrawInt(constraints['minimum_amount']) ||
                               amount <= 0) {
@@ -382,7 +382,8 @@ class _SavingsWithdrawOtpPageState extends State<SavingsWithdrawOtpPage>
     if (_busy || !pageVisible) return;
     if (!force &&
         _lastRefresh != null &&
-        DateTime.now().difference(_lastRefresh!) < const Duration(seconds: 30)) {
+        DateTime.now().difference(_lastRefresh!) <
+            const Duration(seconds: 30)) {
       return;
     }
     _lastRefresh = DateTime.now();

@@ -10,7 +10,7 @@ import '../../multiguna/domain/multiguna_overview_data.dart';
 import '../domain/form_preview.dart';
 import 'form_widgets.dart';
 
-/// Interactive local forms. No network calls or account mutations occur here.
+/// Shared forms, including API-backed savings and buy power top ups.
 class BasyaFormPage extends StatefulWidget {
   const BasyaFormPage({
     super.key,
@@ -46,12 +46,20 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
   bool _allowPop = false;
   bool _leaving = false;
   bool _busy = false;
+  bool _reviewing = false;
   bool _loadingAccounts = false;
   String? _topUpError;
   List<Map<String, dynamic>> _accounts = [];
   int? _accountId;
-  late final _topUpApi = widget.topUpApi ?? SavingsTopUpApi();
-  bool get _isTopUp => _kind == BasyaFormKind.topUpSavings;
+  late final _topUpApi =
+      widget.topUpApi ??
+      (_kind == BasyaFormKind.topUpBuyPower
+          ? SavingsTopUpApi.buyPower()
+          : SavingsTopUpApi());
+  bool get _isTopUp =>
+      _kind == BasyaFormKind.topUpSavings ||
+      _kind == BasyaFormKind.topUpBuyPower;
+  int get _noteLimit => _kind == BasyaFormKind.topUpBuyPower ? 100 : 50;
   Map<String, dynamic>? get _account =>
       _accounts.where((e) => e['id'] == _accountId).firstOrNull;
   Future<void> _loadAccounts() async {
@@ -135,7 +143,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
         setState(
           () => _topUpError = e is SavingsTopUpFailure
               ? e.message
-              : 'Hasil pengiriman belum dapat dipastikan. Periksa riwayat simpanan sebelum mengirim ulang.',
+              : 'Hasil pengiriman belum dapat dipastikan. Periksa status top up dengan admin sebelum mengirim ulang.',
         );
       }
     } finally {
@@ -203,10 +211,6 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       _choices['Bulan'] = FormPreview.months[_loan.nextDueDate.month - 1];
       _choices['Tahun'] = '${_loan.nextDueDate.year}';
     }
-    if (_kind == BasyaFormKind.mandatorySavings) {
-      _choices['Bulan'] = FormPreview.months[DateTime.now().month - 1];
-      _choices['Tahun'] = '${DateTime.now().year}';
-    }
     if (_kind == BasyaFormKind.financing) _controller('Uang muka').text = '0';
   }
 
@@ -262,6 +266,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
 
   Future<void> _review() async {
     if (_busy ||
+        _reviewing ||
         (_isTopUp &&
             (_loadingAccounts ||
                 _accounts.isEmpty ||
@@ -286,6 +291,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       }
       return;
     }
+    _reviewing = true;
     final confirmed = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -297,6 +303,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
         liveTopUp: _isTopUp,
       ),
     );
+    _reviewing = false;
     if (confirmed != true || !mounted) return;
     if (_isTopUp) {
       await _sendTopUp();
@@ -412,7 +419,11 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
           : TextInputAction.next,
       onChanged: (_) {
         _changed();
-        if (_kind == BasyaFormKind.financing && money) setState(() {});
+        if (money &&
+            (_kind == BasyaFormKind.financing ||
+                _kind == BasyaFormKind.mandatorySavings)) {
+          setState(() {});
+        }
       },
       validator: (raw) {
         final value = password ? raw ?? '' : raw?.trim() ?? '';
@@ -509,7 +520,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
                     (e) => DropdownMenuItem<int>(
                       value: e['id'] as int,
                       child: Text(
-                        '${e['bank_name']} ? ${e['account_no']}',
+                        '${e['bank_name']} · ${e['account_no']}',
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -572,30 +583,71 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
             ),
         ];
 
+  Widget _mandatoryAmounts() => LayoutBuilder(
+    builder: (context, constraints) => Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: [
+        for (final amount in [50000, 100000, 150000, 200000])
+          SizedBox(
+            width: (constraints.maxWidth - 12) / 2,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size(0, 72),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 16,
+                ),
+                backgroundColor: _amount('Nominal') == amount
+                    ? AppTheme.teal.withValues(alpha: .10)
+                    : Colors.white,
+                foregroundColor: AppTheme.teal,
+                side: BorderSide(
+                  color: _amount('Nominal') == amount
+                      ? AppTheme.teal
+                      : AppTheme.cardBorder,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              onPressed: () => setState(() {
+                _controller('Nominal').text = groupDigits('$amount');
+                _dirty = true;
+              }),
+              child: Semantics(
+                selected: _amount('Nominal') == amount,
+                child: Text(
+                  '${amount ~/ 1000} ribu',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
+    ),
+  );
+
   List<Widget> _payment() => [
     const FormNotice(
       'Pembayaran menunggu verifikasi admin.',
       title: 'Transfer manual',
     ),
     _date('Tanggal transfer', pastOnly: true),
-    if (_kind == BasyaFormKind.mandatorySavings) ...[
-      const FormSection('Periode iuran'),
-      ..._period(),
-      FormValue(
-        'Nominal kewajiban · contoh',
-        rupiah(FormPreview.mandatoryAmount),
-        prominent: true,
-      ),
-    ] else
-      _text('Nominal', money: true),
+    if (_kind == BasyaFormKind.mandatorySavings) _mandatoryAmounts(),
+    _text('Nominal', money: true),
     ..._paymentDestination(),
     _file('Bukti pembayaran'),
     if (_isTopUp)
       _text(
         'Catatan',
         optional: true,
-        validate: (value) =>
-            value.length > 50 ? 'Catatan maksimal 50 karakter.' : null,
+        validate: (value) => value.length > _noteLimit
+            ? 'Catatan maksimal $_noteLimit karakter.'
+            : null,
       ),
     const Text(
       'Pengiriman bukti tidak berarti pembayaran telah disahkan.',
@@ -930,8 +982,6 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
         'Biaya · contoh': rupiah(0),
       },
       if (_kind == BasyaFormKind.installment) 'Kontrak': _loan.contractNumber,
-      if (_kind == BasyaFormKind.mandatorySavings)
-        'Nominal kewajiban · contoh': rupiah(FormPreview.mandatoryAmount),
       for (final entry in _controllers.entries)
         if (_includeInReview(entry.key) && entry.value.text.trim().isNotEmpty)
           entry.key: _moneyFields.contains(entry.key)

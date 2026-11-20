@@ -316,7 +316,7 @@ class _InvestorHomePageState extends State<InvestorHomePage>
           session: widget.session,
         );
       case 'Mutasi':
-        openBasyaForm(context, BasyaFormKind.mutation);
+        openBasyaForm(context, BasyaFormKind.mutation, session: widget.session);
     }
   }
 

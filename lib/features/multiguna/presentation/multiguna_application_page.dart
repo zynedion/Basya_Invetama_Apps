@@ -1,5 +1,6 @@
+import '../../forms/domain/form_preview.dart'
+    show RupiahInputFormatter, moneyValue;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/basya_components.dart';
 import '../../auth/domain/auth_session.dart';
@@ -36,7 +37,7 @@ class _MultigunaApplicationPageState extends State<MultigunaApplicationPage> {
   TextEditingController _controller(String key) =>
       _fields.putIfAbsent(key, TextEditingController.new);
   String _value(String key) => _fields[key]?.text.trim() ?? '';
-  int _number(String key) => int.tryParse(_value(key)) ?? 0;
+  int _number(String key) => moneyValue(_value(key));
   @override
   void initState() {
     super.initState();
@@ -250,9 +251,7 @@ class _MultigunaApplicationPageState extends State<MultigunaApplicationPage> {
       maxLength: maxLength,
       maxLines: lines,
       keyboardType: numeric ? TextInputType.number : TextInputType.text,
-      inputFormatters: numeric
-          ? [FilteringTextInputFormatter.digitsOnly]
-          : null,
+      inputFormatters: numeric ? [RupiahInputFormatter()] : null,
       decoration: InputDecoration(
         labelText: label,
         prefixText: numeric ? 'Rp ' : null,

@@ -28,6 +28,7 @@ class SavingsPage extends StatefulWidget {
     this.onWithdraw,
     this.onPayMandatory,
     this.onSeeAllTransactions,
+    this.refreshRevision = 0,
   });
 
   final SavingsOverviewData data;
@@ -37,6 +38,7 @@ class SavingsPage extends StatefulWidget {
   final VoidCallback? onWithdraw;
   final VoidCallback? onPayMandatory;
   final VoidCallback? onSeeAllTransactions;
+  final int refreshRevision;
 
   @override
   State<SavingsPage> createState() => _SavingsPageState();
@@ -82,7 +84,8 @@ class _SavingsPageState extends State<SavingsPage> {
   void didUpdateWidget(covariant SavingsPage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.session != widget.session ||
-        oldWidget.gateway != widget.gateway) {
+        oldWidget.gateway != widget.gateway ||
+        oldWidget.refreshRevision != widget.refreshRevision) {
       oldWidget.session?.cache?.removeListener(_clearCache);
       widget.session?.cache?.addListener(_clearCache);
       _remote = null;

@@ -1,4 +1,5 @@
 import '../../multiguna/presentation/multiguna_application_page.dart';
+import '../../investment/presentation/investment_mutation_page.dart';
 import '../../savings/presentation/savings_withdraw_page.dart';
 import '../../auth/domain/auth_session.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,20 @@ Future<void> openBasyaForm(
     settings: RouteSettings(name: '/forms/${kind.name}'),
     builder: (_) => kind == BasyaFormKind.financing
         ? MultigunaApplicationPage(session: session)
+        : kind == BasyaFormKind.mutation
+        ? session != null
+              ? InvestmentMutationPage(session: session)
+              : Scaffold(
+                  appBar: AppBar(title: const Text('Mutasi ke Sukarela')),
+                  body: const SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        'Silakan masuk kembali untuk melakukan mutasi.',
+                      ),
+                    ),
+                  ),
+                )
         : kind == BasyaFormKind.withdraw && session != null
         ? SavingsWithdrawPage(session: session)
         : BasyaFormPage(

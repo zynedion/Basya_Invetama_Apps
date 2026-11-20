@@ -11,14 +11,20 @@ class SavingsTopUpFailure implements Exception {
 }
 
 class SavingsTopUpApi {
-  SavingsTopUpApi({http.Client? client}) : _client = client ?? http.Client();
+  SavingsTopUpApi({http.Client? client})
+    : _client = client ?? http.Client(),
+      _uri = uri;
+  SavingsTopUpApi.buyPower({http.Client? client})
+    : _client = client ?? http.Client(),
+      _uri = Uri.parse('https://api.basyainvestama.id/app/investasi/topup');
   final http.Client _client;
+  final Uri _uri;
   static final uri = Uri.parse(
     'https://api.basyainvestama.id/app/simpanan/topup',
   );
   Future<List<Map<String, dynamic>>> options(AuthSession session) async {
     final data = _decode(
-      await authorizedGet(_client, Uri.parse('$uri/options'), session),
+      await authorizedGet(_client, Uri.parse('$_uri/options'), session),
     );
     return (data['bank_accounts'] as List)
         .map((e) => Map<String, dynamic>.from(e as Map))
@@ -43,7 +49,7 @@ class SavingsTopUpApi {
       );
     }
     final current = await session.recovery?.resolve() ?? session;
-    final request = http.MultipartRequest('POST', uri)
+    final request = http.MultipartRequest('POST', _uri)
       ..headers.addAll({
         'Accept': 'application/json',
         'Authorization': current.authorizationHeader,

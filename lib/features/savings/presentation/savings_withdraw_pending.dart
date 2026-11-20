@@ -48,7 +48,8 @@ class _SavingsWithdrawPendingState extends State<SavingsWithdrawPending>
     if (_loading || _opening || !pageVisible) return;
     if (!force &&
         _lastAttempt != null &&
-        DateTime.now().difference(_lastAttempt!) < const Duration(seconds: 30)) {
+        DateTime.now().difference(_lastAttempt!) <
+            const Duration(seconds: 30)) {
       return;
     }
     _lastAttempt = DateTime.now();
@@ -148,11 +149,13 @@ class WithdrawalPendingCard extends StatefulWidget {
     required this.onOpen,
     this.visible = true,
     this.enabled = true,
+    this.title,
   });
   final Map<String, dynamic> item;
   final DateTime receivedAt;
   final void Function(int remaining, int cooldown) onOpen;
   final bool visible, enabled;
+  final String? title;
   @override
   State<WithdrawalPendingCard> createState() => _WithdrawalPendingCardState();
 }
@@ -253,7 +256,10 @@ class _WithdrawalPendingCardState extends State<WithdrawalPendingCard>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _waiting ? 'Verifikasi penarikan' : 'Penarikan diproses',
+                      widget.title ??
+                          (_waiting
+                              ? 'Verifikasi penarikan'
+                              : 'Penarikan diproses'),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         color: AppTheme.ink,

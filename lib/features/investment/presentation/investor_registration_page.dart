@@ -1,3 +1,5 @@
+import '../../forms/domain/form_preview.dart'
+    show RupiahInputFormatter, moneyValue, groupDigits;
 import '../data/investor_registration_api.dart';
 import '../../auth/domain/auth_session.dart';
 import 'package:flutter/material.dart';
@@ -515,7 +517,9 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
     };
     for (final entry in keys.entries) {
       if (prefill[entry.value] != null) {
-        _fields[entry.key]!.text = prefill[entry.value].toString();
+        _fields[entry.key]!.text = entry.key == 'Pendapatan'
+            ? groupDigits(prefill[entry.value].toString())
+            : prefill[entry.value].toString();
       }
     }
     _birth = DateTime.tryParse(prefill['bod']?.toString() ?? '');
@@ -569,7 +573,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
       return 'Masukkan nomor kontak yang valid';
     }
     if (label == 'Pendapatan' &&
-        (int.tryParse(value) == null || int.parse(value) < 0)) {
+        (!RegExp(r'^\d+(\.\d{3})*$').hasMatch(value))) {
       return 'Masukkan nominal pendapatan yang valid';
     }
     return null;
@@ -666,7 +670,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
         'tax_id': _fields['Nomor NPWP']!.text.trim(),
         'mother_name': _fields['Nama ibu kandung']!.text.trim(),
         'jobs': _job,
-        'income': int.parse(_fields['Pendapatan']!.text.trim()),
+        'income': moneyValue(_fields['Pendapatan']!.text),
         'source_funds': _fields['Sumber dana']!.text.trim(),
         'graduate': _graduate,
       });
@@ -745,8 +749,9 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
                                   : label == 'Nomor kontak'
                                   ? TextInputType.phone
                                   : TextInputType.text,
-                              inputFormatters:
-                                  ['Nomor KTP', 'Pendapatan'].contains(label)
+                              inputFormatters: label == 'Pendapatan'
+                                  ? [RupiahInputFormatter()]
+                                  : ['Nomor KTP'].contains(label)
                                   ? [
                                       FilteringTextInputFormatter.digitsOnly,
                                       if (label == 'Nomor KTP')

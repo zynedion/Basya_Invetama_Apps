@@ -47,6 +47,7 @@ class MainContainer extends StatefulWidget {
 class _MainContainerState extends State<MainContainer> {
   late HomeAudience _audience = widget.audience;
   int _selectedIndex = 0;
+  int _savingsRevision = 0;
   final _lastDestination = LastDestinationStore();
   bool _destinationChanged = false;
   bool _backgrounding = false;
@@ -241,7 +242,10 @@ class _MainContainerState extends State<MainContainer> {
               if (index >= 0) _selectDestination(index);
             },
           ),
-          'Simpanan' => SavingsPage(session: widget.session),
+          'Simpanan' => SavingsPage(
+            session: widget.session,
+            refreshRevision: _savingsRevision,
+          ),
           'Investasi' =>
             _audience != HomeAudience.investor
                 ? InvestorRegistrationIntro(
@@ -249,6 +253,7 @@ class _MainContainerState extends State<MainContainer> {
                     session: widget.session,
                   )
                 : InvestmentPage(
+                    onMutationChanged: () => setState(() => _savingsRevision++),
                     session: widget.session,
                     summaryGateway: widget.summaryGateway,
                   ),
