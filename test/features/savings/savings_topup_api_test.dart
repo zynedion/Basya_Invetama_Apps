@@ -12,9 +12,19 @@ void main() {
     tokenType: 'Bearer',
     expiresAt: DateTime.utc(2030),
   );
-  for (final buyPower in [false, true]) {
-    final createApi = buyPower ? SavingsTopUpApi.buyPower : SavingsTopUpApi.new;
-    final path = buyPower ? '/app/investasi/topup' : '/app/simpanan/topup';
+  for (final kind in ['savings', 'buyPower', 'mandatory']) {
+    final buyPower = kind == 'buyPower';
+    final mandatory = kind == 'mandatory';
+    final createApi = mandatory
+        ? SavingsTopUpApi.mandatory
+        : buyPower
+        ? SavingsTopUpApi.buyPower
+        : SavingsTopUpApi.new;
+    final path = mandatory
+        ? '/app/simpanan/wajib'
+        : buyPower
+        ? '/app/investasi/topup'
+        : '/app/simpanan/topup';
     test(
       '$path options reads real destination IDs and account numbers',
       () async {
@@ -71,13 +81,16 @@ void main() {
             expect(body, contains('application/pdf'));
             expect(body, contains('%PDF-test'));
             expect(body, isNot(contains('nasabah_id')));
+            for (final field in ['month', 'year', 'period', 'bulan', 'tahun']) {
+              expect(body, isNot(contains('name="$field"')));
+            }
             expect(body, isNot(contains('investor_id')));
             expect(
               body,
               contains('name="note"\r\n\r\n${'x' * (buyPower ? 100 : 50)}'),
             );
             return http.Response(
-              '{"status":true,"data":{"topup":{"trx_id":"TEST","status":{"code":"unverified"}}}}',
+              '{"status":true,"data":{"${mandatory ? 'payment' : 'topup'}":{"trx_id":"TEST","status":{"code":"unverified"}}}}',
               201,
             );
           }),

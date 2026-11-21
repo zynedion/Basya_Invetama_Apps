@@ -273,10 +273,14 @@ class _SavingsPageState extends State<SavingsPage> {
                     actionLabel: 'Bayar',
                     onAction:
                         widget.onPayMandatory ??
-                        () => openBasyaForm(
-                          context,
-                          BasyaFormKind.mandatorySavings,
-                        ),
+                        () async {
+                          await openBasyaForm(
+                            context,
+                            BasyaFormKind.mandatorySavings,
+                            session: widget.session,
+                          );
+                          if (mounted) _load();
+                        },
                   ),
                   const SizedBox(height: 10),
                   _MembershipCard(

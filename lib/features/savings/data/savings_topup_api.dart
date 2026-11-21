@@ -17,19 +17,26 @@ class SavingsTopUpApi {
   SavingsTopUpApi.buyPower({http.Client? client})
     : _client = client ?? http.Client(),
       _uri = Uri.parse('https://api.basyainvestama.id/app/investasi/topup');
+  SavingsTopUpApi.mandatory({http.Client? client})
+    : _client = client ?? http.Client(),
+      _uri = Uri.parse('https://api.basyainvestama.id/app/simpanan/wajib');
+  bool get _mandatory => _uri.path.endsWith('/wajib');
   final http.Client _client;
   final Uri _uri;
   static final uri = Uri.parse(
     'https://api.basyainvestama.id/app/simpanan/topup',
   );
   Future<List<Map<String, dynamic>>> options(AuthSession session) async {
-    final data = _decode(
-      await authorizedGet(_client, Uri.parse('$_uri/options'), session),
-    );
+    final data = await paymentOptions(session);
     return (data['bank_accounts'] as List)
         .map((e) => Map<String, dynamic>.from(e as Map))
         .toList();
   }
+
+  Future<Map<String, dynamic>> paymentOptions(AuthSession session) async =>
+      _decode(
+        await authorizedGet(_client, Uri.parse('$_uri/options'), session),
+      );
 
   Future<Map<String, dynamic>> submit(
     AuthSession session, {
@@ -80,7 +87,8 @@ class SavingsTopUpApi {
       await _client.send(request),
     ))().timeout(const Duration(seconds: 30));
     if (response.statusCode == 401) await session.recovery?.invalidate();
-    return _decode(response)['topup'] as Map<String, dynamic>;
+    return _decode(response)[_mandatory ? 'payment' : 'topup']
+        as Map<String, dynamic>;
   }
 
   Map<String, dynamic> _decode(http.Response response) {

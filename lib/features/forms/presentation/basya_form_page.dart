@@ -51,14 +51,18 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
   String? _topUpError;
   List<Map<String, dynamic>> _accounts = [];
   int? _accountId;
+  int _minimum = 50000, _multiple = 50000;
   late final _topUpApi =
       widget.topUpApi ??
       (_kind == BasyaFormKind.topUpBuyPower
           ? SavingsTopUpApi.buyPower()
+          : _kind == BasyaFormKind.mandatorySavings
+          ? SavingsTopUpApi.mandatory()
           : SavingsTopUpApi());
   bool get _isTopUp =>
       _kind == BasyaFormKind.topUpSavings ||
-      _kind == BasyaFormKind.topUpBuyPower;
+      _kind == BasyaFormKind.topUpBuyPower ||
+      _kind == BasyaFormKind.mandatorySavings;
   int get _noteLimit => _kind == BasyaFormKind.topUpBuyPower ? 100 : 50;
   Map<String, dynamic>? get _account =>
       _accounts.where((e) => e['id'] == _accountId).firstOrNull;
@@ -70,10 +74,22 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
     try {
       if (widget.session == null) {
         throw const SavingsTopUpFailure(
-          'Silakan masuk untuk melakukan top up.',
+          'Silakan masuk untuk melakukan pembayaran.',
         );
       }
-      final accounts = await _topUpApi.options(widget.session!);
+      final List<Map<String, dynamic>> accounts;
+      if (_kind == BasyaFormKind.mandatorySavings) {
+        final options = await _topUpApi.paymentOptions(widget.session!);
+        final rule = options['amount_rule'] as Map;
+        _minimum = (rule['minimum'] as num).toInt();
+        _multiple = (rule['multiple_of'] as num).toInt();
+        if (_minimum <= 0 || _multiple <= 0) throw const FormatException();
+        accounts = (options['bank_accounts'] as List)
+            .map((e) => Map<String, dynamic>.from(e as Map))
+            .toList();
+      } else {
+        accounts = await _topUpApi.options(widget.session!);
+      }
       if (mounted) {
         setState(() {
           _accounts = accounts;
@@ -117,7 +133,11 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
           canPop: false,
           child: AlertDialog(
             icon: const Icon(Icons.task_alt, color: AppTheme.teal, size: 40),
-            title: const Text('Top up berhasil dikirim'),
+            title: Text(
+              _kind == BasyaFormKind.mandatorySavings
+                  ? 'Pembayaran berhasil dikirim'
+                  : 'Top up berhasil dikirim',
+            ),
             content: Text(
               'Menunggu verifikasi admin. Saldo akan bertambah setelah disetujui.${result['trx_id'] == null ? '' : '\n\nNomor transaksi: ${result['trx_id']}'}',
             ),
@@ -301,6 +321,7 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
         title: _kind.title,
         values: _reviewValues(),
         liveTopUp: _isTopUp,
+        mandatoryPayment: _kind == BasyaFormKind.mandatorySavings,
       ),
     );
     _reviewing = false;
@@ -589,44 +610,45 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
       runSpacing: 12,
       children: [
         for (final amount in [50000, 100000, 150000, 200000])
-          SizedBox(
-            width: (constraints.maxWidth - 12) / 2,
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                minimumSize: const Size(0, 72),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 16,
+          if (amount >= _minimum && amount % _multiple == 0)
+            SizedBox(
+              width: (constraints.maxWidth - 12) / 2,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 72),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 16,
+                  ),
+                  backgroundColor: _amount('Nominal') == amount
+                      ? AppTheme.teal.withValues(alpha: .10)
+                      : Colors.white,
+                  foregroundColor: AppTheme.teal,
+                  side: BorderSide(
+                    color: _amount('Nominal') == amount
+                        ? AppTheme.teal
+                        : AppTheme.cardBorder,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
-                backgroundColor: _amount('Nominal') == amount
-                    ? AppTheme.teal.withValues(alpha: .10)
-                    : Colors.white,
-                foregroundColor: AppTheme.teal,
-                side: BorderSide(
-                  color: _amount('Nominal') == amount
-                      ? AppTheme.teal
-                      : AppTheme.cardBorder,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              onPressed: () => setState(() {
-                _controller('Nominal').text = groupDigits('$amount');
-                _dirty = true;
-              }),
-              child: Semantics(
-                selected: _amount('Nominal') == amount,
-                child: Text(
-                  '${amount ~/ 1000} ribu',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                onPressed: () => setState(() {
+                  _controller('Nominal').text = groupDigits('$amount');
+                  _dirty = true;
+                }),
+                child: Semantics(
+                  selected: _amount('Nominal') == amount,
+                  child: Text(
+                    '${amount ~/ 1000} ribu',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
       ],
     ),
   );
@@ -638,7 +660,19 @@ class _BasyaFormPageState extends State<BasyaFormPage> {
     ),
     _date('Tanggal transfer', pastOnly: true),
     if (_kind == BasyaFormKind.mandatorySavings) _mandatoryAmounts(),
-    _text('Nominal', money: true),
+    _text(
+      'Nominal',
+      money: true,
+      validate: (value) {
+        if (_kind != BasyaFormKind.mandatorySavings) return null;
+        final amount = moneyValue(value);
+        if (amount < _minimum) return 'Minimal ${rupiah(_minimum)}.';
+        if (amount % _multiple != 0) {
+          return 'Nominal harus kelipatan ${rupiah(_multiple)}.';
+        }
+        return null;
+      },
+    ),
     ..._paymentDestination(),
     _file('Bukti pembayaran'),
     if (_isTopUp)

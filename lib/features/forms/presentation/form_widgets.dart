@@ -638,8 +638,10 @@ class FormReviewSheet extends StatelessWidget {
     required this.title,
     required this.values,
     this.liveTopUp = false,
+    this.mandatoryPayment = false,
   });
   final bool liveTopUp;
+  final bool mandatoryPayment;
   final String title;
   final Map<String, String> values;
   @override
@@ -697,8 +699,10 @@ class FormReviewSheet extends StatelessWidget {
                 ),
               ),
             if (liveTopUp)
-              const FormNotice(
-                'Saldo bertambah setelah top up disetujui admin.',
+              FormNotice(
+                mandatoryPayment
+                    ? 'Saldo Simpanan Wajib bertambah setelah pembayaran disetujui admin.'
+                    : 'Saldo bertambah setelah top up disetujui admin.',
                 title: 'Menunggu verifikasi',
               )
             else
@@ -708,7 +712,11 @@ class FormReviewSheet extends StatelessWidget {
               ),
             const SizedBox(height: 20),
             BasyaActionButton(
-              label: liveTopUp ? 'Kirim top up' : 'Konfirmasi demo',
+              label: mandatoryPayment
+                  ? 'Kirim pembayaran'
+                  : liveTopUp
+                  ? 'Kirim top up'
+                  : 'Konfirmasi demo',
               expand: true,
               labelSize: 16,
               style: BasyaActionStyle.emphasis,
