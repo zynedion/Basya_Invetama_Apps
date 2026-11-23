@@ -22,6 +22,44 @@ class AuthApiClient {
   final http.Client _client;
   final DateTime Function() _now;
 
+  Future<void> changePassword(
+    AuthSession session,
+    String currentPassword,
+    String newPassword,
+    String confirmation,
+  ) async {
+    final response = await _client
+        .post(
+          Uri.parse(
+            'https://api.basyainvestama.id/app/profile/change-password',
+          ),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': session.authorizationHeader,
+          },
+          body: jsonEncode({
+            'current_password': currentPassword,
+            'new_password': newPassword,
+            'confirm_password': confirmation,
+          }),
+        )
+        .timeout(const Duration(seconds: 20));
+    if (response.statusCode >= 500) {
+      throw const FormatException('Password change outcome unknown');
+    }
+    final body = _decodeBody(response.body);
+    if (response.statusCode == 200 && body['status'] == true) return;
+    final messages = body['messages'];
+    final message = messages is Map
+        ? messages.values.join('\n')
+        : body['message']?.toString();
+    throw AuthException(
+      AuthFailureType.validation,
+      message ?? 'Kata sandi belum dapat diperbarui. Silakan coba kembali.',
+    );
+  }
+
   Future<AuthSession> login({
     required String username,
     required String password,

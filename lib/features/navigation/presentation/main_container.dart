@@ -1,3 +1,8 @@
+import 'package:http/http.dart' as http;
+import '../../profile/presentation/profile_edit_page.dart';
+import '../../profile/presentation/change_password_page.dart';
+import '../../auth/data/auth_service.dart';
+import '../../auth/data/auth_api_client.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -6,7 +11,6 @@ import '../data/last_destination_store.dart';
 import '../../../core/notifications/fcm_registration.dart';
 
 import '../../../core/theme/app_theme.dart';
-import '../../forms/presentation/form_routes.dart';
 import '../../auth/domain/auth_gateway.dart';
 import '../../auth/domain/auth_profile.dart';
 import '../../auth/domain/auth_session.dart';
@@ -45,6 +49,68 @@ class MainContainer extends StatefulWidget {
 }
 
 class _MainContainerState extends State<MainContainer> {
+  AuthProfile? _updatedProfile;
+  AuthProfile? get _profile => _updatedProfile ?? widget.profile;
+  Future<void> _editProfile() async {
+    final session = widget.session;
+    if (session == null) return;
+    final saved = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(builder: (_) => ProfileEditPage(session: session)),
+    );
+    if (saved != true || !mounted) return;
+    final transport = http.Client();
+    final client = AuthApiClient(client: transport);
+    try {
+      final profile =
+          await (widget.auth?.getProfile(session) ??
+              client.getProfile(session));
+      if (mounted) {
+        setState(() => _updatedProfile = profile);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profil berhasil diperbarui.')),
+        );
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Profil tersimpan, tetapi tampilan belum berhasil diperbarui.',
+            ),
+            action: SnackBarAction(
+              label: 'Muat ulang',
+              onPressed: _reloadProfile,
+            ),
+          ),
+        );
+      }
+    } finally {
+      transport.close();
+    }
+  }
+
+  Future<void> _reloadProfile() async {
+    final session = widget.session;
+    if (session == null) return;
+    final transport = http.Client();
+    final client = AuthApiClient(client: transport);
+    try {
+      final profile =
+          await (widget.auth?.getProfile(session) ??
+              client.getProfile(session));
+      if (mounted) setState(() => _updatedProfile = profile);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profil belum dapat dimuat ulang.')),
+        );
+      }
+    } finally {
+      transport.close();
+    }
+  }
+
   late HomeAudience _audience = widget.audience;
   int _selectedIndex = 0;
   int _savingsRevision = 0;
@@ -228,7 +294,7 @@ class _MainContainerState extends State<MainContainer> {
         switch (destination.label) {
           'Beranda' => InvestorHomePage(
             auth: widget.auth,
-            profile: widget.profile,
+            profile: _profile,
             session: widget.session,
             summaryGateway: widget.summaryGateway,
             audience: _audience,
@@ -249,7 +315,7 @@ class _MainContainerState extends State<MainContainer> {
           'Investasi' =>
             _audience != HomeAudience.investor
                 ? InvestorRegistrationIntro(
-                    profile: widget.profile,
+                    profile: _profile,
                     session: widget.session,
                   )
                 : InvestmentPage(
@@ -265,16 +331,21 @@ class _MainContainerState extends State<MainContainer> {
             onRetry: _loadMultiguna,
           ),
           'Profil' => ProfilePage(
-            profile: widget.profile,
+            profile: _profile,
             onLogout: _logout,
             loggingOut: _loggingOut,
-            onEditProfile: () => openBasyaForm(
-              context,
-              BasyaFormKind.editProfile,
-              profile: widget.profile,
-            ),
-            onChangePassword: () =>
-                openBasyaForm(context, BasyaFormKind.password),
+            onEditProfile: _editProfile,
+            onChangePassword: () {
+              final auth = widget.session?.recovery;
+              if (auth is AuthService) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => ChangePasswordPage(auth: auth),
+                  ),
+                );
+              }
+            },
           ),
           _ => const SizedBox.shrink(),
         },

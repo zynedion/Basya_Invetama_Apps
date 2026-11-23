@@ -1,3 +1,6 @@
+import '../../../core/widgets/visible_page_state.dart';
+import '../data/multiguna_payment_api.dart';
+import 'multiguna_payment_page.dart';
 import 'multiguna_applications.dart';
 import '../../auth/domain/auth_session.dart';
 import '../data/multiguna_api_client.dart';
@@ -33,7 +36,79 @@ class MultigunaPage extends StatefulWidget {
   State<MultigunaPage> createState() => _MultigunaPageState();
 }
 
-class _MultigunaPageState extends State<MultigunaPage> {
+class _MultigunaPageState extends State<MultigunaPage>
+    with VisiblePageState<MultigunaPage> {
+  final _paymentApi = MultigunaPaymentApi();
+  List<Map<String, dynamic>> _payments = [];
+  bool _paymentsLoading = false, _paymentOpen = false;
+  String? _paymentsError;
+  DateTime? _paymentsLoaded;
+  @override
+  void onPageVisibilityChanged(bool visible) {
+    if (visible) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && pageVisible && !_paymentOpen) _loadPayments();
+      });
+    }
+  }
+
+  Future<void> _loadPayments({bool force = false}) async {
+    final session = widget.session;
+    if (session == null || _paymentsLoading || !pageVisible) return;
+    if (!force &&
+        _paymentsLoaded != null &&
+        DateTime.now().difference(_paymentsLoaded!) <
+            const Duration(seconds: 30)) {
+      return;
+    }
+    _paymentsLoaded = DateTime.now();
+    setState(() {
+      _paymentsLoading = true;
+      _paymentsError = null;
+    });
+    try {
+      final result = await _paymentApi.pending(session);
+      if (mounted && widget.session == session) {
+        setState(() => _payments = result);
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _paymentsError = "Pembayaran aktif belum dapat dimuat.");
+      }
+    } finally {
+      if (mounted) setState(() => _paymentsLoading = false);
+    }
+  }
+
+  Future<void> _pay(MultigunaLoan loan) async {
+    if (_paymentOpen || widget.session == null || loan.id == null) return;
+    _paymentOpen = true;
+    final pending = _payments
+        .where((p) => paymentNumber(p["landing_id"]) == loan.id)
+        .firstOrNull;
+    if (pending != null) {
+      await showPendingPayment(context, pending);
+    } else {
+      await Navigator.push<void>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MultigunaPaymentPage(
+            session: widget.session!,
+            contractId: loan.id!,
+          ),
+        ),
+      );
+    }
+    _paymentOpen = false;
+    if (!mounted) return;
+    _paymentsLoaded = null;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _loadPayments();
+    });
+    widget.onRetry?.call();
+    _loadDetails();
+  }
+
   bool _obligationVisible = true;
   int _applicationsRevision = 0;
   final _detailClient = MultigunaApiClient();
@@ -53,6 +128,8 @@ class _MultigunaPageState extends State<MultigunaPage> {
   void didUpdateWidget(covariant MultigunaPage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.session != widget.session) {
+      _payments = [];
+      _paymentsLoaded = null;
       oldWidget.session?.cache?.removeListener(_clearDetails);
       widget.session?.cache?.addListener(_clearDetails);
       _clearDetails();
@@ -76,6 +153,7 @@ class _MultigunaPageState extends State<MultigunaPage> {
 
   @override
   void dispose() {
+    _paymentApi.dispose();
     _generation++;
     widget.session?.cache?.removeListener(_clearDetails);
     super.dispose();
@@ -231,11 +309,7 @@ class _MultigunaPageState extends State<MultigunaPage> {
                     money: _money,
                     details: _details,
                     onDetail: _openDetail,
-                    onPay: (loan) => openBasyaForm(
-                      context,
-                      BasyaFormKind.installment,
-                      loan: loan,
-                    ),
+                    onPay: _pay,
                   ),
                   if (_detailsLoading)
                     const Padding(
@@ -269,13 +343,28 @@ class _MultigunaPageState extends State<MultigunaPage> {
                       _OverdueNotice(
                         loan: loan,
                         money: _money,
-                        onTap: () => openBasyaForm(
-                          context,
-                          BasyaFormKind.installment,
-                          loan: loan,
-                        ),
+                        onTap: () => _pay(loan),
                       ),
                     ],
+                  if (_paymentsLoading) const LinearProgressIndicator(),
+                  if (_paymentsError != null) ...[
+                    Text(_paymentsError!),
+                    TextButton(
+                      onPressed: () => _loadPayments(force: true),
+                      child: const Text('Coba lagi'),
+                    ),
+                  ],
+                  for (final payment in _payments)
+                    Card.outlined(
+                      child: ListTile(
+                        title: Text(_money(paymentNumber(payment['amount']))),
+                        subtitle: Text(
+                          '${payment['contract_trx_id']}\nMenunggu verifikasi admin',
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => showPendingPayment(context, payment),
+                      ),
+                    ),
                   if (widget.session != null && data.accessible) ...[
                     const SizedBox(height: 24),
                     MultigunaApplications(
@@ -304,6 +393,16 @@ class _MultigunaPageState extends State<MultigunaPage> {
                     for (var index = 0; index < data.loans.length; index++) ...[
                       _ActiveLoanCard(
                         loan: data.loans[index],
+                        onPay:
+                            widget.session != null &&
+                                data.loans[index].id != null
+                            ? () => _pay(data.loans[index])
+                            : null,
+                        paymentPending: _payments.any(
+                          (p) =>
+                              paymentNumber(p['landing_id']) ==
+                              data.loans[index].id,
+                        ),
                         money: _money,
                         onDetail:
                             data.loans[index].id != null &&
@@ -672,7 +771,11 @@ class _ActiveLoanCard extends StatelessWidget {
     required this.loan,
     required this.money,
     this.onDetail,
+    this.onPay,
+    this.paymentPending = false,
   });
+  final VoidCallback? onPay;
+  final bool paymentPending;
   final VoidCallback? onDetail;
   final MultigunaLoan loan;
   final String Function(int) money;
@@ -769,6 +872,16 @@ class _ActiveLoanCard extends StatelessWidget {
             'Periode ${_contractDate(loan.startDate)} - ${_contractDate(loan.endDate)}',
             style: const TextStyle(fontSize: 11, color: AppTheme.muted),
           ),
+          if (onPay != null) ...[
+            const SizedBox(height: 20),
+            BasyaActionButton(
+              label: paymentPending ? 'Lihat pembayaran' : 'Bayar cicilan',
+              style: BasyaActionStyle.emphasis,
+              expand: true,
+              onPressed: onPay,
+            ),
+            const SizedBox(height: 8),
+          ],
           if (onDetail != null)
             Align(
               alignment: Alignment.centerRight,

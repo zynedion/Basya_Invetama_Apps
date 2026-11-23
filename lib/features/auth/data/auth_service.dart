@@ -29,6 +29,46 @@ class AuthService implements AuthGateway, SessionRecovery {
   Future<AuthSession>? _renewing;
   bool _blocked = false;
   int _generation = 0;
+  Completer<void>? _passwordChange;
+
+  Future<void> changePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmation,
+  ) async {
+    if (_passwordChange != null) return;
+    final gate = Completer<void>();
+    _passwordChange = gate;
+    try {
+      final session = await _resolve();
+      final generation = _generation;
+      await _api.changePassword(
+        session,
+        currentPassword,
+        newPassword,
+        confirmation,
+      );
+      if (_blocked || generation != _generation) throw _ended;
+      try {
+        final username = await _sessions.readUsername();
+        if (username == null) throw StateError('Missing username');
+        await _sessions.saveCredentials(username, newPassword);
+        if (_blocked || generation != _generation) {
+          await _sessions.clearPassword();
+          throw _ended;
+        }
+      } catch (_) {
+        await invalidate();
+        throw const AuthException(
+          AuthFailureType.invalidCredentials,
+          'Kata sandi berhasil diubah. Silakan masuk kembali dengan kata sandi baru.',
+        );
+      }
+    } finally {
+      _passwordChange = null;
+      gate.complete();
+    }
+  }
 
   AuthSession _bind(AuthSession session) => AuthSession(
     accessToken: session.accessToken,
@@ -45,6 +85,11 @@ class AuthService implements AuthGateway, SessionRecovery {
 
   @override
   Future<AuthSession> resolve({AuthSession? rejected}) async {
+    await _passwordChange?.future;
+    return _resolve(rejected: rejected);
+  }
+
+  Future<AuthSession> _resolve({AuthSession? rejected}) async {
     if (_blocked) throw _ended;
     final pending = _renewing;
     if (pending != null) return pending;
