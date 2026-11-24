@@ -4,6 +4,7 @@ import '../../auth/domain/auth_session.dart';
 import '../../auth/data/auth_exception.dart';
 import '../data/applications_api_client.dart';
 import 'opportunity_detail_sheet.dart';
+import 'investment_purchase_otp_page.dart';
 
 class ApplicationsView extends StatefulWidget {
   const ApplicationsView({
@@ -168,6 +169,27 @@ class ApplicationsViewState extends State<ApplicationsView> {
         item: items[i],
         global: _data!.global,
         money: widget.money,
+        onOpenOtp:
+            !_data!.global &&
+                items[i].text('jenis') == 'pembelian' &&
+                [
+                  'verify_otp',
+                  'resend_otp',
+                ].contains(items[i].data['next_action'])
+            ? () async {
+                await Navigator.push<void>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => InvestmentPurchaseOtpPage(
+                      refreshOnOpen: true,
+                      session: widget.session,
+                      item: items[i].data,
+                    ),
+                  ),
+                );
+                if (mounted) reload();
+              }
+            : null,
       ),
     );
     if (widget.preview) {
@@ -238,10 +260,12 @@ class ApplicationCard extends StatelessWidget {
     required this.item,
     required this.global,
     required this.money,
+    this.onOpenOtp,
   });
   final InvestmentApplication item;
   final bool global;
   final String Function(int) money;
+  final VoidCallback? onOpenOtp;
   @override
   Widget build(BuildContext context) {
     final (color, background, border, icon) = switch (item.status['code']) {
@@ -278,7 +302,7 @@ class ApplicationCard extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-        onTap: () => _detail(context),
+        onTap: onOpenOtp ?? () => _detail(context),
         child: Padding(
           padding: const EdgeInsets.all(14),
           child: Row(

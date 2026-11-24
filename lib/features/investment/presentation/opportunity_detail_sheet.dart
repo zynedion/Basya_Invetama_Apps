@@ -69,6 +69,7 @@ Future<void> showOpportunityDetail(
   required String Function(int) money,
   int? buyPower,
   AuthSession? session,
+  VoidCallback? onPurchaseReturned,
 }) => showModalBottomSheet<void>(
   context: context,
   isScrollControlled: true,
@@ -264,10 +265,10 @@ Future<void> showOpportunityDetail(
                     disabledOpacity: .75,
                     icon: Icons.shopping_bag_outlined,
                     onPressed: available && item.pricePerLot > 0
-                        ? () {
+                        ? () async {
                             final navigator = Navigator.of(context);
                             navigator.pop();
-                            navigator.push(
+                            await navigator.push(
                               MaterialPageRoute<void>(
                                 settings: const RouteSettings(
                                   name: '/investment/buy',
@@ -280,6 +281,7 @@ Future<void> showOpportunityDetail(
                                 ),
                               ),
                             );
+                            onPurchaseReturned?.call();
                           }
                         : null,
                     expand: true,

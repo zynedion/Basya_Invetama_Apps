@@ -354,17 +354,26 @@ class _MultigunaPageState extends State<MultigunaPage>
                       child: const Text('Coba lagi'),
                     ),
                   ],
-                  for (final payment in _payments)
-                    Card.outlined(
-                      child: ListTile(
-                        title: Text(_money(paymentNumber(payment['amount']))),
-                        subtitle: Text(
-                          '${payment['contract_trx_id']}\nMenunggu verifikasi admin',
-                        ),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => showPendingPayment(context, payment),
+                  if (_payments.isNotEmpty) ...[
+                    const SizedBox(height: 24),
+                    const Text(
+                      'Pembayaran aktif',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
+                    const SizedBox(height: 12),
+                    for (final payment in _payments)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: PendingPaymentCard(
+                          payment: payment,
+                          amount: _money(paymentNumber(payment['amount'])),
+                          onTap: () => showPendingPayment(context, payment),
+                        ),
+                      ),
+                  ],
                   if (widget.session != null && data.accessible) ...[
                     const SizedBox(height: 24),
                     MultigunaApplications(
@@ -730,7 +739,7 @@ class _OverdueNotice extends StatelessWidget {
             children: [
               Text(
                 loan.arrearsMonths > 0
-                    ? '${loan.arrearsMonths} cicilan menunggak'
+                    ? 'Tunggakan ${loan.arrearsMonths} bulan'
                     : 'Cicilan menunggak',
                 style: const TextStyle(
                   color: AppTheme.negative,

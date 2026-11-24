@@ -374,6 +374,9 @@ class _InvestmentPageState extends State<InvestmentPage> {
                           onTap: () => showOpportunityDetail(
                             context,
                             opportunity: opportunity,
+                            onPurchaseReturned: () {
+                              if (mounted) _refresh();
+                            },
                             session: widget.session,
                             money: _money,
                             buyPower: _summary?.isGlobal == false

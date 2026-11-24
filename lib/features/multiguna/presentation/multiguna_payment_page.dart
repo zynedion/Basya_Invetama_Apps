@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/basya_components.dart';
 import '../../auth/domain/auth_session.dart';
 import '../../forms/domain/form_preview.dart';
@@ -20,27 +21,177 @@ String? validateInstallmentAmount(int amount, Map rule) {
   return null;
 }
 
-Widget paymentAllocation(Map payment) => Column(
+String _paymentPeriod(dynamic value) {
+  final date = DateTime.tryParse('$value-01');
+  if (date == null) return value?.toString() ?? '-';
+  const months = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
+  ];
+  return '${months[date.month - 1]} ${date.year}';
+}
+
+class PendingPaymentCard extends StatelessWidget {
+  const PendingPaymentCard({
+    super.key,
+    required this.payment,
+    required this.amount,
+    required this.onTap,
+  });
+  final Map payment;
+  final String amount;
+  final VoidCallback onTap;
+  @override
+  Widget build(BuildContext context) => Material(
+    color: const Color(0xFFFFFAF0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+      side: const BorderSide(color: AppTheme.warningSurface),
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppTheme.warningSurface,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Icon(
+                Icons.schedule_outlined,
+                color: AppTheme.warning,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    amount,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    payment['asset_type']?.toString() ??
+                        payment['contract_trx_id']?.toString() ??
+                        'Pembayaran cicilan',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Menunggu verifikasi admin',
+                    style: TextStyle(
+                      color: AppTheme.warning,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Icon(Icons.chevron_right, color: AppTheme.teal),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _paymentInfo(String label, dynamic value) => Padding(
+  padding: const EdgeInsets.only(bottom: 16),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, style: const TextStyle(color: AppTheme.muted, fontSize: 12)),
+      const SizedBox(height: 4),
+      Text(
+        value?.toString() ?? '-',
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+    ],
+  ),
+);
+
+Widget paymentAllocation(Map payment, {bool showTotal = true}) => Column(
   crossAxisAlignment: CrossAxisAlignment.stretch,
   children: [
-    FormValue(
-      'Total pembayaran',
-      rupiah(paymentNumber(payment['amount'])),
-      prominent: true,
-    ),
+    if (showTotal)
+      _paymentInfo(
+        'Total pembayaran',
+        rupiah(paymentNumber(payment['amount'])),
+      ),
     if (payment['outstanding_after'] != null)
-      FormValue(
+      _paymentInfo(
         'Sisa kewajiban setelah disetujui',
         rupiah(paymentNumber(payment['outstanding_after'])),
       ),
     for (final row in payment['allocations'] as List? ?? [])
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text('Cicilan ke-${row['installment_to']} · ${row['period']}'),
-        subtitle: Text(
-          'Pokok ${rupiah(paymentNumber(row['principal']))} · Margin ${rupiah(paymentNumber(row['margin']))}',
+      Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppTheme.readOnlySurface,
+          borderRadius: BorderRadius.circular(14),
         ),
-        trailing: Text(rupiah(paymentNumber(row['amount']))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _paymentPeriod(row['period']),
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Cicilan ke-${row['installment_to']}',
+              style: const TextStyle(fontSize: 12, color: AppTheme.muted),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              rupiah(paymentNumber(row['amount'])),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.teal,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 16,
+              runSpacing: 4,
+              children: [
+                Text(
+                  'Pokok ${rupiah(paymentNumber(row['principal']))}',
+                  style: const TextStyle(fontSize: 12, color: AppTheme.muted),
+                ),
+                Text(
+                  'Margin ${rupiah(paymentNumber(row['margin']))}',
+                  style: const TextStyle(fontSize: 12, color: AppTheme.muted),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
   ],
 );
@@ -52,26 +203,112 @@ Future<void> showPendingPayment(
   isScrollControlled: true,
   useSafeArea: true,
   showDragHandle: true,
-  builder: (_) => FractionallySizedBox(
-    heightFactor: .8,
-    child: ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        const Text(
-          'Pembayaran menunggu verifikasi',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-        ),
-        Text('${payment['contract_trx_id']}'),
-        Text('${payment['trx_id']}'),
-        paymentAllocation(payment),
-        if (payment['bank_account'] is Map)
-          FormValue(
-            'Rekening tujuan',
-            '${payment['bank_account']['bank_name']} · ${payment['bank_account']['account_no']}',
+  backgroundColor: Colors.white,
+  builder: (sheetContext) => FractionallySizedBox(
+    heightFactor: .85,
+    child: SafeArea(
+      top: false,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 12, 12),
+            child: Row(
+              children: [
+                const Expanded(
+                  child: Text(
+                    'Detail pembayaran',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                IconButton(
+                  tooltip: 'Tutup',
+                  onPressed: () => Navigator.pop(sheetContext),
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
           ),
-        if (payment['note'] != null) FormValue('Catatan', '${payment['note']}'),
-        const Text('Cicilan diperbarui setelah pembayaran disetujui admin.'),
-      ],
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFAF0),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: AppTheme.warningSurface),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Total pembayaran',
+                        style: TextStyle(color: AppTheme.muted),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        rupiah(paymentNumber(payment['amount'])),
+                        style: const TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'Menunggu verifikasi admin',
+                        style: TextStyle(
+                          color: AppTheme.warning,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Cicilan diperbarui setelah pembayaran disetujui admin.',
+                        style: TextStyle(fontSize: 12, color: AppTheme.muted),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                if (payment['asset_type'] != null)
+                  _paymentInfo('Pembiayaan', payment['asset_type']),
+                _paymentInfo('Nomor kontrak', payment['contract_trx_id']),
+                _paymentInfo('Nomor pembayaran', payment['trx_id']),
+                if (payment['trx_date'] != null)
+                  _paymentInfo('Tanggal transfer', payment['trx_date']),
+                if ((payment['allocations'] as List? ?? []).isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Alokasi pembayaran',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 12),
+                  paymentAllocation(payment, showTotal: false),
+                ],
+                if (payment['bank_account'] is Map) ...[
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Rekening tujuan',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 12),
+                  _paymentInfo(
+                    '${payment['bank_account']['bank_name']}',
+                    payment['bank_account']['account_no'],
+                  ),
+                  _paymentInfo(
+                    'Atas nama',
+                    payment['bank_account']['account_name'],
+                  ),
+                ],
+                if (payment['note']?.toString().trim().isNotEmpty == true)
+                  _paymentInfo('Catatan', payment['note']),
+              ],
+            ),
+          ),
+        ],
+      ),
     ),
   ),
 );
@@ -294,7 +531,7 @@ class _MultigunaPaymentPageState extends State<MultigunaPaymentPage> {
                                           count <=
                                       paymentNumber(rule['maximum']))
                                     (
-                                      '$count cicilan',
+                                      '$count bulan',
                                       paymentNumber(rule['multiple_of']) *
                                           count,
                                     ),
