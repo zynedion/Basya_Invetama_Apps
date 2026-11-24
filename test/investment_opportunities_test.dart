@@ -1,3 +1,4 @@
+import 'package:basya_investama/features/investment/data/investment_purchase_api.dart';
 import 'package:basya_investama/features/investment/presentation/investment_purchase_page.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -72,54 +73,79 @@ void main() {
     expect(item.pricePerLot, 1000000);
     expect(item.availableLots, 500);
   });
-  testWidgets('purchase uses refreshed detail price and remaining lots', (
+  testWidgets('purchase uses options price, available balance and lot limit', (
     tester,
   ) async {
     final originalApi = client(source);
     final original = (await originalApi.getOpportunities(session)).first;
     originalApi.close();
-    final fixture = jsonDecode(source) as Map;
-    final detail = fixture['data']['peluang'][0] as Map;
-    detail['harga_per_lot'] = 2000000;
-    detail['sisa_lot'] = 1;
-    final api = OpportunitiesApiClient(
-      client: MockClient(
-        (request) async => http.Response(
+    final api = InvestmentPurchaseApi(
+      client: MockClient((request) async {
+        expect(request.url.path, '/app/investasi/pembelian/10/options');
+        expect(request.method, 'GET');
+        expect(request.headers['Authorization'], 'Bearer test');
+        return http.Response(
           jsonEncode({
             'status': true,
-            'data': {'currency': 'IDR', 'peluang': detail},
+            'data': {
+              'currency': 'IDR',
+              'stock': {
+                'id': 10,
+                'proyek': {'nama': 'SARASA LAND'},
+                'harga_per_lot': 2000000,
+                'lot_tersedia': 500,
+              },
+              'buy_power': {
+                'ledger_balance': 10000000,
+                'available_balance': 2000000,
+              },
+              'eligibility': {'can_buy': true, 'reasons': []},
+              'constraints': {'minimum_lot': 1, 'maximum_lot': 1},
+            },
           }),
           200,
-          headers: {'content-type': 'application/json; charset=utf-8'},
-        ),
-      ),
+        );
+      }),
     );
-    addTearDown(api.close);
+    addTearDown(api.dispose);
     await tester.pumpWidget(
       MaterialApp(
         home: InvestmentPurchasePage(
           opportunity: original,
           buyPower: 10000000,
           session: session,
-          detailClient: api,
-          summaryGateway: FakeSummary([]),
+          api: api,
           money: (v) => 'Rp $v',
         ),
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Rp 2000000 / lot'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.byType(TextFormField),
       300,
       scrollable: find.byType(Scrollable).first,
     );
+    expect(find.text('Maksimal 1 lot'), findsOneWidget);
+    // Pending funds reduce the available balance even though the caller passed a larger summary balance.
+    expect(find.text('Rp 10000000'), findsNothing);
     await tester.enterText(find.byType(TextFormField), '2');
-    await tester.pump();
-    expect(find.text('Maksimal 1 lot tersedia.'), findsOneWidget);
+    final review = find.widgetWithText(BasyaActionButton, 'Tinjau pembelian');
+    await tester.ensureVisible(review);
+    await tester.pumpAndSettle();
+    await tester.tap(review);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Maksimal 1 lot sesuai kuota dan Buy Power tersedia.'),
+      findsOneWidget,
+    );
     await tester.enterText(find.byType(TextFormField), '1');
+    await tester.ensureVisible(review);
+    await tester.pumpAndSettle();
+    await tester.tap(review);
     await tester.pump();
-    expect(find.text('Rp 2000000'), findsWidgets);
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Konfirmasi pembelian'), findsOneWidget);
+    expect(find.text('1 lot x Rp 2000000'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
   test('empty list and invalid payloads', () async {
@@ -230,7 +256,7 @@ void main() {
     await tester.tap(buy);
     await tester.pumpAndSettle();
     expect(find.text('Beli investasi'), findsOneWidget);
-    expect(find.text('Informasi investasi'), findsOneWidget);
+    expect(find.text('Coba lagi'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
