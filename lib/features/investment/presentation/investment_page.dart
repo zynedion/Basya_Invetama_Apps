@@ -408,7 +408,14 @@ class _InvestmentPageState extends State<InvestmentPage> {
                       ),
                     ],
                     if (_portfolio != null)
-                      PortfolioCards(data: _portfolio!, money: _money),
+                      PortfolioCards(
+                        data: _portfolio!,
+                        money: _money,
+                        session: widget.session,
+                        onSaleReturned: () {
+                          if (mounted) _refresh();
+                        },
+                      ),
                   ] else
                     _PortfolioContent(
                       holdings: _data.holdings,

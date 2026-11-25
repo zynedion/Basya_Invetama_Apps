@@ -1,3 +1,5 @@
+import 'package:basya_investama/features/investment/data/investment_purchase_api.dart';
+import 'package:basya_investama/core/widgets/basya_components.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -65,75 +67,121 @@ void main() {
       }
     },
   );
-  testWidgets(
-    'detail opens sale; validates lots and confirms principal value',
-    (tester) async {
-      tester.view.physicalSize = const Size(360, 800);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: SingleChildScrollView(
-              child: PortfolioCards(
-                data: PortfolioData(
-                  isGlobal: true,
-                  items: [PortfolioItem(holding())],
-                ),
-                money: (v) => 'Rp $v',
+  testWidgets('global portfolio cannot sell another investor holding', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: PortfolioCards(
+              data: PortfolioData(
+                isGlobal: true,
+                items: [PortfolioItem(holding())],
               ),
+              money: (v) => 'Rp $v',
             ),
           ),
         ),
-      );
-      await tester.ensureVisible(find.text('Lihat detail portofolio'));
-      await tester.tap(find.text('Lihat detail portofolio'));
-      await tester.pumpAndSettle();
-      expect(find.text('Detail portofolio'), findsOneWidget);
-      await tester.tap(find.text('Jual'));
-      await tester.pumpAndSettle();
-      expect(find.text('Jual investasi'), findsOneWidget);
-      await tester.scrollUntilVisible(
-        find.byType(TextFormField),
-        300,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.enterText(find.byType(TextFormField), '0');
-      await tester.pump();
-      expect(find.text('Masukkan minimal 1 lot.'), findsOneWidget);
-      await tester.enterText(find.byType(TextFormField), '9');
-      await tester.pump();
-      expect(find.text('Jumlah melebihi lot tersedia.'), findsOneWidget);
-      await tester.enterText(find.byType(TextFormField), '3');
-      await tester.scrollUntilVisible(
-        find.text('Tinjau penjualan'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.tap(find.text('Tinjau penjualan'));
-      await tester.pumpAndSettle();
-      expect(find.text('Konfirmasi penjualan'), findsOneWidget);
-      expect(find.text('7 lot'), findsOneWidget);
-      expect(find.text('Rp 3000000'), findsWidgets);
-      expect(
-        tester
-            .widget<FilledButton>(
-              find.widgetWithText(FilledButton, 'Konfirmasi jual'),
-            )
-            .onPressed,
-        isNull,
-      );
-      await tester.tap(find.text('Ubah jumlah'));
-      await tester.pumpAndSettle();
-      expect(
-        tester
-            .widget<TextFormField>(find.byType(TextFormField))
-            .controller!
-            .text,
-        '3',
-      );
-      expect(tester.takeException(), isNull);
-    },
-  );
+      ),
+    );
+    await tester.ensureVisible(find.text('Lihat detail portofolio'));
+    await tester.tap(find.text('Lihat detail portofolio'));
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<BasyaActionButton>(
+            find.widgetWithText(BasyaActionButton, 'Jual'),
+          )
+          .onPressed,
+      isNull,
+    );
+  });
+  testWidgets('sale uses options available lots and current price', (
+    tester,
+  ) async {
+    final api = InvestmentPurchaseApi.sale(
+      client: MockClient((r) async {
+        expect(r.url.path, '/app/investasi/penjualan/10/options');
+        return http.Response(
+          jsonEncode({
+            'status': true,
+            'data': {
+              'stock': {
+                'id': 10,
+                'proyek': {'nama': 'KPR'},
+                'project_status': 'closed',
+              },
+              'position': {
+                'owned_lot': 12,
+                'pending_sell_lot': 2,
+                'available_lot': 10,
+                'harga_per_lot': 2000000,
+                'harga_per_lembar': 20000,
+                'current_value': 24000000,
+                'available_value': 20000000,
+              },
+              'constraints': {'minimum_lot': 1, 'maximum_lot': 10},
+              'eligibility': {'can_sell': true, 'reasons': []},
+            },
+          }),
+          200,
+        );
+      }),
+    );
+    addTearDown(api.dispose);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: InvestmentSalePage(
+          item: PortfolioItem(holding()),
+          money: (v) => 'Rp $v',
+          session: AuthSession(
+            accessToken: 'test',
+            tokenType: 'Bearer',
+            expiresAt: DateTime(2099),
+          ),
+          api: api,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byType(TextFormField),
+      250,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.enterText(find.byType(TextFormField), '11');
+    final review = find.widgetWithText(BasyaActionButton, 'Tinjau penjualan');
+    await tester.ensureVisible(review);
+    await tester.pumpAndSettle();
+    await tester.tap(review);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Maksimal 10 lot sesuai lot yang tersedia untuk dijual.'),
+      findsOneWidget,
+    );
+    await tester.enterText(find.byType(TextFormField), '3');
+    await tester.ensureVisible(review);
+    await tester.pumpAndSettle();
+    await tester.tap(review);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Konfirmasi penjualan'), findsOneWidget);
+    expect(find.text('3 lot x Rp 2000000'), findsOneWidget);
+    expect(
+      tester
+          .widget<FilledButton>(
+            find.widgetWithText(FilledButton, 'Konfirmasi jual'),
+          )
+          .onPressed,
+      isNotNull,
+    );
+    await tester.tap(find.text('Ubah jumlah'));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<TextFormField>(find.byType(TextFormField)).controller!.text,
+      '3',
+    );
+    expect(tester.takeException(), isNull);
+  });
 }

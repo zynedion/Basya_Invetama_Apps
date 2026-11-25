@@ -16,13 +16,19 @@ class InvestmentPurchaseFailure implements Exception {
 
 class InvestmentPurchaseApi {
   InvestmentPurchaseApi({http.Client? client})
-    : _client = client ?? http.Client();
+    : _client = client ?? http.Client(),
+      isSale = false;
+  InvestmentPurchaseApi.sale({http.Client? client})
+    : _client = client ?? http.Client(),
+      isSale = true;
+  final bool isSale;
+  String get _kind => isSale ? 'penjualan' : 'pembelian';
   final http.Client _client;
   static const _base = 'https://api.basyainvestama.id/app/investasi';
   Future<Map<String, dynamic>> options(AuthSession session, int stockId) =>
-      _get(session, '/pembelian/$stockId/options');
+      _get(session, '/$_kind/$stockId/options');
   Future<List<Map<String, dynamic>>> pending(AuthSession session) async {
-    final data = await _get(session, '/pengajuan?type=pembelian');
+    final data = await _get(session, '/pengajuan?type=$_kind');
     if (data['pengajuan'] is! List) {
       throw const InvestmentPurchaseFailure(
         'Respons pengajuan tidak valid.',
@@ -39,7 +45,7 @@ class InvestmentPurchaseApi {
     AuthSession session,
     int stockId,
     int lots,
-  ) => _post(session, '/pembelian/$stockId', {'total_lot': lots});
+  ) => _post(session, '/$_kind/$stockId', {'total_lot': lots});
   Future<Map<String, dynamic>> verify(
     AuthSession session,
     int id,
@@ -88,7 +94,7 @@ class InvestmentPurchaseApi {
         response.statusCode >= 300 ||
         map['status'] != true) {
       throw InvestmentPurchaseFailure(
-        map['message']?.toString() ?? 'Pembelian belum dapat diproses.',
+        map['message']?.toString() ?? 'Pengajuan belum dapat diproses.',
         response.statusCode,
         purchaseMap(map['data']),
       );

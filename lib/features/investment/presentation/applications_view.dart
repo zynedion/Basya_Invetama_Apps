@@ -171,7 +171,7 @@ class ApplicationsViewState extends State<ApplicationsView> {
         money: widget.money,
         onOpenOtp:
             !_data!.global &&
-                items[i].text('jenis') == 'pembelian' &&
+                ['pembelian', 'penjualan'].contains(items[i].text('jenis')) &&
                 [
                   'verify_otp',
                   'resend_otp',
@@ -181,6 +181,7 @@ class ApplicationsViewState extends State<ApplicationsView> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => InvestmentPurchaseOtpPage(
+                      isSale: items[i].text('jenis') == 'penjualan',
                       refreshOnOpen: true,
                       session: widget.session,
                       item: items[i].data,

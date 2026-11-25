@@ -15,11 +15,13 @@ class InvestmentPurchaseOtpPage extends StatefulWidget {
     required this.item,
     this.api,
     this.refreshOnOpen = false,
+    this.isSale = false,
   });
   final AuthSession session;
   final Map<String, dynamic> item;
   final InvestmentPurchaseApi? api;
   final bool refreshOnOpen;
+  final bool isSale;
   @override
   State<InvestmentPurchaseOtpPage> createState() =>
       _InvestmentPurchaseOtpPageState();
@@ -27,7 +29,9 @@ class InvestmentPurchaseOtpPage extends StatefulWidget {
 
 class _InvestmentPurchaseOtpPageState extends State<InvestmentPurchaseOtpPage>
     with VisiblePageState<InvestmentPurchaseOtpPage> {
-  late final _api = widget.api ?? InvestmentPurchaseApi();
+  late final _api =
+      widget.api ??
+      (widget.isSale ? InvestmentPurchaseApi.sale() : InvestmentPurchaseApi());
   late Map<String, dynamic> _item = Map.of(widget.item);
   late Map<String, dynamic> _otp = purchaseMap(_item['otp']);
   final _code = TextEditingController();
@@ -154,7 +158,11 @@ class _InvestmentPurchaseOtpPageState extends State<InvestmentPurchaseOtpPage>
         _code.clear();
         await _sync();
       } else {
-        final purchase = purchaseMap(result['purchase']);
+        final purchase = purchaseMap(
+          widget.isSale
+              ? (result['sale'] ?? result['purchase'])
+              : result['purchase'],
+        );
         if (purchaseInt(purchase['id']) != purchaseInt(_item['id']) ||
             purchaseMap(purchase['status'])['code'] != 'menunggu_approval' ||
             result['next_action'] != 'admin_approval') {
@@ -188,7 +196,11 @@ class _InvestmentPurchaseOtpPageState extends State<InvestmentPurchaseOtpPage>
   Widget build(BuildContext context) => PopScope(
     canPop: !_busy,
     child: Scaffold(
-      appBar: AppBar(title: const Text('Verifikasi pembelian')),
+      appBar: AppBar(
+        title: Text(
+          widget.isSale ? 'Verifikasi penjualan' : 'Verifikasi pembelian',
+        ),
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(20),
@@ -208,7 +220,9 @@ class _InvestmentPurchaseOtpPageState extends State<InvestmentPurchaseOtpPage>
             const SizedBox(height: 10),
             Text(
               _verified
-                  ? 'Pembelian menunggu approval admin. Buy Power belum dipotong.'
+                  ? (widget.isSale
+                        ? 'Penjualan menunggu approval admin. Lot berkurang dan hasil penjualan masuk ke Buy Power setelah disetujui.'
+                        : 'Pembelian menunggu approval admin. Buy Power belum dipotong.')
                   : 'Kode dikirim melalui WhatsApp ke ${_otp['destination'] ?? 'nomor terdaftar'}. Jangan bagikan kode kepada siapa pun.',
             ),
             const SizedBox(height: 20),
@@ -260,7 +274,9 @@ class _InvestmentPurchaseOtpPageState extends State<InvestmentPurchaseOtpPage>
               ),
               const SizedBox(height: 20),
               BasyaActionButton(
-                label: 'Verifikasi pembelian',
+                label: widget.isSale
+                    ? 'Verifikasi penjualan'
+                    : 'Verifikasi pembelian',
                 style: BasyaActionStyle.emphasis,
                 expand: true,
                 loading: _busy,

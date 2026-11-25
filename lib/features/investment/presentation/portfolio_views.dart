@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../auth/domain/auth_session.dart';
+import 'investment_sale_page.dart';
+export 'investment_sale_page.dart' show InvestmentSalePage;
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/basya_components.dart';
 import '../domain/portfolio_data.dart';
 import 'opportunity_detail_sheet.dart';
 
 class PortfolioCards extends StatelessWidget {
-  const PortfolioCards({super.key, required this.data, required this.money});
+  const PortfolioCards({
+    super.key,
+    required this.data,
+    required this.money,
+    this.session,
+    this.onSaleReturned,
+  });
   final PortfolioData data;
+  final AuthSession? session;
+  final VoidCallback? onSaleReturned;
   final String Function(int) money;
   @override
   Widget build(BuildContext context) => Column(
@@ -112,8 +122,13 @@ class PortfolioCards extends StatelessWidget {
               BasyaActionButton(
                 label: 'Lihat detail portofolio',
                 style: BasyaActionStyle.tonal,
-                onPressed: () =>
-                    showPortfolioDetail(context, item: item, money: money),
+                onPressed: () => showPortfolioDetail(
+                  context,
+                  item: item,
+                  money: money,
+                  session: data.isGlobal ? null : session,
+                  onSaleReturned: onSaleReturned,
+                ),
                 expand: true,
               ),
             ],
@@ -137,6 +152,8 @@ List<Widget> ownershipInfo(PortfolioItem item, String Function(int) money) => [
 Future<void> showPortfolioDetail(
   BuildContext context, {
   required PortfolioItem item,
+  AuthSession? session,
+  VoidCallback? onSaleReturned,
   required String Function(int) money,
 }) => showModalBottomSheet<void>(
   context: context,
@@ -238,19 +255,23 @@ Future<void> showPortfolioDetail(
               labelSize: 14,
               disabledOpacity: .75,
               expand: true,
-              onPressed: item.canPreviewSale
-                  ? () {
+              onPressed: item.canPreviewSale && session != null
+                  ? () async {
                       final navigator = Navigator.of(context);
                       navigator.pop();
-                      navigator.push(
+                      await navigator.push(
                         MaterialPageRoute<void>(
                           settings: const RouteSettings(
                             name: '/investment/sell',
                           ),
-                          builder: (_) =>
-                              InvestmentSalePage(item: item, money: money),
+                          builder: (_) => InvestmentSalePage(
+                            item: item,
+                            money: money,
+                            session: session,
+                          ),
                         ),
                       );
+                      onSaleReturned?.call();
                     }
                   : null,
             ),
@@ -260,179 +281,6 @@ Future<void> showPortfolioDetail(
     ),
   ),
 );
-
-class InvestmentSalePage extends StatefulWidget {
-  const InvestmentSalePage({
-    super.key,
-    required this.item,
-    required this.money,
-  });
-  final PortfolioItem item;
-  final String Function(int) money;
-  @override
-  State<InvestmentSalePage> createState() => _InvestmentSalePageState();
-}
-
-class _InvestmentSalePageState extends State<InvestmentSalePage> {
-  final _form = GlobalKey<FormState>();
-  final _quantity = TextEditingController();
-  bool _reviewing = false;
-  int get lots => int.tryParse(_quantity.text) ?? 0;
-  int get total => lots * widget.item.price;
-  @override
-  void dispose() {
-    _quantity.dispose();
-    super.dispose();
-  }
-
-  Future<void> _review() async {
-    if (_reviewing ||
-        !widget.item.canPreviewSale ||
-        !_form.currentState!.validate()) {
-      return;
-    }
-    FocusScope.of(context).unfocus();
-    setState(() => _reviewing = true);
-    await showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Konfirmasi penjualan'),
-        scrollable: true,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              widget.item.name,
-              style: const TextStyle(fontWeight: FontWeight.w700),
-            ),
-            if (widget.item.ownerName.isNotEmpty)
-              _Info(label: 'Pemilik', value: widget.item.ownerName),
-            _Info(label: 'Jumlah lot dijual', value: '$lots lot'),
-            _Info(
-              label: 'Harga per lot',
-              value: widget.money(widget.item.price),
-            ),
-            _Info(label: 'Total nilai jual', value: widget.money(total)),
-            _Info(
-              label: 'Sisa lot dimiliki',
-              value: '${widget.item.lots - lots} lot',
-            ),
-            const Text(
-              'Penjualan melalui aplikasi belum tersedia. Kepemilikan Anda belum berubah.',
-              style: TextStyle(color: AppTheme.muted),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Ubah jumlah'),
-          ),
-          const FilledButton(onPressed: null, child: Text('Konfirmasi jual')),
-        ],
-      ),
-    );
-    if (mounted) setState(() => _reviewing = false);
-  }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppTheme.loginCanvas,
-    appBar: AppBar(
-      title: const Text('Jual investasi'),
-      backgroundColor: AppTheme.loginCanvas,
-    ),
-    body: SafeArea(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
-          child: Form(
-            key: _form,
-            child: ListView(
-              padding: const EdgeInsets.all(24),
-              children: [
-                Text(
-                  widget.item.name,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-                    border: Border.all(color: AppTheme.cardBorder),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Text(
-                        'Informasi kepemilikan',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      ...ownershipInfo(widget.item, widget.money),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: _quantity,
-                  enabled: widget.item.canPreviewSale,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(9),
-                  ],
-                  decoration: InputDecoration(
-                    labelText: 'Jumlah lot dijual',
-                    suffixText: 'lot',
-                    helperText:
-                        '${widget.item.availableLots} lot tersedia untuk dijual',
-                    border: const OutlineInputBorder(),
-                  ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
-                    final quantity = int.tryParse(value ?? '') ?? 0;
-                    if (quantity < 1) return 'Masukkan minimal 1 lot.';
-                    if (quantity > widget.item.availableLots ||
-                        quantity > widget.item.lots) {
-                      return 'Jumlah melebihi lot tersedia.';
-                    }
-                    return null;
-                  },
-                  onChanged: (_) => setState(() {}),
-                ),
-                const SizedBox(height: 16),
-                _Info(label: 'Total nilai jual', value: widget.money(total)),
-                const Text(
-                  'Dihitung dari jumlah lot dikalikan harga per lot.',
-                  style: TextStyle(color: AppTheme.muted, fontSize: 12),
-                ),
-                const SizedBox(height: 24),
-                BasyaActionButton(
-                  label: 'Tinjau penjualan',
-                  style: BasyaActionStyle.emphasis,
-                  labelSize: 14,
-                  expand: true,
-                  onPressed: widget.item.canPreviewSale && !_reviewing
-                      ? _review
-                      : null,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
 
 class _Info extends StatelessWidget {
   const _Info({
